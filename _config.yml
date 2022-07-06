@@ -1,1 +1,5 @@
 theme: jekyll-theme-cayman
+
+domain: shicheng-ye.github.io
+baseurl: /docs/ # the subpath of your site, e.g. /blog
+url: https://shicheng-ye.github.io # the base hostname & protocol for your site, e.g. http://example.
