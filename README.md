@@ -1,3 +1,5 @@
-# shicheng-ye.github.io
-
-my name is :pizza:
+```shell
+layout: page
+title: "PAGE TITLE"
+permalink: /docs/
+```
