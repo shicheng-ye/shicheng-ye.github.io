@@ -63,355 +63,7 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 75 words, 15 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-reinforcement-learning/">[rv] reinforcement learning</a></h3></div><div class="post-content"><div class="card"><p><h1 id="Reinforcement-Learning-P1-：Basics"><a href="#Reinforcement-Learning-P1-：Basics" class="headerlink" title="Reinforcement Learning P1 ：Basics"></a>Reinforcement Learning P1 ：Basics</h1><h2 id="Supervised-Learning→RL"><a href="#Supervised-Learning→RL" class="headerlink" title="Supervised Learning→RL"></a>Supervised Learning→RL</h2><p>Supervised Learning：给定 label</p>
-<p>Self Supervised Learning：自动生成 label</p>
-<p>Unsupervised Learning(Auto-encoder)：没用到人类的 label，但事实上仍然还有 label 只不过不需要用人力生成</p>
-<p>RL：机器当我们给它一个输入的时候，我们不知道最佳的输出（label）应该是什么。如下棋。</p>
-<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><img src="https://s2.loli.net/2022/07/02/47o2ubILgfhtE6w.png" alt="image-20220702145935497" style="zoom:50%;" />
-
-<h2 id="Machine-Learning-≈-Looking-for-a-Function"><a href="#Machine-Learning-≈-Looking-for-a-Function" class="headerlink" title="Machine Learning ≈ Looking for a Function"></a>Machine Learning ≈ Looking for a Function</h2><p>机器学习就是找一个 Function，Reinforcement Learning 也是，这个 Function 即 Actor 本身，要做的就是最大化 reward 之总和。</p>
-<p>例：Atari Space Invador。Actor：操作对象。环境：游戏场景。Observation：游戏画面。</p>
-<p>例：围棋。稀疏 Reward，只有游戏结束（输、赢）才能够拿到 Reward。</p>
-<h2 id="Machine-Learning-is-so-simple-……"><a href="#Machine-Learning-is-so-simple-……" class="headerlink" title="Machine Learning is so simple ……"></a>Machine Learning is so simple ……</h2><p>Machine Learning 三个步骤：</p>
-<ol>
-<li>定义含待求未知数的 Function</li>
-<li>定义 Loss Function</li>
-<li>Optimization，minimize loss</li>
-</ol>
-<p>而 RL 其实也是一模一样的三个步骤</p>
-<h3 id="Step-1-Function-with-Unknown"><a href="#Step-1-Function-with-Unknown" class="headerlink" title="Step 1: Function with Unknown"></a>Step 1: Function with Unknown</h3><p>Function (in RL) &#x3D; Actor, RL 中的 Actor 即神经网络，通称 Policy 的 Network。</p>
-<p>神经网络输入：the observation of machine represented as a vector or a matrix。</p>
-<p>神经网络输出：each action corresponds to a neuron in output layer。</p>
-<p><img src="https://s2.loli.net/2022/07/03/nj8qFcTSyQ1RCBM.png" alt="image-20220702151119061"></p>
-<p>为什么输出结果是概率分布？引入随机性。</p>
-<h3 id="Step-2-Define-“Loss”"><a href="#Step-2-Define-“Loss”" class="headerlink" title="Step 2: Define “Loss”"></a>Step 2: Define “Loss”</h3><p>从游戏开始到结束的这整个过程被称之为一个 &#x3D;&#x3D;Episode&#x3D;&#x3D;,</p>
-<p>将整个游戏的过程中 Actor 採取非常多的行为得到的 Reward 通通集合起来便是 &#x3D;&#x3D;Total Reward (Return)&#x3D;&#x3D;。$R &#x3D; \sum^{T}_{t&#x3D;1}r_t$ 。</p>
-<p>Return 是最大化的对象，我们要最小化 loss，可以定义 loss &#x3D; -R。</p>
-<h3 id="Step-3-Optimization"><a href="#Step-3-Optimization" class="headerlink" title="Step 3: Optimization"></a>Step 3: Optimization</h3><p>将整个游戏的过程中 s 跟 a 所形成的这个 Sequence 叫做 Trajectory。符号表示为 $\tau &#x3D; {s_1, a_1,s_2,a_2,…}$。</p>
-<p>通常说，Reward Function 在定义的时候和 Action 与 Observation 都有关联。即 $r_i$ 和 $s_i$  和 $a_i$ 有关系。优化 Return 就行。</p>
-<p>但是 RL 困难之处在于它不是一个一般的 Optimization 的问题。</p>
-<p>第一个问题是，Actor 的输出是有随机性的。 Network 裡面的某一个 Layer 每次产生出来结果是不一样的。第二，Environment 只是一个黑盒，且包含随机性。</p>
-<p>与 GAN 的对比。</p>
-<p>相同：GAN 中 调整 Generator 的参数让 Discriminator 的输出越大越好。RL 中调整 ACtor 的参数让 Environment 的 Reward 越大越好。</p>
-<p>不同：Discriminator 是 Network，但 Environment 只是个黑盒。不能用 GD 调整 Environment。</p>
-<h1 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h1><h3 id="How-to-control-your-actor"><a href="#How-to-control-your-actor" class="headerlink" title="How to control your actor"></a>How to control your actor</h3><img src="https://s2.loli.net/2022/07/02/v7TwXC5UEJWoGdL.png" alt="image-20220702152953732" style="zoom:50%;" />
-
-<p>可以把它想成一个分类的问题。即 s 是 Actor 的输入, $\hat{a}$(Ground Truth) 就是 Label。</p>
-<p>计算 Actor 的输出跟 Ground Truth 之间的 Cross-entropy，那接下来就可以定义一个 Loss。提示：根据交叉熵的定义，预测分布和真实分布有相同的分布时交叉熵最小。Loss 越小，就等价于预测值越接近真实值。</p>
-<img src="https://s2.loli.net/2022/07/02/Zb6yw2HEv38tVJM.png" alt="image-20220702153405916" style="zoom:50%;" />
-
-<p>模型训练</p>
-<img src="https://s2.loli.net/2022/07/02/T3mxPShAgQp6ZKY.png" alt="image-20220702153533859" style="zoom:50%;" />
-
-<p>用数值 A 表示代替 +1&#x2F;-1，就可以实现表示动作的好坏程度。Loss 改写为：<br>$$<br>L&#x3D;\sum A_ne_n<br>$$</p>
-<h2 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h2><h2 id="Version-0"><a href="#Version-0" class="headerlink" title="Version 0"></a>Version 0</h2><p>用随机的  Actor 去跟环境做互动收集训练资料获得 ${s_i, a_i}$。再根据情况好坏为之赋予 $r_i$。</p>
-<p>最简单的但不正确的版本。短视近利。事实上，每一个行为都会影响到接下来发生的事情。例：Space Invador 中，由于只有开火才能得到正 Reward，故他会一直开火。</p>
-<p>Reward Delay：牺牲短期的利益,以换取更长程的目标。</p>
-<h2 id="Version-1"><a href="#Version-1" class="headerlink" title="Version 1"></a>Version 1</h2><p>&#x3D;&#x3D;Cumulated Reward&#x3D;&#x3D;：把当下与未来所有的 Reward 加起来评估一个 Action 的好坏。<br>$$<br>G_t &#x3D; \sum^{N}_{n&#x3D;t} r_n<br>$$<br>用 $G_i$ 表示每个 ${s_i, a_i}$ 对应的 reward。</p>
-<p>问题在于：未来发生的影响中，有些影响大有些影响小。</p>
-<h2 id="Version-2"><a href="#Version-2" class="headerlink" title="Version 2"></a>Version 2</h2><p>加上递减权重 $\gamma$。未来的 reward 中，离当下近的表示影响更大。<br>$$<br>G’<em>t &#x3D; \sum^{N}</em>{n&#x3D;t} \gamma^{n-t}r_n<br>$$</p>
-<h2 id="Version-3"><a href="#Version-3" class="headerlink" title="Version 3"></a>Version 3</h2><p>做标准化，因为好或坏是相对的。</p>
-<p>一个最简单的方法就是：把所有的 G’ 都减掉一个 b，即&#x3D;&#x3D;Baseline&#x3D;&#x3D;。</p>
-<h2 id="Policy-Gradient-1"><a href="#Policy-Gradient-1" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h2><img src="https://s2.loli.net/2022/07/03/GJB31Hvkh4InrgR.png" alt="image-20220702155759971" style="zoom:50%;" />
-
-<p>其中，$L &#x3D; \sum A_n e_n$。$A_n$ 就是 Reward，$e_n$ 就是交叉熵。</p>
-<p>一般的 Training，Data Collection 都是在 For 循环之外。但在 RL 裡面收集资料是在 For 循环裡面。这意味着更新一次参数以后，就要重新收集资料，因此 RL 的训练过程非常花时间。</p>
-<p>为什么不把 Data Collection 放在 For 循环之外？彼之砒霜，吾之蜜糖。因为由 $θ_{i-1}$ 所收集出来的资料不一定适合拿来 Update $θ_{i}$ 的参数。</p>
-<p>故同一个 Action 同一个行为，对于不同的 Actor 而言，它的好是不一样的。更新后的 Actor，可能 Trajectory 就会跟之前出现区别。</p>
-<h3 id="On-policy-v-s-Off-policy"><a href="#On-policy-v-s-Off-policy" class="headerlink" title="On-policy v.s. Off-policy"></a>On-policy v.s. Off-policy</h3><p>被训练的 Actor 与跟环境互动的 Actor 是同一个叫做 &#x3D;&#x3D;On-policy  Learning&#x3D;&#x3D;。</p>
-<p>反之，为 &#x3D;&#x3D;Off-policy Learning&#x3D;&#x3D;。</p>
-<p>Off-policy 的好处：不用一直收集资料。可以收一次资料，就 Update 参数很多次。</p>
-<p>显然上文所述为 On-policy Learning。</p>
-<h3 id="Off-policy-→-Proximal-Policy-Optimization-PPO"><a href="#Off-policy-→-Proximal-Policy-Optimization-PPO" class="headerlink" title="Off-policy → Proximal Policy Optimization(PPO)"></a>Off-policy → Proximal Policy Optimization(PPO)</h3><p>Off-policy 的经典算法： Proximal Policy Optimization。</p>
-<p>Off-policy 的重点：在训练的那个 Network，要知道自己跟别人之间的差距，它要有意识到它跟环境互动的那个 Actor 是不一样的。</p>
-<p>例子：东施效颦，别瞎模仿。</p>
-<h3 id="Collection-Training-Data-Exploration"><a href="#Collection-Training-Data-Exploration" class="headerlink" title="Collection Training Data: Exploration"></a>Collection Training Data: Exploration</h3><p>Exploration：Actor 在採取行为的时候有随机性的。随机性大一点意味着能够收集到比较丰富的资料。实现方法：增大 Actor 的 Output（Distribution）的 Entropy；在 Actor 参数上加 Noise。</p>
-<h2 id="Critic"><a href="#Critic" class="headerlink" title="Critic"></a>Critic</h2><p>Critic 用以评估一个 Actor 的好坏。Given actor 𝜃, how good it is when observing 𝑠 (and taking action 𝑎)。</p>
-<p>本课程中 Critic 叫做 &#x3D;&#x3D;Value Function&#x3D;&#x3D;，用 $V^θ(s)$ 来表示。输出一个 scalar（Discounted Cumulated Reward）。</p>
-<p>故 Value Function 的作用就是：对某一个参数为 $\theta$ 的 Actor 来说，如果它已经看到某一个游戏画面 s，那接下来会得到的 Discounted Cumulated Reward 应该是多少。</p>
-<p>DCR 需要未来的 Reward 来计算。但当下怎么知道未来的 Reward 呢？Value Function 的能力就是要未卜先知。</p>
-<h2 id="How-to-estimate-V-θ-s"><a href="#How-to-estimate-V-θ-s" class="headerlink" title="How to estimate $ V^θ(s) $"></a>How to estimate $ V^θ(s) $</h2><h3 id="Monte-Carlo-MC-based-approach"><a href="#Monte-Carlo-MC-based-approach" class="headerlink" title="Monte-Carlo (MC) based approach"></a>Monte-Carlo (MC) based approach</h3><p>MC：把 Actor 拿去跟环境互动很多轮，可以得到每轮的 DCR。</p>
-<p>那么 Value Function 就得到一笔训练资料，训练目标是：如果看到 $s_a$ 作为输入，那它的输出 $ V^θ(s_a) $ 应该要跟 G’a 越接近越好。</p>
-<img src="https://s2.loli.net/2022/07/02/jz5FaG1xdcvsWI7.png" alt="image-20220702161849346" style="zoom: 50%;" />
-
-
-
-<h3 id="Temporal-difference-TD-approach"><a href="#Temporal-difference-TD-approach" class="headerlink" title="Temporal-difference (TD) approach"></a>Temporal-difference (TD) approach</h3><p>一轮互动可能无法终止或者很长。</p>
-<p>TD：不用玩完整场游戏，才能得到训练 Value 的资料。虽然我们不知道，$ V^θ(s_t)$ 和 $ V^θ(s_{t+1})$ 应该是什么，但是我们可以让 $ V^θ(s_t)$  与 $ \gamma V^θ(s_{t+1})$ 的差值逼近已知的 $r_t$。</p>
-<img src="https://s2.loli.net/2022/07/02/lazNsUr4dnBRx1k.png" alt="image-20220702162248677" style="zoom:50%;" />
-
-<h3 id="MC-v-s-TD"><a href="#MC-v-s-TD" class="headerlink" title="MC v.s. TD"></a>MC v.s. TD</h3><img src="https://s2.loli.net/2022/07/03/SrMDN6TPgmFfh7v.png" alt="image-20220702162905728" style="zoom:50%;" />
-
-
-
-<h2 id="Version-3-5"><a href="#Version-3-5" class="headerlink" title="Version 3.5"></a>Version 3.5</h2><p>把 baseline 设成 $V^θ(S)$。把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; G’_t-V^θ(s_t)<br>$$<br>为什么这样可以？我们知道 $ V^θ(s_t)$是看到某一个画面 $s_t$ 以后，接下来会得到的 (加权) Reward。它其实是一个期望，因为有随机性，即每次的 $a_t$ 可能不同，故每次可能会得到不一样的 Reward。</p>
-<img src="https://s2.loli.net/2022/07/02/krBqTm6nCYiFKMG.png" alt="image-20220702163444448" style="zoom:50%;" />
-
-<p>图中 Gt’ 是 sample 某一个 trajectory 的结果，而$ V^θ(s_t)$ 是很多条路径平均以后的结果。</p>
-<p>问题在于：把一个 sample 去减掉平均，这样会准吗？也许这个sample 特别好或特别坏。为什麽不是拿平均去减掉平均？</p>
-<h2 id="Version-4"><a href="#Version-4" class="headerlink" title="Version 4"></a>Version 4</h2><p>最后一个版本：平均去减掉平均。这就是 &#x3D;&#x3D;Advantage Actor-Critic&#x3D;&#x3D;。</p>
-<p>把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; r_t+V^θ(s_{t+1})-V^θ(s_t)<br>$$<br><img src="https://s2.loli.net/2022/07/03/M72tBQOvFV5lpsX.png" alt="image-20220702163949638" style="zoom:50%;" /></p>
-<h2 id="Tip-of-Actor-Critic"><a href="#Tip-of-Actor-Critic" class="headerlink" title="Tip of Actor-Critic"></a>Tip of Actor-Critic</h2><p>Actor 和 Critic 都是 Network，他们的输入可以公用 CNN。</p>
-<h2 id="Sparse-Reward"><a href="#Sparse-Reward" class="headerlink" title="Sparse Reward"></a>Sparse Reward</h2><p>Sparse Reward：$r_t$ &#x3D; 0 in most cases。例如拧螺丝。</p>
-<p>解决办法：reward shaping。</p>
-<h2 id="Imitation-Learning"><a href="#Imitation-Learning" class="headerlink" title="Imitation Learning"></a>Imitation Learning</h2><p>Actor 可以与环境互动，但 reward function 不知道怎么定义。</p>
-<p>解决办法：根据专家的演示 ${\hat{\tau_1}, \hat{\tau_2}, …}$ 进行模仿学习。</p>
-<p>例子：自动驾驶，机械臂抓举。</p>
-<p>问题：专家们只对有限的观察进行抽样。</p>
-<h2 id="Inverse-Reinforcement-Learning"><a href="#Inverse-Reinforcement-Learning" class="headerlink" title="Inverse Reinforcement Learning"></a>Inverse Reinforcement Learning</h2><p>使用 reward function 找到最佳 actor。</p>
-<p>原则：The teacher is always the best。</p>
-<p>方法论：</p>
-<img src="https://s2.loli.net/2022/07/02/YR12xlTz8PwE7sG.png" alt="image-20220702164853222" style="zoom:50%;" />
-
-<img src="https://s2.loli.net/2022/07/02/FDgLe1CdnYfmhoU.png" alt="image-20220702165029388" style="zoom:50%;" />
-
-<p>和 GAN 的类比理解</p>
-<p>GAN 中 Generator 的优化目标是产生跟 Ground Truth 的很像的结果，IRL 中 Actor 的优化目标是产生跟 Expert 的很像的结果。</p>
-<p>GAN 中 Discriminator 的优化目标是产生分辨 Ground Truth 和 Generator 的输出值，给 Ground Truth 打高分，IRL 中 Reward 则是给 Expert 打高分。</p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 2401 words, 8 min 0 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-pattern-recognition-courses/">[ml][rv] pattern recognition</a></h3></div><div class="post-content"><div class="card"><p><h3 id="1-总览"><a href="#1-总览" class="headerlink" title="1. 总览"></a>1. 总览</h3><img src="https://s2.loli.net/2022/06/25/NcpDeYXjQLCB7wb.png" alt="image-20220625120156682" style="zoom: 67%;" />
-
-<p><strong>考核形式</strong></p>
-<p>主要考对概念的一些理解，例如说偏置方差分解和过拟合欠拟合之间的关系</p>
-<p>计算有但不是太多</p>
-<p>在理解的基础上对算法进行记忆，比如 PCA &amp; LDA，他们的目标函数优化这些都是要知道的</p>
-<h3 id="2-提取特征"><a href="#2-提取特征" class="headerlink" title="2. 提取特征"></a>2. 提取特征</h3><blockquote>
-<p>提取特征：Normalization(Chap. 9), PCA(Chap. 5), FLD(Chap. 6), Sparse(Chap. 11), …<br>PCA 无监督，FLD 有监督地利用标签去提取特征的方法<br>Sparse 没有详细地去讲</p>
-</blockquote>
-<h4 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h4><img src="https://s2.loli.net/2022/06/25/Vu6rQ4LS8Rylxvb.png" alt="image-20220625122340062" style="zoom: 67%;" />
-
-<img src="https://s2.loli.net/2022/06/25/OfLYdTHaN3JwQX8.png" alt="image-20220625122352658" style="zoom:67%;" />
-
-<p>可以把范围从 [0, 1] 拉伸至任意范围。</p>
-<p>如果某一维度的最大值等于最小值，这个维度的数据可以丢掉。</p>
-<p>如果 0 值在原始数据中代表 “空”，那么应该把它规范成0。</p>
-<p>如果测试样例的数据范围大于 0 或 大于 1，有时候算法必须要求 [0, 1]，那么可以把小于 0 的值设为 0，大于 1 同理，如果算法不要求其实也可以这么做。</p>
-<p>如果能看出某维数据符合高斯分布，那么也可以化为标准高斯分布：</p>
-<img src="https://s2.loli.net/2022/06/25/5P1Z49mjxLMqrBH.png" alt="image-20220625122726742" style="zoom: 67%;" />
-
-<p>L-1 规范化：如果值非负，规范化后样例各维之和为 1</p>
-<img src="https://s2.loli.net/2022/06/25/cNhxoSBs9TGaEyZ.png" alt="image-20220625122931565" style="zoom:67%;" />
-
-<p>L-2 规范化：把数据规范化为单位向量</p>
-<img src="https://s2.loli.net/2022/06/25/G9Fc2trETn1ZvoU.png" alt="image-20220625122925127" style="zoom:67%;" />
-
-<h4 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h4><p>首先要会做 SVD 分解。</p>
-<img src="https://s2.loli.net/2022/06/25/Hn4AO2M1Ze8hL9v.png" alt="image-20220625155915036" style="zoom: 67%;" />
-
-<p><img src="https://s2.loli.net/2022/06/25/3rj7boJ9OiTKktw.png" alt="image-20220625155923920"></p>
-<h4 id="FLD"><a href="#FLD" class="headerlink" title="FLD"></a>FLD</h4><p>思想：把数据点进行投影，使得不同类别之间的数据距离尽可能大。</p>
-<p> <img src="https://s2.loli.net/2022/06/25/oudrltBzY3psvSE.png" alt="image-20220625160821944" style="zoom: 50%;" />     <img src="https://s2.loli.net/2022/06/25/v5VHwi7oY9ELePM.png" alt="image-20220625162319955" style="zoom: 50%;" /></p>
-<p>可分性的绝对要素：两个均值之间的距离 + 两个标准差。要实现分类，就需要最大化这二者的比例。</p>
-<p>注：PCA 和 FLD 中的 X 的尺寸都是 (dim x 1) 。因而，$$a^Ta$$ 的结果是一个值，$$aa^T$$ 的结果是一个矩阵。</p>
-<p>二分类的 FLD：</p>
-<img src="https://s2.loli.net/2022/06/25/1UghbLr4SEZizaY.png" alt="image-20220625165356810" style="zoom: 50%;" />
-
-<p>$$w$$：投影方向</p>
-<p>$$m_i$$ ：集合 i 的均值</p>
-<p>$$C_i$$ ：集合 i 的协方差矩阵</p>
-<p>$$<br>C_i &#x3D; \frac{1}{N_i} \sum_{x \in X_i} (x-m_i)(x-m_i)^T<br>$$</p>
-<p>传统 FLD 用散度矩阵而不是用协方差矩阵，散度矩阵 $$S_i &#x3D; N_iC_i$$</p>
-<p>类间散度矩阵 &amp; 类内散度矩阵：</p>
-<p>$$<br>S_B&#x3D;(m_1-m_2)(m_1-m_2)^T \<br>S_W &#x3D; S_1+S_2<br>$$</p>
-<p>目标函数（第一行的 m 是投影后的均值，第二行的 m 是向量）：</p>
-<p>$$<br>J &#x3D; \frac{(m_1-m_2)^2}{\sigma_1^2+\sigma_2^2} \<br>&#x3D; \frac{(m_1^T w-m_2^Tw) ^ 2}{\sigma_1^2+\sigma_2^2} \<br>&#x3D; \frac{w^T(m_1-m_2)(m_1-m_2)^Tw}{w^T(C_1+C_2)w} \<br>&#x3D; \frac{w^TS_Bw}{w^TS_Ww} \<br>$$</p>
-<p>如果一个均值向量扮演了所属类别的所有样本的代理，那么就可以用均值向量集合的散度矩阵代替 $$S_B$$</p>
-<p>$$<br>\sum^{2}_{i&#x3D;1}(m_i - \overline{m})(m_i - \overline{m}) ^T \<br>\overline{m} &#x3D; \frac{m_1+m_2}{2}<br>$$</p>
-<p>之后就可以计算以及规范化了。</p>
-<p>考虑至多类别呢？</p>
-<p>类内散度矩阵 </p>
-<p>$$<br>S_W &#x3D; \sum ^{K}<em>{k&#x3D;1} S_k &#x3D; \sum ^{K}</em>{k&#x3D;1}N_kC_k &#x3D; \sum ^{K}<em>{k&#x3D;1} \sum</em>{x \ in X_k}(x-m_i)(x-m_i)^T<br>$$</p>
-<p>总散度矩阵</p>
-<p>$$<br>S_T &#x3D; \sum ^{N}<em>{i&#x3D;1}(x_i-m)(x_i-m)^T \<br>m &#x3D; \frac{1}{N} \sum^{N}</em>{i&#x3D;1}x_i<br>$$</p>
-<p>类间散度矩阵</p>
-<p>$$<br>S_B &#x3D;\sum ^{K}_{k&#x3D;1}N_k(m_k-m)(m_k-m)^T<br>$$</p>
-<p>规律：总散度矩阵 &#x3D;  类内散度矩阵 + 类间散度矩阵。</p>
-<p>多分类问题中，类间散度矩阵不再是秩为 1 的矩阵，算法 6.1 不可用，故求解如下广义特征值问题来找最佳投影方向：</p>
-<p>$$<br>S_B w &#x3D; \lambda S_W w<br>$$</p>
-<p>当 $S_W$ 可逆，广义特征值问题等价于：</p>
-<p>$$<br>S_W ^ {-1} S_B w &#x3D; \lambda  w<br>$$</p>
-<p>那么如何找更多投影方向（降低更多维度）呢？类似 PCA，只要使用与前 K-1 个最大广义特征值对应的广义特征向量即可</p>
-<h4 id="Sparse"><a href="#Sparse" class="headerlink" title="Sparse"></a>Sparse</h4><p>含义：最小化 $$l_0$$$ norm（向量 x 的非零元素个数）</p>
-<p>$$<br>minimize\  ||x||_0 \<br>subject\ to\ Ax&#x3D;y<br>$$</p>
-<h3 id="3-分类器"><a href="#3-分类器" class="headerlink" title="3. 分类器"></a>3. 分类器</h3><blockquote>
-<p>分类器：kNN, SVM, Decision Tree, Ensemble, Regression, NN, CNN<br>kNN, SVM 前两个重要，后面都是简单提一下<br>CNN 也可以看作是个特征提取的方法</p>
-</blockquote>
-<h4 id="kNN（机器学习）"><a href="#kNN（机器学习）" class="headerlink" title="kNN（机器学习）"></a>kNN（机器学习）</h4><p>理解且会用</p>
-<p>缺陷以及解决办法</p>
-<ol>
-<li><p>出现平局：可以给不同的样本施加不同的权重，加强依赖样本的权重，降低不可信赖样本的影响。</p>
-</li>
-<li><p>离群点</p>
-</li>
-</ol>
-<p>复杂度 O(nd) [d是计算距离的代价]</p>
-<h4 id="SVM（机器学习）"><a href="#SVM（机器学习）" class="headerlink" title="SVM（机器学习）"></a>SVM（机器学习）</h4><h4 id="Decision-Tree-Regression（机器学习）"><a href="#Decision-Tree-Regression（机器学习）" class="headerlink" title="Decision Tree + Regression（机器学习）"></a>Decision Tree + Regression（机器学习）</h4><h4 id="Ensemble"><a href="#Ensemble" class="headerlink" title="Ensemble"></a>Ensemble</h4><h4 id="NN"><a href="#NN" class="headerlink" title="NN"></a>NN</h4><h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><h3 id="4-概率模型"><a href="#4-概率模型" class="headerlink" title="4. 概率模型"></a>4. 概率模型</h3><blockquote>
-<p>概率模型 (Chap. 8)：参数估计，非参，HMM，GMM<br>参数估计：点估计，贝叶斯估计，HMM<br>非参数估计：KDE<br>要知道 HMM 的隐马尔可夫性质 + 要知道 GMM 的概念</p>
-</blockquote>
-<p>概率模型：计算变量的概率或者概率分布的模型。</p>
-<p>参数估计：假设 PDF 服从某种函数形式，当指定其所有参数值之后，PDF 就完全确定，估计 PDF 就是估计参数。</p>
-<p>非参数估计：非参数不代表无参数（允许无限），用训练数据直接估计空间中任意点的密度 p(x|D)。</p>
-<p>生成模型：估计 p(x|y&#x3D;i) 和 p(y&#x3D;i)，根据贝叶斯定理求 p(y&#x3D;i|x)</p>
-<p>判别模型：直接估计 p(y&#x3D;i|x)</p>
-<p>这些模型都有两个步骤：推理和决策，分别是估计各种密度函数，根据估计得到的PDF对任意的？给出输出。</p>
-<h4 id="点估计（参）"><a href="#点估计（参）" class="headerlink" title="点估计（参）"></a>点估计（参）</h4><p>点估计（point estimation）是用样本统计量来估计总体参数，典型的如 MLE 和 MAP，把 $$\theta$$ 视作固定参数，目的是找这个最佳参数。</p>
-<p>p(D|theta) 不是 PDF，但 p(x|theta) 是。</p>
-<p>likelihood function of MLE：</p>
-<p>$$<br>l(\theta) &#x3D; p(D|\theta) &#x3D; \prod_{i}p(x_i|\theta)<br>$$</p>
-<p>高斯分布的最大似然估计，可以通过对 $ll(\theta)$ 求偏微分得到结果：</p>
-<p>$$<br>\mu &#x3D; \frac{1}{n} \sum^{n}<em>{i&#x3D;1}x_i \<br>\sigma^2 &#x3D; \frac{1}{n} \sum^{n}</em>{i&#x3D;1}(x_i-\mu)(x_i-\mu)^T<br>$$</p>
-<p>最大后验估计（MAP）：把参数 theta 自身的取值可能性考虑进来。如果一无所知就等价于 MLE。</p>
-<p>$$<br>\theta &#x3D; argmax_{\theta} l(\theta)p(\theta)<br>$$</p>
-<p>渐进性质（asymptotic property），如一致性（consistency）：随样本容量增大收敛到参数真值的估计量</p>
-<p>其他性质，无偏估计（unbiased estimate）：指估计量的期望和被估计量的真值相等</p>
-<p>完成 inference 后，如何决策？根据参数得到后验概率 p(y|x;theta) 得出结果，在 0-1 风险时，选择概率大的就行。</p>
-<img src="https://s2.loli.net/2022/06/29/rTozyVmcjG6n1RC.png" alt="image-20220625193547900" style="zoom: 33%;" />
-
-<h4 id="贝叶斯估计（参）"><a href="#贝叶斯估计（参）" class="headerlink" title="贝叶斯估计（参）"></a>贝叶斯估计（参）</h4><p>点估计是把 $\theta$ 看成固定参数，而贝叶斯估计 p(theta|D) 是估计一个 $$\theta$$ 的分布，而不是一个值（点）！</p>
-<p>高斯分布参数的贝叶斯估计：设参数 theta 的先验分布 p(theta)，数据 X &#x3D; {x1, … , xn}，估计 p(theta|D)。这里假设单变量，只估计 p(theta|D) 的高斯分布的均值 mu，方差 sigma^2 已知：</p>
-<ol>
-<li><p>根据已知的先验高斯分布 P(theta) &#x3D; N(mu0, sigma0^2)</p>
-</li>
-<li><p>根据贝叶斯定理和独立性，可以得 p(theta|D) &#x3D;</p>
-</li>
-</ol>
-<img src="https://s2.loli.net/2022/06/25/9nU37YI5kqDdj8A.png" alt="image-20220625191741658" style="zoom:50%;" />
-
-<p>估计均值 &amp; 方差为：</p>
-<img src="https://s2.loli.net/2022/06/29/mwhWvl2gLouRy8a.png" alt="image-20220625192656515" style="zoom:50%;" />
-
-<p>共轭先验conjugate prior：若 p(x|theta) ，存在先验 p(theta)，使得 p(x|theta) 和 p(theta) 有相同的函数形式，从而简化推导和计算。如高斯分布的共轭先验分布仍然是高斯分布。</p>
-<p>完成 inference 后，如何决策？输出一个分布，结果通常根据期望决定。</p>
-<h4 id="KDE（非参）"><a href="#KDE（非参）" class="headerlink" title="KDE（非参）"></a>KDE（非参）</h4><p>常用的参数形式基本都是单模的，不足以描述复杂的数据分布。因此应该直接以训练数据自身来估计分布。</p>
-<p>例：直方图。每维 n 个bin，那么 n 维应该保存多少个bin的参数？$$n^d$$。太大了，且不光滑！</p>
-<p>给定一组提取于未知分布 p(x) 的数据 $x_1,x_2,…,x_n$ ，任一点 x 处的核密度估计定义为：</p>
-<p>$$<br>\hat{p}(x) &#x3D; \frac{1}{nh} \sum^{n}_{i&#x3D;1}K(\frac{x-x_i}{h})<br>$$</p>
-<p>$$<br>K(x) \ge0, \int K(x)dx&#x3D;1<br>$$</p>
-<p>KDE 核函数与 SVM 的不同：在概率估计中被用于估计目标点周围的概率密度。而在SVM中，被用于计算两点间的核空间距离。</p>
-<img src="https://s2.loli.net/2022/06/25/OzKfk6DU5dah1Ng.png" alt="image-20220625193832796" style="zoom: 33%;" />
-
-<p>连续的。</p>
-<p>窗宽确定：使得估计的积分均方误差 (mean integral square error,MISE) 达到最小，如下式</p>
-<p>$$<br>MISE{\hat{p}<em>h(x)}&#x3D;E[\int^{\inf}</em>{-\inf}{\hat{p}_h(x)-p(x)}dx]<br>$$</p>
-<h4 id="HMM（机器学习）"><a href="#HMM（机器学习）" class="headerlink" title="HMM（机器学习）"></a>HMM（机器学习）</h4><p><strong>隐马尔可夫性质</strong></p>
-<p>$$P(X_t|X_{1:t-1})&#x3D;P(X_t|X_{t-1})$$ ，无记忆性，当前状态的只跟上一个状态有关系。</p>
-<p><strong>随机过程（stochastic process）</strong></p>
-<p>$${X(t), t\in T}$$ 是一系列随机变量的集合，用于描述一些过程的时间进化，目的是希望过去对现在有帮助。也就是说，对于每个 $$t \in T$$, $$X(t)$$ 是一个随机变量。索引 t 通常被解释为时间，因此把 $$X(t)$$ 作为 t 时流程的状态。</p>
-<p>B：emission probability 发出观察值的概率。$$b_j(k)&#x3D;Pr(O_t&#x3D;V_k|Q_t&#x3D;S_j)$$。当未知状态为 $$S_j$$ 时观察到为 $$V_k$$ 的概率。</p>
-<p><strong>Problem 1. Evaluation</strong></p>
-<p>概念：给定已知 $$\lambda &#x3D; (A,B,\pi)$$ 的 HMM 模型，以及一个完整的输出序列 $$o&#x3D;o_{1:T}$$，求该模型观察到该输出序列的概率 $$P(O|\lambda)$$。</p>
-<p>作用：看出此模型对该观察序列的成绩，从而在多个模型中选择最适合的模型。</p>
-<p>算法</p>
-<ol>
-<li>Naive</li>
-</ol>
-<p>假设隐状态序列 $q_{1:T}$ 已知：</p>
-<p>$$<br>Pr(o_{1:T}|\lambda, q_{ 1:T}) &#x3D; \prod^{T}<em>{t&#x3D;1}Pr(o_t|q_t, \lambda) &#x3D; \prod^{T}</em>{t&#x3D;1}b_{q_i}(o_i)<br>$$</p>
-<p>则必有</p>
-<p>$$<br>Pr(o_{1:T}|\lambda) &#x3D; Pr(o_{1:T}, q_{1:T}|\lambda) &#x3D;\sum_{all\ Q}Pr(o_{1:T}|\lambda, q_{ 1:T})Pr(q_{1:T}|\lambda)<br>$$</p>
-<p>时间复杂度 $$O(TN^T)$$</p>
-<ol start="2">
-<li>对 Naive 的观察与优化——提取 $$b_i(o_i)$$</li>
-</ol>
-<p>$$<br>Pr(o_{1:T}|\lambda)&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T},Q_T&#x3D;S_i|\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)Pr(O_T&#x3D;V_k|Q_T&#x3D;S_i,\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)b_i(o_T)<br>$$</p>
-<ol start="3">
-<li>对 Naive 的观察与优化——提取 $$A_{ji}$$</li>
-</ol>
-<p>$$<br>Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda) &#x3D; \sum_{j&#x3D;1}^{N}Pr(o_{1:T-1},Q_{T-1}&#x3D;S_j|\lambda)A_{ji}<br>$$</p>
-<p>根据 2. 和 3. 的提取优化，可得</p>
-<p>$$<br>Pr(o_{1:T}|\lambda)&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T},Q_T&#x3D;S_i|\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)b_i(o_T)\<br>&#x3D;\sum_{i&#x3D;1}^{N}(b_i(o_T)\sum_{j&#x3D;1}^{N}Pr(o_{1:T-1},Q_{T-1}&#x3D;S_j|\lambda)A_{ji}) \<br>$$</p>
-<ol start="4">
-<li>前向算法 forward</li>
-</ol>
-<p>定义 $$\alpha_{t}(i)&#x3D;Pr(o_{1:t},Q_t&#x3D;S_i|\lambda)$$。含义：对于已知参数 $$\lambda$$ 的模型，获得观测序列 $$o_{1:T}$$ 且 t 时刻隐状态为 $$S_i$$ 的概率。</p>
-<p>初始化：$$\alpha_1(i)&#x3D;Pr(o_{1},Q_1&#x3D;S_i|\lambda) &#x3D; Pr(Q_1&#x3D;S_i|\lambda)Pr(o_{1}|Q_1&#x3D;S_i,\lambda) &#x3D; Pr(Q_1&#x3D;S_i|\lambda)b_i(o_1)$$</p>
-<p>前向递推：</p>
-<p>$$<br>\alpha_{t+1}(i)&#x3D;[\sum^{N}<em>{j&#x3D;1} Pr(o</em>{1:t},Q_t&#x3D;S_j|\lambda)A_{ji}]b_i(o_{t+1})\<br>&#x3D;[\sum^{N}<em>{j&#x3D;1} a</em>{t}(j)A_{ji}]b_i(o_{t+1})<br>$$</p>
-<p>结果：$$Pr(o_{1:T}|\lambda)&#x3D;\sum^{N}<em>{i&#x3D;1}Pr(o</em>{1:T},Q_T&#x3D;S_i|\lambda)&#x3D;\sum^{N}_{i&#x3D;1} \alpha_T(i) $$</p>
-<p>复杂度：$$O(TN^2)$$</p>
-<p>⑤ 后向算法 backward</p>
-<p>定义 $$\beta_t(i) &#x3D; Pr(o_{t+1:T}|Q_t&#x3D;S_i, \lambda)$$。含义：对于已知参数 $$\lambda$$ 的模型，已知 t 时刻状态为 $$S_i$$，未来观测到 $$o_{t+1:T}$$ 的概率。</p>
-<p>初始化：$$\beta_T(i) &#x3D; 1$$。</p>
-<p>反向更新：</p>
-<p>$$<br>\beta_t(i) &#x3D; \sum^{N}<em>{j&#x3D;1}A</em>{ij}b_j(o_{t+1})\beta_{t+1}(j)<br>$$</p>
-<p>输出：$$Pr(o_{1:T}|\lambda)&#x3D;\sum^{N}<em>{i&#x3D;1}\pi</em>{i}b_i(o_{1})\beta_{1}(i)$$</p>
-<p><strong>Problem 2：Decoding</strong></p>
-<p>概念：给定已知 $$\lambda &#x3D; (A,B,\pi)$$ 的 HMM 模型，以及一个完整的输出序列 $$o&#x3D;o_{1:T}$$，求一个完全指定的隐变量序列 $$q_{1:T}$$ 的值。</p>
-<p>作用：语音识别中状态可能有实际意义（各音节），可以用来观察模型结构，优化模型。</p>
-<p>算法：</p>
-<img src="https://s2.loli.net/2022/06/29/LWcKyRP9Zk8xB4Y.png" alt="image-20220629185728038" style="zoom: 50%;" />
-
-<p><strong>Problem 3：Learning</strong></p>
-<p>概念：发现 $$\lambda &#x3D; (A,B,\pi)$$，使得对于固定的 N，T，和观察值 O，似然概率 $$P(O|\lambda)$$ 最大。</p>
-<p>作用：最重要的问题</p>
-<p>目前无法发现全局最优解，常用 Baum-Welch 算法。</p>
-<h3 id="5-优化方法"><a href="#5-优化方法" class="headerlink" title="5. 优化方法"></a>5. 优化方法</h3><blockquote>
-<p>优化方法：极值条件，对偶，KKT，GD，SGD，EM，<br>要知道凸优化和非凸优化，要知道凸优化的话，极值就是最优点，那么找最优点就是导数等于0<br>要直到 SVM 里面的对偶问题，SVM 没有显式最优解，因此可以用 GD，Regression 有显式最优解<br>在神经网络里面一般用 SGD，SGD 要有一个概念，为什么我们要用 SGD 和 GD？要知道二者区别，还得知道 SGD 优点<br>要对概率模型的参数进行估计的话，可以考虑用 EM 进行参数估计，比如 HMM</p>
-</blockquote>
-<p>凸优化定义：</p>
-<p>$$<br>minimize \ f_0(x)  \<br>subject \ to \ f_i(x)&lt;&#x3D;b_i,\ \ i&#x3D;1,…,m<br>$$</p>
-<p>其中，目标函数和约束函数都是凸函数，即</p>
-<p>$$<br>f_i(\alpha x+\beta y) &lt;&#x3D; \alpha f_i(x) + \beta f_i(y) \<br>\alpha + \beta &#x3D; 1,\  \alpha &gt;&#x3D;0, \ \beta&gt;&#x3D;0<br>$$</p>
-<h4 id="SVM-中的对偶-amp-KKT（机器学习）"><a href="#SVM-中的对偶-amp-KKT（机器学习）" class="headerlink" title="[SVM 中的对偶 &amp; KKT（机器学习）"></a>[SVM 中的对偶 &amp; KKT（机器学习）</h4><h4 id="GD-amp-SGD"><a href="#GD-amp-SGD" class="headerlink" title="GD &amp; SGD"></a>GD &amp; SGD</h4><p>随机梯度下降每次只用一个样本，对于最优化凸问题，虽然不是每次迭代得到的损失函数都向着全局最优方向， 但是大的整体的方向是向全局最优解的，最终的结果往往是在全局最优解附近。但是相比于批量梯度，这样的方法更快，更快收敛。</p>
-<p>批量梯度下降每次更新时用所有样本。对于最优化凸问题，可以达到一个全局最优。如果样本不多的情况下，当然是这样收敛的速度会更快。但是很多时候，样本很多，更新一次要很久。</p>
-<h4 id="EM-amp-GMM（机器学习）"><a href="#EM-amp-GMM（机器学习）" class="headerlink" title="EM &amp; GMM（机器学习）"></a>EM &amp; GMM（机器学习）</h4><p>浙大</p>
-<h3 id="6-距离度量"><a href="#6-距离度量" class="headerlink" title="6. 距离度量"></a>6. 距离度量</h3><blockquote>
-<p>（样本之间的）距离度量：l-p 范数, DTW, …<br>要知道如何度量两个不同时间序列的样本之间的距离<br>DTW 动态时间规整</p>
-</blockquote>
-<p>$$l_0$$ 范数：向量 x 的非零元素的个数</p>
-<img src="https://s2.loli.net/2022/06/29/QEPADFUZL5hbsfv.png" alt="image-20220625200150788" style="zoom:50%;" />
-
-<p>DTW（Dynamic Time Warping）：动态时间规整</p>
-<p>性质：1. 匹配是顺序的 2. 每个 $$x_i$$ 或 $$y_i$$ 都要有对应的匹配 3. 一个 $$x_i$$ 可以和多个 $$y_j$$ 匹配，反之亦然</p>
-<img src="https://s2.loli.net/2022/06/29/UdA6mkPbKY1phcR.png" alt="image-20220625202602917" style="zoom:50%;" />
-
-<p>递推公式：</p>
-<img src="https://s2.loli.net/2022/06/29/OeASiJYFf952cZh.png" alt="image-20220625202654161" style="zoom:50%;" />
-
-<h4 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h4><p>单变量</p>
-<p>$$<br>H&#x3D;-\sum^{m}_{i&#x3D;1}p_ilog_2p_i<br>$$</p>
-<p>$$<br>h&#x3D;-\int p(x)ln(p(x))dx<br>$$</p>
-<p>双变量</p>
-<p>$$<br>H(x,y)&#x3D;-\sum_{x}\sum_{y}P(x,y)log_2P(x,y)<br>$$</p>
-<p>$$<br>h&#x3D;-\int p(x,y)ln(p(x,y))dxdy<br>$$</p>
-<p>$$<br>H(X|Y) &#x3D; \sum_{y}P(y)H(X|Y&#x3D;y) &#x3D;<br>-\sum_{y}P(y)\sum_{x}P(X&#x3D;x|Y&#x3D;y)log_2P(X&#x3D;x|Y&#x3D;y) \<br>&#x3D; -\sum_{x,y}P(x,y)log_2 \frac{P(x,y)}{p(y)}<br>$$</p>
-<p>$$<br>h(x,y) &#x3D; -\int p(x,y)ln\frac{p(x,y)}{p(y)}dxdy<br>$$</p>
-<p>熵之间的关系</p>
-<p>H(X,Y)&#x3D;H(X)+H(Y|X)&#x3D;H(Y)+H(X|Y)</p>
-<p>H(X|Y)&lt;H(X)</p>
-<p>H(Y|X)&lt;H(Y)</p>
-<p>互信息</p>
-<p>$$<br>I(X;Y)&#x3D;H(X)-H(X|Y) &#x3D; \sum_{x,y}P(x,y)log_2 \frac{P(x,y)}{P(x)P(y)}<br>$$</p>
-<p>KL 散度</p>
-<p>$$<br>KL(P||Q)&#x3D;\sum_{i} P_ilog_2\frac{P_i}{Q_i}<br>$$</p>
-<p>$$KL(P||Q) \ge 0$$，等号成立条件：$$P_i&#x3D;Q_i$$。不对称。</p>
-<p>交叉熵</p>
-<p>$$<br>CE(P,Q)&#x3D;-\sum_{i}P_ilog_2Q_i \<br>CE(P,Q)&#x3D;H(p)+KL(P||Q)&#x3D;-\sum_{i}P_ilog_2P_i+\sum_{i} P_ilog_2\frac{P_i}{Q_i}<br>$$</p>
-<h3 id="7-损失函数"><a href="#7-损失函数" class="headerlink" title="7. 损失函数"></a>7. 损失函数</h3><blockquote>
-<p>损失函数：square, hinge, exponential, logistic, cross entropy, …<br>线性回归：square<br>SVM：hinge<br>Adaboost：exp<br>逻辑回归：logistic<br>神经网络：cross entropy</p>
-</blockquote>
-<h4 id="Square（机器学习）"><a href="#Square（机器学习）" class="headerlink" title="Square（机器学习）"></a>Square（机器学习）</h4><p>形式：</p>
-<p>$$<br>L(f,y)&#x3D;(f-y)^2<br>$$</p>
-<p>线性回归中的 Square：</p>
-<p>$$<br>L&#x3D;\sum^{N}_{i&#x3D;1}(y_i-\theta^Tx_i)<br>$$</p>
-<h4 id="Hinge"><a href="#Hinge" class="headerlink" title="Hinge"></a>Hinge</h4><p>译为铰链损失。</p>
-<p>形式：</p>
-<p>$$<br>L(y,f(x)) &#x3D; max(0,1-yf(x)),<br>$$</p>
-<p>SVM 中的 Hinge：</p>
-<p>$$<br>L &#x3D; \frac{1}{2C}||w||^2+\sum^{N}_{i&#x3D;1}max(0, 1-y_i(\theta^Tx_i+b))<br>$$</p>
-<h4 id="Exp"><a href="#Exp" class="headerlink" title="Exp"></a>Exp</h4><p>译为指数损失。</p>
-<p>形式：</p>
-<p>$$<br>L(y, f(x)) &#x3D; exp[-yf(x)]<br>$$</p>
-<p>Adaboost 中的 Exp：</p>
-<p>$$<br>L(y, f(x)) &#x3D; \frac{1}{n} \sum^{n}_{i&#x3D;1} exp[-y_if(x_i)]<br>$$</p>
-<h4 id="Logistic（机器学习）"><a href="#Logistic（机器学习）" class="headerlink" title="Logistic（机器学习）"></a>Logistic（机器学习）</h4><p>形式：</p>
-<p>$$<br>L(y,f(x))&#x3D;\sum_{l}y^l ln P(y^l&#x3D;1|x^l,w)+(1-y^l)ln P(y^l&#x3D;0|x^l,w) \<br>&#x3D;\sum_{l}y^l(w_0+\sum^{n}<em>{i&#x3D;1}w_ix_i^l)-ln(1+exp(w_0+\sum^{n}</em>{i&#x3D;1}w_ix_i^l))<br>$$</p>
-<h4 id="Cross-entropy"><a href="#Cross-entropy" class="headerlink" title="Cross entropy"></a>Cross entropy</h4><p>形式：</p>
-<p>$$<br>L(y,f(x)) &#x3D; -\sum^{n}_{i&#x3D;1}y_i logf(x_i)<br>$$</p>
-<h3 id="8-评价准则"><a href="#8-评价准则" class="headerlink" title="8. 评价准则"></a>8. 评价准则</h3><blockquote>
-<p>评价准则：Acc, ROC, AP, Recall (TPR, true position rate), Precision, Bayes error, Bias-variance<br>概念掌握<br>Bayes error：取一个后验概率最大的去作为模型预测的输出<br>Bias-variance：把模型的误差做一个偏执方差分解，需要直到模型的偏置和方差，以及是由什么决定的</p>
-</blockquote>
-<p>PPT 3-4</p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 4526 words, 15 min 5 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-machine-learning-courses/">[ml][rv] sysu-courses</a></h3></div><div class="post-content"><div class="card"><p><h4 id="1-线性回归-逻辑回归"><a href="#1-线性回归-逻辑回归" class="headerlink" title="1. 线性回归 + 逻辑回归"></a>1. 线性回归 + 逻辑回归</h4><blockquote>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 75 words, 15 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-machine-learning-courses/">[ml][rv] sysu-courses</a></h3></div><div class="post-content"><div class="card"><p><h4 id="1-线性回归-逻辑回归"><a href="#1-线性回归-逻辑回归" class="headerlink" title="1. 线性回归 + 逻辑回归"></a>1. 线性回归 + 逻辑回归</h4><blockquote>
 <p>TIPS：什么是线性回归逻辑回归，损失函数有可能带正则项，为什么要加正则项因为要防止过拟合，损失函数要怎么定义，梯度下降好处有什么坏处有什么，最优参数表达式怎么写的</p>
 </blockquote>
 <p><strong>损失函数</strong></p>
@@ -794,7 +446,355 @@
 <p><strong>数据稀疏的问题</strong></p>
 <img src="https://s2.loli.net/2022/06/25/unjKe5YSromxyRG.png" alt="image-20220622190602455" style="zoom:50%;" />
 
-<img src="https://s2.loli.net/2022/06/25/8TADf4nGsN1Vemo.png" alt="image-20220622190618711" style="zoom:50%;" /></p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 3836 words, 12 min 47 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-domain-adaptation/">[ml][rv] domain adaptation</a></h3></div><div class="post-content"><div class="card"><p><h1 id="27-Domain-Adaptation"><a href="#27-Domain-Adaptation" class="headerlink" title="27 Domain Adaptation"></a>27 Domain Adaptation</h1><p>训练资料跟测试资料的分布是不一样的，叫做 &#x3D;&#x3D;Domain Shift&#x3D;&#x3D;。</p>
+<img src="https://s2.loli.net/2022/06/25/8TADf4nGsN1Vemo.png" alt="image-20220622190618711" style="zoom:50%;" /></p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 3836 words, 12 min 47 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-pattern-recognition-courses/">[ml][rv] pattern recognition</a></h3></div><div class="post-content"><div class="card"><p><h3 id="1-总览"><a href="#1-总览" class="headerlink" title="1. 总览"></a>1. 总览</h3><img src="https://s2.loli.net/2022/06/25/NcpDeYXjQLCB7wb.png" alt="image-20220625120156682" style="zoom: 67%;" />
+
+<p><strong>考核形式</strong></p>
+<p>主要考对概念的一些理解，例如说偏置方差分解和过拟合欠拟合之间的关系</p>
+<p>计算有但不是太多</p>
+<p>在理解的基础上对算法进行记忆，比如 PCA &amp; LDA，他们的目标函数优化这些都是要知道的</p>
+<h3 id="2-提取特征"><a href="#2-提取特征" class="headerlink" title="2. 提取特征"></a>2. 提取特征</h3><blockquote>
+<p>提取特征：Normalization(Chap. 9), PCA(Chap. 5), FLD(Chap. 6), Sparse(Chap. 11), …<br>PCA 无监督，FLD 有监督地利用标签去提取特征的方法<br>Sparse 没有详细地去讲</p>
+</blockquote>
+<h4 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h4><img src="https://s2.loli.net/2022/06/25/Vu6rQ4LS8Rylxvb.png" alt="image-20220625122340062" style="zoom: 67%;" />
+
+<img src="https://s2.loli.net/2022/06/25/OfLYdTHaN3JwQX8.png" alt="image-20220625122352658" style="zoom:67%;" />
+
+<p>可以把范围从 [0, 1] 拉伸至任意范围。</p>
+<p>如果某一维度的最大值等于最小值，这个维度的数据可以丢掉。</p>
+<p>如果 0 值在原始数据中代表 “空”，那么应该把它规范成0。</p>
+<p>如果测试样例的数据范围大于 0 或 大于 1，有时候算法必须要求 [0, 1]，那么可以把小于 0 的值设为 0，大于 1 同理，如果算法不要求其实也可以这么做。</p>
+<p>如果能看出某维数据符合高斯分布，那么也可以化为标准高斯分布：</p>
+<img src="https://s2.loli.net/2022/06/25/5P1Z49mjxLMqrBH.png" alt="image-20220625122726742" style="zoom: 67%;" />
+
+<p>L-1 规范化：如果值非负，规范化后样例各维之和为 1</p>
+<img src="https://s2.loli.net/2022/06/25/cNhxoSBs9TGaEyZ.png" alt="image-20220625122931565" style="zoom:67%;" />
+
+<p>L-2 规范化：把数据规范化为单位向量</p>
+<img src="https://s2.loli.net/2022/06/25/G9Fc2trETn1ZvoU.png" alt="image-20220625122925127" style="zoom:67%;" />
+
+<h4 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h4><p>首先要会做 SVD 分解。</p>
+<img src="https://s2.loli.net/2022/06/25/Hn4AO2M1Ze8hL9v.png" alt="image-20220625155915036" style="zoom: 67%;" />
+
+<p><img src="https://s2.loli.net/2022/06/25/3rj7boJ9OiTKktw.png" alt="image-20220625155923920"></p>
+<h4 id="FLD"><a href="#FLD" class="headerlink" title="FLD"></a>FLD</h4><p>思想：把数据点进行投影，使得不同类别之间的数据距离尽可能大。</p>
+<p> <img src="https://s2.loli.net/2022/06/25/oudrltBzY3psvSE.png" alt="image-20220625160821944" style="zoom: 50%;" />     <img src="https://s2.loli.net/2022/06/25/v5VHwi7oY9ELePM.png" alt="image-20220625162319955" style="zoom: 50%;" /></p>
+<p>可分性的绝对要素：两个均值之间的距离 + 两个标准差。要实现分类，就需要最大化这二者的比例。</p>
+<p>注：PCA 和 FLD 中的 X 的尺寸都是 (dim x 1) 。因而，$$a^Ta$$ 的结果是一个值，$$aa^T$$ 的结果是一个矩阵。</p>
+<p>二分类的 FLD：</p>
+<img src="https://s2.loli.net/2022/06/25/1UghbLr4SEZizaY.png" alt="image-20220625165356810" style="zoom: 50%;" />
+
+<p>$$w$$：投影方向</p>
+<p>$$m_i$$ ：集合 i 的均值</p>
+<p>$$C_i$$ ：集合 i 的协方差矩阵</p>
+<p>$$<br>C_i &#x3D; \frac{1}{N_i} \sum_{x \in X_i} (x-m_i)(x-m_i)^T<br>$$</p>
+<p>传统 FLD 用散度矩阵而不是用协方差矩阵，散度矩阵 $$S_i &#x3D; N_iC_i$$</p>
+<p>类间散度矩阵 &amp; 类内散度矩阵：</p>
+<p>$$<br>S_B&#x3D;(m_1-m_2)(m_1-m_2)^T \<br>S_W &#x3D; S_1+S_2<br>$$</p>
+<p>目标函数（第一行的 m 是投影后的均值，第二行的 m 是向量）：</p>
+<p>$$<br>J &#x3D; \frac{(m_1-m_2)^2}{\sigma_1^2+\sigma_2^2} \<br>&#x3D; \frac{(m_1^T w-m_2^Tw) ^ 2}{\sigma_1^2+\sigma_2^2} \<br>&#x3D; \frac{w^T(m_1-m_2)(m_1-m_2)^Tw}{w^T(C_1+C_2)w} \<br>&#x3D; \frac{w^TS_Bw}{w^TS_Ww} \<br>$$</p>
+<p>如果一个均值向量扮演了所属类别的所有样本的代理，那么就可以用均值向量集合的散度矩阵代替 $$S_B$$</p>
+<p>$$<br>\sum^{2}_{i&#x3D;1}(m_i - \overline{m})(m_i - \overline{m}) ^T \<br>\overline{m} &#x3D; \frac{m_1+m_2}{2}<br>$$</p>
+<p>之后就可以计算以及规范化了。</p>
+<p>考虑至多类别呢？</p>
+<p>类内散度矩阵 </p>
+<p>$$<br>S_W &#x3D; \sum ^{K}<em>{k&#x3D;1} S_k &#x3D; \sum ^{K}</em>{k&#x3D;1}N_kC_k &#x3D; \sum ^{K}<em>{k&#x3D;1} \sum</em>{x \ in X_k}(x-m_i)(x-m_i)^T<br>$$</p>
+<p>总散度矩阵</p>
+<p>$$<br>S_T &#x3D; \sum ^{N}<em>{i&#x3D;1}(x_i-m)(x_i-m)^T \<br>m &#x3D; \frac{1}{N} \sum^{N}</em>{i&#x3D;1}x_i<br>$$</p>
+<p>类间散度矩阵</p>
+<p>$$<br>S_B &#x3D;\sum ^{K}_{k&#x3D;1}N_k(m_k-m)(m_k-m)^T<br>$$</p>
+<p>规律：总散度矩阵 &#x3D;  类内散度矩阵 + 类间散度矩阵。</p>
+<p>多分类问题中，类间散度矩阵不再是秩为 1 的矩阵，算法 6.1 不可用，故求解如下广义特征值问题来找最佳投影方向：</p>
+<p>$$<br>S_B w &#x3D; \lambda S_W w<br>$$</p>
+<p>当 $S_W$ 可逆，广义特征值问题等价于：</p>
+<p>$$<br>S_W ^ {-1} S_B w &#x3D; \lambda  w<br>$$</p>
+<p>那么如何找更多投影方向（降低更多维度）呢？类似 PCA，只要使用与前 K-1 个最大广义特征值对应的广义特征向量即可</p>
+<h4 id="Sparse"><a href="#Sparse" class="headerlink" title="Sparse"></a>Sparse</h4><p>含义：最小化 $$l_0$$$ norm（向量 x 的非零元素个数）</p>
+<p>$$<br>minimize\  ||x||_0 \<br>subject\ to\ Ax&#x3D;y<br>$$</p>
+<h3 id="3-分类器"><a href="#3-分类器" class="headerlink" title="3. 分类器"></a>3. 分类器</h3><blockquote>
+<p>分类器：kNN, SVM, Decision Tree, Ensemble, Regression, NN, CNN<br>kNN, SVM 前两个重要，后面都是简单提一下<br>CNN 也可以看作是个特征提取的方法</p>
+</blockquote>
+<h4 id="kNN（机器学习）"><a href="#kNN（机器学习）" class="headerlink" title="kNN（机器学习）"></a>kNN（机器学习）</h4><p>理解且会用</p>
+<p>缺陷以及解决办法</p>
+<ol>
+<li><p>出现平局：可以给不同的样本施加不同的权重，加强依赖样本的权重，降低不可信赖样本的影响。</p>
+</li>
+<li><p>离群点</p>
+</li>
+</ol>
+<p>复杂度 O(nd) [d是计算距离的代价]</p>
+<h4 id="SVM（机器学习）"><a href="#SVM（机器学习）" class="headerlink" title="SVM（机器学习）"></a>SVM（机器学习）</h4><h4 id="Decision-Tree-Regression（机器学习）"><a href="#Decision-Tree-Regression（机器学习）" class="headerlink" title="Decision Tree + Regression（机器学习）"></a>Decision Tree + Regression（机器学习）</h4><h4 id="Ensemble"><a href="#Ensemble" class="headerlink" title="Ensemble"></a>Ensemble</h4><h4 id="NN"><a href="#NN" class="headerlink" title="NN"></a>NN</h4><h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><h3 id="4-概率模型"><a href="#4-概率模型" class="headerlink" title="4. 概率模型"></a>4. 概率模型</h3><blockquote>
+<p>概率模型 (Chap. 8)：参数估计，非参，HMM，GMM<br>参数估计：点估计，贝叶斯估计，HMM<br>非参数估计：KDE<br>要知道 HMM 的隐马尔可夫性质 + 要知道 GMM 的概念</p>
+</blockquote>
+<p>概率模型：计算变量的概率或者概率分布的模型。</p>
+<p>参数估计：假设 PDF 服从某种函数形式，当指定其所有参数值之后，PDF 就完全确定，估计 PDF 就是估计参数。</p>
+<p>非参数估计：非参数不代表无参数（允许无限），用训练数据直接估计空间中任意点的密度 p(x|D)。</p>
+<p>生成模型：估计 p(x|y&#x3D;i) 和 p(y&#x3D;i)，根据贝叶斯定理求 p(y&#x3D;i|x)</p>
+<p>判别模型：直接估计 p(y&#x3D;i|x)</p>
+<p>这些模型都有两个步骤：推理和决策，分别是估计各种密度函数，根据估计得到的PDF对任意的？给出输出。</p>
+<h4 id="点估计（参）"><a href="#点估计（参）" class="headerlink" title="点估计（参）"></a>点估计（参）</h4><p>点估计（point estimation）是用样本统计量来估计总体参数，典型的如 MLE 和 MAP，把 $$\theta$$ 视作固定参数，目的是找这个最佳参数。</p>
+<p>p(D|theta) 不是 PDF，但 p(x|theta) 是。</p>
+<p>likelihood function of MLE：</p>
+<p>$$<br>l(\theta) &#x3D; p(D|\theta) &#x3D; \prod_{i}p(x_i|\theta)<br>$$</p>
+<p>高斯分布的最大似然估计，可以通过对 $ll(\theta)$ 求偏微分得到结果：</p>
+<p>$$<br>\mu &#x3D; \frac{1}{n} \sum^{n}<em>{i&#x3D;1}x_i \<br>\sigma^2 &#x3D; \frac{1}{n} \sum^{n}</em>{i&#x3D;1}(x_i-\mu)(x_i-\mu)^T<br>$$</p>
+<p>最大后验估计（MAP）：把参数 theta 自身的取值可能性考虑进来。如果一无所知就等价于 MLE。</p>
+<p>$$<br>\theta &#x3D; argmax_{\theta} l(\theta)p(\theta)<br>$$</p>
+<p>渐进性质（asymptotic property），如一致性（consistency）：随样本容量增大收敛到参数真值的估计量</p>
+<p>其他性质，无偏估计（unbiased estimate）：指估计量的期望和被估计量的真值相等</p>
+<p>完成 inference 后，如何决策？根据参数得到后验概率 p(y|x;theta) 得出结果，在 0-1 风险时，选择概率大的就行。</p>
+<img src="https://s2.loli.net/2022/06/29/rTozyVmcjG6n1RC.png" alt="image-20220625193547900" style="zoom: 33%;" />
+
+<h4 id="贝叶斯估计（参）"><a href="#贝叶斯估计（参）" class="headerlink" title="贝叶斯估计（参）"></a>贝叶斯估计（参）</h4><p>点估计是把 $\theta$ 看成固定参数，而贝叶斯估计 p(theta|D) 是估计一个 $$\theta$$ 的分布，而不是一个值（点）！</p>
+<p>高斯分布参数的贝叶斯估计：设参数 theta 的先验分布 p(theta)，数据 X &#x3D; {x1, … , xn}，估计 p(theta|D)。这里假设单变量，只估计 p(theta|D) 的高斯分布的均值 mu，方差 sigma^2 已知：</p>
+<ol>
+<li><p>根据已知的先验高斯分布 P(theta) &#x3D; N(mu0, sigma0^2)</p>
+</li>
+<li><p>根据贝叶斯定理和独立性，可以得 p(theta|D) &#x3D;</p>
+</li>
+</ol>
+<img src="https://s2.loli.net/2022/06/25/9nU37YI5kqDdj8A.png" alt="image-20220625191741658" style="zoom:50%;" />
+
+<p>估计均值 &amp; 方差为：</p>
+<img src="https://s2.loli.net/2022/06/29/mwhWvl2gLouRy8a.png" alt="image-20220625192656515" style="zoom:50%;" />
+
+<p>共轭先验conjugate prior：若 p(x|theta) ，存在先验 p(theta)，使得 p(x|theta) 和 p(theta) 有相同的函数形式，从而简化推导和计算。如高斯分布的共轭先验分布仍然是高斯分布。</p>
+<p>完成 inference 后，如何决策？输出一个分布，结果通常根据期望决定。</p>
+<h4 id="KDE（非参）"><a href="#KDE（非参）" class="headerlink" title="KDE（非参）"></a>KDE（非参）</h4><p>常用的参数形式基本都是单模的，不足以描述复杂的数据分布。因此应该直接以训练数据自身来估计分布。</p>
+<p>例：直方图。每维 n 个bin，那么 n 维应该保存多少个bin的参数？$$n^d$$。太大了，且不光滑！</p>
+<p>给定一组提取于未知分布 p(x) 的数据 $x_1,x_2,…,x_n$ ，任一点 x 处的核密度估计定义为：</p>
+<p>$$<br>\hat{p}(x) &#x3D; \frac{1}{nh} \sum^{n}_{i&#x3D;1}K(\frac{x-x_i}{h})<br>$$</p>
+<p>$$<br>K(x) \ge0, \int K(x)dx&#x3D;1<br>$$</p>
+<p>KDE 核函数与 SVM 的不同：在概率估计中被用于估计目标点周围的概率密度。而在SVM中，被用于计算两点间的核空间距离。</p>
+<img src="https://s2.loli.net/2022/06/25/OzKfk6DU5dah1Ng.png" alt="image-20220625193832796" style="zoom: 33%;" />
+
+<p>连续的。</p>
+<p>窗宽确定：使得估计的积分均方误差 (mean integral square error,MISE) 达到最小，如下式</p>
+<p>$$<br>MISE{\hat{p}<em>h(x)}&#x3D;E[\int^{\inf}</em>{-\inf}{\hat{p}_h(x)-p(x)}dx]<br>$$</p>
+<h4 id="HMM（机器学习）"><a href="#HMM（机器学习）" class="headerlink" title="HMM（机器学习）"></a>HMM（机器学习）</h4><p><strong>隐马尔可夫性质</strong></p>
+<p>$$P(X_t|X_{1:t-1})&#x3D;P(X_t|X_{t-1})$$ ，无记忆性，当前状态的只跟上一个状态有关系。</p>
+<p><strong>随机过程（stochastic process）</strong></p>
+<p>$${X(t), t\in T}$$ 是一系列随机变量的集合，用于描述一些过程的时间进化，目的是希望过去对现在有帮助。也就是说，对于每个 $$t \in T$$, $$X(t)$$ 是一个随机变量。索引 t 通常被解释为时间，因此把 $$X(t)$$ 作为 t 时流程的状态。</p>
+<p>B：emission probability 发出观察值的概率。$$b_j(k)&#x3D;Pr(O_t&#x3D;V_k|Q_t&#x3D;S_j)$$。当未知状态为 $$S_j$$ 时观察到为 $$V_k$$ 的概率。</p>
+<p><strong>Problem 1. Evaluation</strong></p>
+<p>概念：给定已知 $$\lambda &#x3D; (A,B,\pi)$$ 的 HMM 模型，以及一个完整的输出序列 $$o&#x3D;o_{1:T}$$，求该模型观察到该输出序列的概率 $$P(O|\lambda)$$。</p>
+<p>作用：看出此模型对该观察序列的成绩，从而在多个模型中选择最适合的模型。</p>
+<p>算法</p>
+<ol>
+<li>Naive</li>
+</ol>
+<p>假设隐状态序列 $q_{1:T}$ 已知：</p>
+<p>$$<br>Pr(o_{1:T}|\lambda, q_{ 1:T}) &#x3D; \prod^{T}<em>{t&#x3D;1}Pr(o_t|q_t, \lambda) &#x3D; \prod^{T}</em>{t&#x3D;1}b_{q_i}(o_i)<br>$$</p>
+<p>则必有</p>
+<p>$$<br>Pr(o_{1:T}|\lambda) &#x3D; Pr(o_{1:T}, q_{1:T}|\lambda) &#x3D;\sum_{all\ Q}Pr(o_{1:T}|\lambda, q_{ 1:T})Pr(q_{1:T}|\lambda)<br>$$</p>
+<p>时间复杂度 $$O(TN^T)$$</p>
+<ol start="2">
+<li>对 Naive 的观察与优化——提取 $$b_i(o_i)$$</li>
+</ol>
+<p>$$<br>Pr(o_{1:T}|\lambda)&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T},Q_T&#x3D;S_i|\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)Pr(O_T&#x3D;V_k|Q_T&#x3D;S_i,\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)b_i(o_T)<br>$$</p>
+<ol start="3">
+<li>对 Naive 的观察与优化——提取 $$A_{ji}$$</li>
+</ol>
+<p>$$<br>Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda) &#x3D; \sum_{j&#x3D;1}^{N}Pr(o_{1:T-1},Q_{T-1}&#x3D;S_j|\lambda)A_{ji}<br>$$</p>
+<p>根据 2. 和 3. 的提取优化，可得</p>
+<p>$$<br>Pr(o_{1:T}|\lambda)&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T},Q_T&#x3D;S_i|\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)b_i(o_T)\<br>&#x3D;\sum_{i&#x3D;1}^{N}(b_i(o_T)\sum_{j&#x3D;1}^{N}Pr(o_{1:T-1},Q_{T-1}&#x3D;S_j|\lambda)A_{ji}) \<br>$$</p>
+<ol start="4">
+<li>前向算法 forward</li>
+</ol>
+<p>定义 $$\alpha_{t}(i)&#x3D;Pr(o_{1:t},Q_t&#x3D;S_i|\lambda)$$。含义：对于已知参数 $$\lambda$$ 的模型，获得观测序列 $$o_{1:T}$$ 且 t 时刻隐状态为 $$S_i$$ 的概率。</p>
+<p>初始化：$$\alpha_1(i)&#x3D;Pr(o_{1},Q_1&#x3D;S_i|\lambda) &#x3D; Pr(Q_1&#x3D;S_i|\lambda)Pr(o_{1}|Q_1&#x3D;S_i,\lambda) &#x3D; Pr(Q_1&#x3D;S_i|\lambda)b_i(o_1)$$</p>
+<p>前向递推：</p>
+<p>$$<br>\alpha_{t+1}(i)&#x3D;[\sum^{N}<em>{j&#x3D;1} Pr(o</em>{1:t},Q_t&#x3D;S_j|\lambda)A_{ji}]b_i(o_{t+1})\<br>&#x3D;[\sum^{N}<em>{j&#x3D;1} a</em>{t}(j)A_{ji}]b_i(o_{t+1})<br>$$</p>
+<p>结果：$$Pr(o_{1:T}|\lambda)&#x3D;\sum^{N}<em>{i&#x3D;1}Pr(o</em>{1:T},Q_T&#x3D;S_i|\lambda)&#x3D;\sum^{N}_{i&#x3D;1} \alpha_T(i) $$</p>
+<p>复杂度：$$O(TN^2)$$</p>
+<p>⑤ 后向算法 backward</p>
+<p>定义 $$\beta_t(i) &#x3D; Pr(o_{t+1:T}|Q_t&#x3D;S_i, \lambda)$$。含义：对于已知参数 $$\lambda$$ 的模型，已知 t 时刻状态为 $$S_i$$，未来观测到 $$o_{t+1:T}$$ 的概率。</p>
+<p>初始化：$$\beta_T(i) &#x3D; 1$$。</p>
+<p>反向更新：</p>
+<p>$$<br>\beta_t(i) &#x3D; \sum^{N}<em>{j&#x3D;1}A</em>{ij}b_j(o_{t+1})\beta_{t+1}(j)<br>$$</p>
+<p>输出：$$Pr(o_{1:T}|\lambda)&#x3D;\sum^{N}<em>{i&#x3D;1}\pi</em>{i}b_i(o_{1})\beta_{1}(i)$$</p>
+<p><strong>Problem 2：Decoding</strong></p>
+<p>概念：给定已知 $$\lambda &#x3D; (A,B,\pi)$$ 的 HMM 模型，以及一个完整的输出序列 $$o&#x3D;o_{1:T}$$，求一个完全指定的隐变量序列 $$q_{1:T}$$ 的值。</p>
+<p>作用：语音识别中状态可能有实际意义（各音节），可以用来观察模型结构，优化模型。</p>
+<p>算法：</p>
+<img src="https://s2.loli.net/2022/06/29/LWcKyRP9Zk8xB4Y.png" alt="image-20220629185728038" style="zoom: 50%;" />
+
+<p><strong>Problem 3：Learning</strong></p>
+<p>概念：发现 $$\lambda &#x3D; (A,B,\pi)$$，使得对于固定的 N，T，和观察值 O，似然概率 $$P(O|\lambda)$$ 最大。</p>
+<p>作用：最重要的问题</p>
+<p>目前无法发现全局最优解，常用 Baum-Welch 算法。</p>
+<h3 id="5-优化方法"><a href="#5-优化方法" class="headerlink" title="5. 优化方法"></a>5. 优化方法</h3><blockquote>
+<p>优化方法：极值条件，对偶，KKT，GD，SGD，EM，<br>要知道凸优化和非凸优化，要知道凸优化的话，极值就是最优点，那么找最优点就是导数等于0<br>要直到 SVM 里面的对偶问题，SVM 没有显式最优解，因此可以用 GD，Regression 有显式最优解<br>在神经网络里面一般用 SGD，SGD 要有一个概念，为什么我们要用 SGD 和 GD？要知道二者区别，还得知道 SGD 优点<br>要对概率模型的参数进行估计的话，可以考虑用 EM 进行参数估计，比如 HMM</p>
+</blockquote>
+<p>凸优化定义：</p>
+<p>$$<br>minimize \ f_0(x)  \<br>subject \ to \ f_i(x)&lt;&#x3D;b_i,\ \ i&#x3D;1,…,m<br>$$</p>
+<p>其中，目标函数和约束函数都是凸函数，即</p>
+<p>$$<br>f_i(\alpha x+\beta y) &lt;&#x3D; \alpha f_i(x) + \beta f_i(y) \<br>\alpha + \beta &#x3D; 1,\  \alpha &gt;&#x3D;0, \ \beta&gt;&#x3D;0<br>$$</p>
+<h4 id="SVM-中的对偶-amp-KKT（机器学习）"><a href="#SVM-中的对偶-amp-KKT（机器学习）" class="headerlink" title="[SVM 中的对偶 &amp; KKT（机器学习）"></a>[SVM 中的对偶 &amp; KKT（机器学习）</h4><h4 id="GD-amp-SGD"><a href="#GD-amp-SGD" class="headerlink" title="GD &amp; SGD"></a>GD &amp; SGD</h4><p>随机梯度下降每次只用一个样本，对于最优化凸问题，虽然不是每次迭代得到的损失函数都向着全局最优方向， 但是大的整体的方向是向全局最优解的，最终的结果往往是在全局最优解附近。但是相比于批量梯度，这样的方法更快，更快收敛。</p>
+<p>批量梯度下降每次更新时用所有样本。对于最优化凸问题，可以达到一个全局最优。如果样本不多的情况下，当然是这样收敛的速度会更快。但是很多时候，样本很多，更新一次要很久。</p>
+<h4 id="EM-amp-GMM（机器学习）"><a href="#EM-amp-GMM（机器学习）" class="headerlink" title="EM &amp; GMM（机器学习）"></a>EM &amp; GMM（机器学习）</h4><p>浙大</p>
+<h3 id="6-距离度量"><a href="#6-距离度量" class="headerlink" title="6. 距离度量"></a>6. 距离度量</h3><blockquote>
+<p>（样本之间的）距离度量：l-p 范数, DTW, …<br>要知道如何度量两个不同时间序列的样本之间的距离<br>DTW 动态时间规整</p>
+</blockquote>
+<p>$$l_0$$ 范数：向量 x 的非零元素的个数</p>
+<img src="https://s2.loli.net/2022/06/29/QEPADFUZL5hbsfv.png" alt="image-20220625200150788" style="zoom:50%;" />
+
+<p>DTW（Dynamic Time Warping）：动态时间规整</p>
+<p>性质：1. 匹配是顺序的 2. 每个 $$x_i$$ 或 $$y_i$$ 都要有对应的匹配 3. 一个 $$x_i$$ 可以和多个 $$y_j$$ 匹配，反之亦然</p>
+<img src="https://s2.loli.net/2022/06/29/UdA6mkPbKY1phcR.png" alt="image-20220625202602917" style="zoom:50%;" />
+
+<p>递推公式：</p>
+<img src="https://s2.loli.net/2022/06/29/OeASiJYFf952cZh.png" alt="image-20220625202654161" style="zoom:50%;" />
+
+<h4 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h4><p>单变量</p>
+<p>$$<br>H&#x3D;-\sum^{m}_{i&#x3D;1}p_ilog_2p_i<br>$$</p>
+<p>$$<br>h&#x3D;-\int p(x)ln(p(x))dx<br>$$</p>
+<p>双变量</p>
+<p>$$<br>H(x,y)&#x3D;-\sum_{x}\sum_{y}P(x,y)log_2P(x,y)<br>$$</p>
+<p>$$<br>h&#x3D;-\int p(x,y)ln(p(x,y))dxdy<br>$$</p>
+<p>$$<br>H(X|Y) &#x3D; \sum_{y}P(y)H(X|Y&#x3D;y) &#x3D;<br>-\sum_{y}P(y)\sum_{x}P(X&#x3D;x|Y&#x3D;y)log_2P(X&#x3D;x|Y&#x3D;y) \<br>&#x3D; -\sum_{x,y}P(x,y)log_2 \frac{P(x,y)}{p(y)}<br>$$</p>
+<p>$$<br>h(x,y) &#x3D; -\int p(x,y)ln\frac{p(x,y)}{p(y)}dxdy<br>$$</p>
+<p>熵之间的关系</p>
+<p>H(X,Y)&#x3D;H(X)+H(Y|X)&#x3D;H(Y)+H(X|Y)</p>
+<p>H(X|Y)&lt;H(X)</p>
+<p>H(Y|X)&lt;H(Y)</p>
+<p>互信息</p>
+<p>$$<br>I(X;Y)&#x3D;H(X)-H(X|Y) &#x3D; \sum_{x,y}P(x,y)log_2 \frac{P(x,y)}{P(x)P(y)}<br>$$</p>
+<p>KL 散度</p>
+<p>$$<br>KL(P||Q)&#x3D;\sum_{i} P_ilog_2\frac{P_i}{Q_i}<br>$$</p>
+<p>$$KL(P||Q) \ge 0$$，等号成立条件：$$P_i&#x3D;Q_i$$。不对称。</p>
+<p>交叉熵</p>
+<p>$$<br>CE(P,Q)&#x3D;-\sum_{i}P_ilog_2Q_i \<br>CE(P,Q)&#x3D;H(p)+KL(P||Q)&#x3D;-\sum_{i}P_ilog_2P_i+\sum_{i} P_ilog_2\frac{P_i}{Q_i}<br>$$</p>
+<h3 id="7-损失函数"><a href="#7-损失函数" class="headerlink" title="7. 损失函数"></a>7. 损失函数</h3><blockquote>
+<p>损失函数：square, hinge, exponential, logistic, cross entropy, …<br>线性回归：square<br>SVM：hinge<br>Adaboost：exp<br>逻辑回归：logistic<br>神经网络：cross entropy</p>
+</blockquote>
+<h4 id="Square（机器学习）"><a href="#Square（机器学习）" class="headerlink" title="Square（机器学习）"></a>Square（机器学习）</h4><p>形式：</p>
+<p>$$<br>L(f,y)&#x3D;(f-y)^2<br>$$</p>
+<p>线性回归中的 Square：</p>
+<p>$$<br>L&#x3D;\sum^{N}_{i&#x3D;1}(y_i-\theta^Tx_i)<br>$$</p>
+<h4 id="Hinge"><a href="#Hinge" class="headerlink" title="Hinge"></a>Hinge</h4><p>译为铰链损失。</p>
+<p>形式：</p>
+<p>$$<br>L(y,f(x)) &#x3D; max(0,1-yf(x)),<br>$$</p>
+<p>SVM 中的 Hinge：</p>
+<p>$$<br>L &#x3D; \frac{1}{2C}||w||^2+\sum^{N}_{i&#x3D;1}max(0, 1-y_i(\theta^Tx_i+b))<br>$$</p>
+<h4 id="Exp"><a href="#Exp" class="headerlink" title="Exp"></a>Exp</h4><p>译为指数损失。</p>
+<p>形式：</p>
+<p>$$<br>L(y, f(x)) &#x3D; exp[-yf(x)]<br>$$</p>
+<p>Adaboost 中的 Exp：</p>
+<p>$$<br>L(y, f(x)) &#x3D; \frac{1}{n} \sum^{n}_{i&#x3D;1} exp[-y_if(x_i)]<br>$$</p>
+<h4 id="Logistic（机器学习）"><a href="#Logistic（机器学习）" class="headerlink" title="Logistic（机器学习）"></a>Logistic（机器学习）</h4><p>形式：</p>
+<p>$$<br>L(y,f(x))&#x3D;\sum_{l}y^l ln P(y^l&#x3D;1|x^l,w)+(1-y^l)ln P(y^l&#x3D;0|x^l,w) \<br>&#x3D;\sum_{l}y^l(w_0+\sum^{n}<em>{i&#x3D;1}w_ix_i^l)-ln(1+exp(w_0+\sum^{n}</em>{i&#x3D;1}w_ix_i^l))<br>$$</p>
+<h4 id="Cross-entropy"><a href="#Cross-entropy" class="headerlink" title="Cross entropy"></a>Cross entropy</h4><p>形式：</p>
+<p>$$<br>L(y,f(x)) &#x3D; -\sum^{n}_{i&#x3D;1}y_i logf(x_i)<br>$$</p>
+<h3 id="8-评价准则"><a href="#8-评价准则" class="headerlink" title="8. 评价准则"></a>8. 评价准则</h3><blockquote>
+<p>评价准则：Acc, ROC, AP, Recall (TPR, true position rate), Precision, Bayes error, Bias-variance<br>概念掌握<br>Bayes error：取一个后验概率最大的去作为模型预测的输出<br>Bias-variance：把模型的误差做一个偏执方差分解，需要直到模型的偏置和方差，以及是由什么决定的</p>
+</blockquote>
+<p>PPT 3-4</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 4526 words, 15 min 5 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-reinforcement-learning/">[rv] reinforcement learning</a></h3></div><div class="post-content"><div class="card"><p><h1 id="Reinforcement-Learning-P1-：Basics"><a href="#Reinforcement-Learning-P1-：Basics" class="headerlink" title="Reinforcement Learning P1 ：Basics"></a>Reinforcement Learning P1 ：Basics</h1><h2 id="Supervised-Learning→RL"><a href="#Supervised-Learning→RL" class="headerlink" title="Supervised Learning→RL"></a>Supervised Learning→RL</h2><p>Supervised Learning：给定 label</p>
+<p>Self Supervised Learning：自动生成 label</p>
+<p>Unsupervised Learning(Auto-encoder)：没用到人类的 label，但事实上仍然还有 label 只不过不需要用人力生成</p>
+<p>RL：机器当我们给它一个输入的时候，我们不知道最佳的输出（label）应该是什么。如下棋。</p>
+<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><img src="https://s2.loli.net/2022/07/02/47o2ubILgfhtE6w.png" alt="image-20220702145935497" style="zoom:50%;" />
+
+<h2 id="Machine-Learning-≈-Looking-for-a-Function"><a href="#Machine-Learning-≈-Looking-for-a-Function" class="headerlink" title="Machine Learning ≈ Looking for a Function"></a>Machine Learning ≈ Looking for a Function</h2><p>机器学习就是找一个 Function，Reinforcement Learning 也是，这个 Function 即 Actor 本身，要做的就是最大化 reward 之总和。</p>
+<p>例：Atari Space Invador。Actor：操作对象。环境：游戏场景。Observation：游戏画面。</p>
+<p>例：围棋。稀疏 Reward，只有游戏结束（输、赢）才能够拿到 Reward。</p>
+<h2 id="Machine-Learning-is-so-simple-……"><a href="#Machine-Learning-is-so-simple-……" class="headerlink" title="Machine Learning is so simple ……"></a>Machine Learning is so simple ……</h2><p>Machine Learning 三个步骤：</p>
+<ol>
+<li>定义含待求未知数的 Function</li>
+<li>定义 Loss Function</li>
+<li>Optimization，minimize loss</li>
+</ol>
+<p>而 RL 其实也是一模一样的三个步骤</p>
+<h3 id="Step-1-Function-with-Unknown"><a href="#Step-1-Function-with-Unknown" class="headerlink" title="Step 1: Function with Unknown"></a>Step 1: Function with Unknown</h3><p>Function (in RL) &#x3D; Actor, RL 中的 Actor 即神经网络，通称 Policy 的 Network。</p>
+<p>神经网络输入：the observation of machine represented as a vector or a matrix。</p>
+<p>神经网络输出：each action corresponds to a neuron in output layer。</p>
+<p><img src="https://s2.loli.net/2022/07/03/nj8qFcTSyQ1RCBM.png" alt="image-20220702151119061"></p>
+<p>为什么输出结果是概率分布？引入随机性。</p>
+<h3 id="Step-2-Define-“Loss”"><a href="#Step-2-Define-“Loss”" class="headerlink" title="Step 2: Define “Loss”"></a>Step 2: Define “Loss”</h3><p>从游戏开始到结束的这整个过程被称之为一个 &#x3D;&#x3D;Episode&#x3D;&#x3D;,</p>
+<p>将整个游戏的过程中 Actor 採取非常多的行为得到的 Reward 通通集合起来便是 &#x3D;&#x3D;Total Reward (Return)&#x3D;&#x3D;。$R &#x3D; \sum^{T}_{t&#x3D;1}r_t$ 。</p>
+<p>Return 是最大化的对象，我们要最小化 loss，可以定义 loss &#x3D; -R。</p>
+<h3 id="Step-3-Optimization"><a href="#Step-3-Optimization" class="headerlink" title="Step 3: Optimization"></a>Step 3: Optimization</h3><p>将整个游戏的过程中 s 跟 a 所形成的这个 Sequence 叫做 Trajectory。符号表示为 $\tau &#x3D; {s_1, a_1,s_2,a_2,…}$。</p>
+<p>通常说，Reward Function 在定义的时候和 Action 与 Observation 都有关联。即 $r_i$ 和 $s_i$  和 $a_i$ 有关系。优化 Return 就行。</p>
+<p>但是 RL 困难之处在于它不是一个一般的 Optimization 的问题。</p>
+<p>第一个问题是，Actor 的输出是有随机性的。 Network 裡面的某一个 Layer 每次产生出来结果是不一样的。第二，Environment 只是一个黑盒，且包含随机性。</p>
+<p>与 GAN 的对比。</p>
+<p>相同：GAN 中 调整 Generator 的参数让 Discriminator 的输出越大越好。RL 中调整 ACtor 的参数让 Environment 的 Reward 越大越好。</p>
+<p>不同：Discriminator 是 Network，但 Environment 只是个黑盒。不能用 GD 调整 Environment。</p>
+<h1 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h1><h3 id="How-to-control-your-actor"><a href="#How-to-control-your-actor" class="headerlink" title="How to control your actor"></a>How to control your actor</h3><img src="https://s2.loli.net/2022/07/02/v7TwXC5UEJWoGdL.png" alt="image-20220702152953732" style="zoom:50%;" />
+
+<p>可以把它想成一个分类的问题。即 s 是 Actor 的输入, $\hat{a}$(Ground Truth) 就是 Label。</p>
+<p>计算 Actor 的输出跟 Ground Truth 之间的 Cross-entropy，那接下来就可以定义一个 Loss。提示：根据交叉熵的定义，预测分布和真实分布有相同的分布时交叉熵最小。Loss 越小，就等价于预测值越接近真实值。</p>
+<img src="https://s2.loli.net/2022/07/02/Zb6yw2HEv38tVJM.png" alt="image-20220702153405916" style="zoom:50%;" />
+
+<p>模型训练</p>
+<img src="https://s2.loli.net/2022/07/02/T3mxPShAgQp6ZKY.png" alt="image-20220702153533859" style="zoom:50%;" />
+
+<p>用数值 A 表示代替 +1&#x2F;-1，就可以实现表示动作的好坏程度。Loss 改写为：<br>$$<br>L&#x3D;\sum A_ne_n<br>$$</p>
+<h2 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h2><h2 id="Version-0"><a href="#Version-0" class="headerlink" title="Version 0"></a>Version 0</h2><p>用随机的  Actor 去跟环境做互动收集训练资料获得 ${s_i, a_i}$。再根据情况好坏为之赋予 $r_i$。</p>
+<p>最简单的但不正确的版本。短视近利。事实上，每一个行为都会影响到接下来发生的事情。例：Space Invador 中，由于只有开火才能得到正 Reward，故他会一直开火。</p>
+<p>Reward Delay：牺牲短期的利益,以换取更长程的目标。</p>
+<h2 id="Version-1"><a href="#Version-1" class="headerlink" title="Version 1"></a>Version 1</h2><p>&#x3D;&#x3D;Cumulated Reward&#x3D;&#x3D;：把当下与未来所有的 Reward 加起来评估一个 Action 的好坏。<br>$$<br>G_t &#x3D; \sum^{N}_{n&#x3D;t} r_n<br>$$<br>用 $G_i$ 表示每个 ${s_i, a_i}$ 对应的 reward。</p>
+<p>问题在于：未来发生的影响中，有些影响大有些影响小。</p>
+<h2 id="Version-2"><a href="#Version-2" class="headerlink" title="Version 2"></a>Version 2</h2><p>加上递减权重 $\gamma$。未来的 reward 中，离当下近的表示影响更大。<br>$$<br>G’<em>t &#x3D; \sum^{N}</em>{n&#x3D;t} \gamma^{n-t}r_n<br>$$</p>
+<h2 id="Version-3"><a href="#Version-3" class="headerlink" title="Version 3"></a>Version 3</h2><p>做标准化，因为好或坏是相对的。</p>
+<p>一个最简单的方法就是：把所有的 G’ 都减掉一个 b，即&#x3D;&#x3D;Baseline&#x3D;&#x3D;。</p>
+<h2 id="Policy-Gradient-1"><a href="#Policy-Gradient-1" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h2><img src="https://s2.loli.net/2022/07/03/GJB31Hvkh4InrgR.png" alt="image-20220702155759971" style="zoom:50%;" />
+
+<p>其中，$L &#x3D; \sum A_n e_n$。$A_n$ 就是 Reward，$e_n$ 就是交叉熵。</p>
+<p>一般的 Training，Data Collection 都是在 For 循环之外。但在 RL 裡面收集资料是在 For 循环裡面。这意味着更新一次参数以后，就要重新收集资料，因此 RL 的训练过程非常花时间。</p>
+<p>为什么不把 Data Collection 放在 For 循环之外？彼之砒霜，吾之蜜糖。因为由 $θ_{i-1}$ 所收集出来的资料不一定适合拿来 Update $θ_{i}$ 的参数。</p>
+<p>故同一个 Action 同一个行为，对于不同的 Actor 而言，它的好是不一样的。更新后的 Actor，可能 Trajectory 就会跟之前出现区别。</p>
+<h3 id="On-policy-v-s-Off-policy"><a href="#On-policy-v-s-Off-policy" class="headerlink" title="On-policy v.s. Off-policy"></a>On-policy v.s. Off-policy</h3><p>被训练的 Actor 与跟环境互动的 Actor 是同一个叫做 &#x3D;&#x3D;On-policy  Learning&#x3D;&#x3D;。</p>
+<p>反之，为 &#x3D;&#x3D;Off-policy Learning&#x3D;&#x3D;。</p>
+<p>Off-policy 的好处：不用一直收集资料。可以收一次资料，就 Update 参数很多次。</p>
+<p>显然上文所述为 On-policy Learning。</p>
+<h3 id="Off-policy-→-Proximal-Policy-Optimization-PPO"><a href="#Off-policy-→-Proximal-Policy-Optimization-PPO" class="headerlink" title="Off-policy → Proximal Policy Optimization(PPO)"></a>Off-policy → Proximal Policy Optimization(PPO)</h3><p>Off-policy 的经典算法： Proximal Policy Optimization。</p>
+<p>Off-policy 的重点：在训练的那个 Network，要知道自己跟别人之间的差距，它要有意识到它跟环境互动的那个 Actor 是不一样的。</p>
+<p>例子：东施效颦，别瞎模仿。</p>
+<h3 id="Collection-Training-Data-Exploration"><a href="#Collection-Training-Data-Exploration" class="headerlink" title="Collection Training Data: Exploration"></a>Collection Training Data: Exploration</h3><p>Exploration：Actor 在採取行为的时候有随机性的。随机性大一点意味着能够收集到比较丰富的资料。实现方法：增大 Actor 的 Output（Distribution）的 Entropy；在 Actor 参数上加 Noise。</p>
+<h2 id="Critic"><a href="#Critic" class="headerlink" title="Critic"></a>Critic</h2><p>Critic 用以评估一个 Actor 的好坏。Given actor 𝜃, how good it is when observing 𝑠 (and taking action 𝑎)。</p>
+<p>本课程中 Critic 叫做 &#x3D;&#x3D;Value Function&#x3D;&#x3D;，用 $V^θ(s)$ 来表示。输出一个 scalar（Discounted Cumulated Reward）。</p>
+<p>故 Value Function 的作用就是：对某一个参数为 $\theta$ 的 Actor 来说，如果它已经看到某一个游戏画面 s，那接下来会得到的 Discounted Cumulated Reward 应该是多少。</p>
+<p>DCR 需要未来的 Reward 来计算。但当下怎么知道未来的 Reward 呢？Value Function 的能力就是要未卜先知。</p>
+<h2 id="How-to-estimate-V-θ-s"><a href="#How-to-estimate-V-θ-s" class="headerlink" title="How to estimate $ V^θ(s) $"></a>How to estimate $ V^θ(s) $</h2><h3 id="Monte-Carlo-MC-based-approach"><a href="#Monte-Carlo-MC-based-approach" class="headerlink" title="Monte-Carlo (MC) based approach"></a>Monte-Carlo (MC) based approach</h3><p>MC：把 Actor 拿去跟环境互动很多轮，可以得到每轮的 DCR。</p>
+<p>那么 Value Function 就得到一笔训练资料，训练目标是：如果看到 $s_a$ 作为输入，那它的输出 $ V^θ(s_a) $ 应该要跟 G’a 越接近越好。</p>
+<img src="https://s2.loli.net/2022/07/02/jz5FaG1xdcvsWI7.png" alt="image-20220702161849346" style="zoom: 50%;" />
+
+
+
+<h3 id="Temporal-difference-TD-approach"><a href="#Temporal-difference-TD-approach" class="headerlink" title="Temporal-difference (TD) approach"></a>Temporal-difference (TD) approach</h3><p>一轮互动可能无法终止或者很长。</p>
+<p>TD：不用玩完整场游戏，才能得到训练 Value 的资料。虽然我们不知道，$ V^θ(s_t)$ 和 $ V^θ(s_{t+1})$ 应该是什么，但是我们可以让 $ V^θ(s_t)$  与 $ \gamma V^θ(s_{t+1})$ 的差值逼近已知的 $r_t$。</p>
+<img src="https://s2.loli.net/2022/07/02/lazNsUr4dnBRx1k.png" alt="image-20220702162248677" style="zoom:50%;" />
+
+<h3 id="MC-v-s-TD"><a href="#MC-v-s-TD" class="headerlink" title="MC v.s. TD"></a>MC v.s. TD</h3><img src="https://s2.loli.net/2022/07/03/SrMDN6TPgmFfh7v.png" alt="image-20220702162905728" style="zoom:50%;" />
+
+
+
+<h2 id="Version-3-5"><a href="#Version-3-5" class="headerlink" title="Version 3.5"></a>Version 3.5</h2><p>把 baseline 设成 $V^θ(S)$。把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; G’_t-V^θ(s_t)<br>$$<br>为什么这样可以？我们知道 $ V^θ(s_t)$是看到某一个画面 $s_t$ 以后，接下来会得到的 (加权) Reward。它其实是一个期望，因为有随机性，即每次的 $a_t$ 可能不同，故每次可能会得到不一样的 Reward。</p>
+<img src="https://s2.loli.net/2022/07/02/krBqTm6nCYiFKMG.png" alt="image-20220702163444448" style="zoom:50%;" />
+
+<p>图中 Gt’ 是 sample 某一个 trajectory 的结果，而$ V^θ(s_t)$ 是很多条路径平均以后的结果。</p>
+<p>问题在于：把一个 sample 去减掉平均，这样会准吗？也许这个sample 特别好或特别坏。为什麽不是拿平均去减掉平均？</p>
+<h2 id="Version-4"><a href="#Version-4" class="headerlink" title="Version 4"></a>Version 4</h2><p>最后一个版本：平均去减掉平均。这就是 &#x3D;&#x3D;Advantage Actor-Critic&#x3D;&#x3D;。</p>
+<p>把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; r_t+V^θ(s_{t+1})-V^θ(s_t)<br>$$<br><img src="https://s2.loli.net/2022/07/03/M72tBQOvFV5lpsX.png" alt="image-20220702163949638" style="zoom:50%;" /></p>
+<h2 id="Tip-of-Actor-Critic"><a href="#Tip-of-Actor-Critic" class="headerlink" title="Tip of Actor-Critic"></a>Tip of Actor-Critic</h2><p>Actor 和 Critic 都是 Network，他们的输入可以公用 CNN。</p>
+<h2 id="Sparse-Reward"><a href="#Sparse-Reward" class="headerlink" title="Sparse Reward"></a>Sparse Reward</h2><p>Sparse Reward：$r_t$ &#x3D; 0 in most cases。例如拧螺丝。</p>
+<p>解决办法：reward shaping。</p>
+<h2 id="Imitation-Learning"><a href="#Imitation-Learning" class="headerlink" title="Imitation Learning"></a>Imitation Learning</h2><p>Actor 可以与环境互动，但 reward function 不知道怎么定义。</p>
+<p>解决办法：根据专家的演示 ${\hat{\tau_1}, \hat{\tau_2}, …}$ 进行模仿学习。</p>
+<p>例子：自动驾驶，机械臂抓举。</p>
+<p>问题：专家们只对有限的观察进行抽样。</p>
+<h2 id="Inverse-Reinforcement-Learning"><a href="#Inverse-Reinforcement-Learning" class="headerlink" title="Inverse Reinforcement Learning"></a>Inverse Reinforcement Learning</h2><p>使用 reward function 找到最佳 actor。</p>
+<p>原则：The teacher is always the best。</p>
+<p>方法论：</p>
+<img src="https://s2.loli.net/2022/07/02/YR12xlTz8PwE7sG.png" alt="image-20220702164853222" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/07/02/FDgLe1CdnYfmhoU.png" alt="image-20220702165029388" style="zoom:50%;" />
+
+<p>和 GAN 的类比理解</p>
+<p>GAN 中 Generator 的优化目标是产生跟 Ground Truth 的很像的结果，IRL 中 Actor 的优化目标是产生跟 Expert 的很像的结果。</p>
+<p>GAN 中 Discriminator 的优化目标是产生分辨 Ground Truth 和 Generator 的输出值，给 Ground Truth 打高分，IRL 中 Reward 则是给 Expert 打高分。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 2401 words, 8 min 0 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-domain-adaptation/">[ml][rv] domain adaptation</a></h3></div><div class="post-content"><div class="card"><p><h1 id="27-Domain-Adaptation"><a href="#27-Domain-Adaptation" class="headerlink" title="27 Domain Adaptation"></a>27 Domain Adaptation</h1><p>训练资料跟测试资料的分布是不一样的，叫做 &#x3D;&#x3D;Domain Shift&#x3D;&#x3D;。</p>
 <p>解决办法是 &#x3D;&#x3D;Domain Adaptation&#x3D;&#x3D;，它也可以看做是 &#x3D;&#x3D;Transfer Learning&#x3D;&#x3D; 的一种。</p>
 <p>Transfer Learning ：在 A 任务上学到的技能可以被用在 B 任务上</p>
 <p>Domain Adaptation：你的训练资料是一个 Domain，你的测试资料是另外一个 Domain，你在训练资料上面学到的资讯可以要把它用到另外一个 Domain 上。</p>
