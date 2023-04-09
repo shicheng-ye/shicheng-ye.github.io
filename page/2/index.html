@@ -63,7 +63,112 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 75 words, 15 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-machine-learning-courses/">[ml][rv] sysu-courses</a></h3></div><div class="post-content"><div class="card"><p><h4 id="1-线性回归-逻辑回归"><a href="#1-线性回归-逻辑回归" class="headerlink" title="1. 线性回归 + 逻辑回归"></a>1. 线性回归 + 逻辑回归</h4><blockquote>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 75 words, 15 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-reinforcement-learning/">[rv] reinforcement learning</a></h3></div><div class="post-content"><div class="card"><p><h1 id="Reinforcement-Learning-P1-：Basics"><a href="#Reinforcement-Learning-P1-：Basics" class="headerlink" title="Reinforcement Learning P1 ：Basics"></a>Reinforcement Learning P1 ：Basics</h1><h2 id="Supervised-Learning→RL"><a href="#Supervised-Learning→RL" class="headerlink" title="Supervised Learning→RL"></a>Supervised Learning→RL</h2><p>Supervised Learning：给定 label</p>
+<p>Self Supervised Learning：自动生成 label</p>
+<p>Unsupervised Learning(Auto-encoder)：没用到人类的 label，但事实上仍然还有 label 只不过不需要用人力生成</p>
+<p>RL：机器当我们给它一个输入的时候，我们不知道最佳的输出（label）应该是什么。如下棋。</p>
+<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><img src="https://s2.loli.net/2022/07/02/47o2ubILgfhtE6w.png" alt="image-20220702145935497" style="zoom:50%;" />
+
+<h2 id="Machine-Learning-≈-Looking-for-a-Function"><a href="#Machine-Learning-≈-Looking-for-a-Function" class="headerlink" title="Machine Learning ≈ Looking for a Function"></a>Machine Learning ≈ Looking for a Function</h2><p>机器学习就是找一个 Function，Reinforcement Learning 也是，这个 Function 即 Actor 本身，要做的就是最大化 reward 之总和。</p>
+<p>例：Atari Space Invador。Actor：操作对象。环境：游戏场景。Observation：游戏画面。</p>
+<p>例：围棋。稀疏 Reward，只有游戏结束（输、赢）才能够拿到 Reward。</p>
+<h2 id="Machine-Learning-is-so-simple-……"><a href="#Machine-Learning-is-so-simple-……" class="headerlink" title="Machine Learning is so simple ……"></a>Machine Learning is so simple ……</h2><p>Machine Learning 三个步骤：</p>
+<ol>
+<li>定义含待求未知数的 Function</li>
+<li>定义 Loss Function</li>
+<li>Optimization，minimize loss</li>
+</ol>
+<p>而 RL 其实也是一模一样的三个步骤</p>
+<h3 id="Step-1-Function-with-Unknown"><a href="#Step-1-Function-with-Unknown" class="headerlink" title="Step 1: Function with Unknown"></a>Step 1: Function with Unknown</h3><p>Function (in RL) &#x3D; Actor, RL 中的 Actor 即神经网络，通称 Policy 的 Network。</p>
+<p>神经网络输入：the observation of machine represented as a vector or a matrix。</p>
+<p>神经网络输出：each action corresponds to a neuron in output layer。</p>
+<p><img src="https://s2.loli.net/2022/07/03/nj8qFcTSyQ1RCBM.png" alt="image-20220702151119061"></p>
+<p>为什么输出结果是概率分布？引入随机性。</p>
+<h3 id="Step-2-Define-“Loss”"><a href="#Step-2-Define-“Loss”" class="headerlink" title="Step 2: Define “Loss”"></a>Step 2: Define “Loss”</h3><p>从游戏开始到结束的这整个过程被称之为一个 &#x3D;&#x3D;Episode&#x3D;&#x3D;,</p>
+<p>将整个游戏的过程中 Actor 採取非常多的行为得到的 Reward 通通集合起来便是 &#x3D;&#x3D;Total Reward (Return)&#x3D;&#x3D;。$R &#x3D; \sum^{T}_{t&#x3D;1}r_t$ 。</p>
+<p>Return 是最大化的对象，我们要最小化 loss，可以定义 loss &#x3D; -R。</p>
+<h3 id="Step-3-Optimization"><a href="#Step-3-Optimization" class="headerlink" title="Step 3: Optimization"></a>Step 3: Optimization</h3><p>将整个游戏的过程中 s 跟 a 所形成的这个 Sequence 叫做 Trajectory。符号表示为 $\tau &#x3D; {s_1, a_1,s_2,a_2,…}$。</p>
+<p>通常说，Reward Function 在定义的时候和 Action 与 Observation 都有关联。即 $r_i$ 和 $s_i$  和 $a_i$ 有关系。优化 Return 就行。</p>
+<p>但是 RL 困难之处在于它不是一个一般的 Optimization 的问题。</p>
+<p>第一个问题是，Actor 的输出是有随机性的。 Network 裡面的某一个 Layer 每次产生出来结果是不一样的。第二，Environment 只是一个黑盒，且包含随机性。</p>
+<p>与 GAN 的对比。</p>
+<p>相同：GAN 中 调整 Generator 的参数让 Discriminator 的输出越大越好。RL 中调整 ACtor 的参数让 Environment 的 Reward 越大越好。</p>
+<p>不同：Discriminator 是 Network，但 Environment 只是个黑盒。不能用 GD 调整 Environment。</p>
+<h1 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h1><h3 id="How-to-control-your-actor"><a href="#How-to-control-your-actor" class="headerlink" title="How to control your actor"></a>How to control your actor</h3><img src="https://s2.loli.net/2022/07/02/v7TwXC5UEJWoGdL.png" alt="image-20220702152953732" style="zoom:50%;" />
+
+<p>可以把它想成一个分类的问题。即 s 是 Actor 的输入, $\hat{a}$(Ground Truth) 就是 Label。</p>
+<p>计算 Actor 的输出跟 Ground Truth 之间的 Cross-entropy，那接下来就可以定义一个 Loss。提示：根据交叉熵的定义，预测分布和真实分布有相同的分布时交叉熵最小。Loss 越小，就等价于预测值越接近真实值。</p>
+<img src="https://s2.loli.net/2022/07/02/Zb6yw2HEv38tVJM.png" alt="image-20220702153405916" style="zoom:50%;" />
+
+<p>模型训练</p>
+<img src="https://s2.loli.net/2022/07/02/T3mxPShAgQp6ZKY.png" alt="image-20220702153533859" style="zoom:50%;" />
+
+<p>用数值 A 表示代替 +1&#x2F;-1，就可以实现表示动作的好坏程度。Loss 改写为：<br>$$<br>L&#x3D;\sum A_ne_n<br>$$</p>
+<h2 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h2><h2 id="Version-0"><a href="#Version-0" class="headerlink" title="Version 0"></a>Version 0</h2><p>用随机的  Actor 去跟环境做互动收集训练资料获得 ${s_i, a_i}$。再根据情况好坏为之赋予 $r_i$。</p>
+<p>最简单的但不正确的版本。短视近利。事实上，每一个行为都会影响到接下来发生的事情。例：Space Invador 中，由于只有开火才能得到正 Reward，故他会一直开火。</p>
+<p>Reward Delay：牺牲短期的利益,以换取更长程的目标。</p>
+<h2 id="Version-1"><a href="#Version-1" class="headerlink" title="Version 1"></a>Version 1</h2><p>&#x3D;&#x3D;Cumulated Reward&#x3D;&#x3D;：把当下与未来所有的 Reward 加起来评估一个 Action 的好坏。<br>$$<br>G_t &#x3D; \sum^{N}_{n&#x3D;t} r_n<br>$$<br>用 $G_i$ 表示每个 ${s_i, a_i}$ 对应的 reward。</p>
+<p>问题在于：未来发生的影响中，有些影响大有些影响小。</p>
+<h2 id="Version-2"><a href="#Version-2" class="headerlink" title="Version 2"></a>Version 2</h2><p>加上递减权重 $\gamma$。未来的 reward 中，离当下近的表示影响更大。<br>$$<br>G’<em>t &#x3D; \sum^{N}</em>{n&#x3D;t} \gamma^{n-t}r_n<br>$$</p>
+<h2 id="Version-3"><a href="#Version-3" class="headerlink" title="Version 3"></a>Version 3</h2><p>做标准化，因为好或坏是相对的。</p>
+<p>一个最简单的方法就是：把所有的 G’ 都减掉一个 b，即&#x3D;&#x3D;Baseline&#x3D;&#x3D;。</p>
+<h2 id="Policy-Gradient-1"><a href="#Policy-Gradient-1" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h2><img src="https://s2.loli.net/2022/07/03/GJB31Hvkh4InrgR.png" alt="image-20220702155759971" style="zoom:50%;" />
+
+<p>其中，$L &#x3D; \sum A_n e_n$。$A_n$ 就是 Reward，$e_n$ 就是交叉熵。</p>
+<p>一般的 Training，Data Collection 都是在 For 循环之外。但在 RL 裡面收集资料是在 For 循环裡面。这意味着更新一次参数以后，就要重新收集资料，因此 RL 的训练过程非常花时间。</p>
+<p>为什么不把 Data Collection 放在 For 循环之外？彼之砒霜，吾之蜜糖。因为由 $θ_{i-1}$ 所收集出来的资料不一定适合拿来 Update $θ_{i}$ 的参数。</p>
+<p>故同一个 Action 同一个行为，对于不同的 Actor 而言，它的好是不一样的。更新后的 Actor，可能 Trajectory 就会跟之前出现区别。</p>
+<h3 id="On-policy-v-s-Off-policy"><a href="#On-policy-v-s-Off-policy" class="headerlink" title="On-policy v.s. Off-policy"></a>On-policy v.s. Off-policy</h3><p>被训练的 Actor 与跟环境互动的 Actor 是同一个叫做 &#x3D;&#x3D;On-policy  Learning&#x3D;&#x3D;。</p>
+<p>反之，为 &#x3D;&#x3D;Off-policy Learning&#x3D;&#x3D;。</p>
+<p>Off-policy 的好处：不用一直收集资料。可以收一次资料，就 Update 参数很多次。</p>
+<p>显然上文所述为 On-policy Learning。</p>
+<h3 id="Off-policy-→-Proximal-Policy-Optimization-PPO"><a href="#Off-policy-→-Proximal-Policy-Optimization-PPO" class="headerlink" title="Off-policy → Proximal Policy Optimization(PPO)"></a>Off-policy → Proximal Policy Optimization(PPO)</h3><p>Off-policy 的经典算法： Proximal Policy Optimization。</p>
+<p>Off-policy 的重点：在训练的那个 Network，要知道自己跟别人之间的差距，它要有意识到它跟环境互动的那个 Actor 是不一样的。</p>
+<p>例子：东施效颦，别瞎模仿。</p>
+<h3 id="Collection-Training-Data-Exploration"><a href="#Collection-Training-Data-Exploration" class="headerlink" title="Collection Training Data: Exploration"></a>Collection Training Data: Exploration</h3><p>Exploration：Actor 在採取行为的时候有随机性的。随机性大一点意味着能够收集到比较丰富的资料。实现方法：增大 Actor 的 Output（Distribution）的 Entropy；在 Actor 参数上加 Noise。</p>
+<h2 id="Critic"><a href="#Critic" class="headerlink" title="Critic"></a>Critic</h2><p>Critic 用以评估一个 Actor 的好坏。Given actor 𝜃, how good it is when observing 𝑠 (and taking action 𝑎)。</p>
+<p>本课程中 Critic 叫做 &#x3D;&#x3D;Value Function&#x3D;&#x3D;，用 $V^θ(s)$ 来表示。输出一个 scalar（Discounted Cumulated Reward）。</p>
+<p>故 Value Function 的作用就是：对某一个参数为 $\theta$ 的 Actor 来说，如果它已经看到某一个游戏画面 s，那接下来会得到的 Discounted Cumulated Reward 应该是多少。</p>
+<p>DCR 需要未来的 Reward 来计算。但当下怎么知道未来的 Reward 呢？Value Function 的能力就是要未卜先知。</p>
+<h2 id="How-to-estimate-V-θ-s"><a href="#How-to-estimate-V-θ-s" class="headerlink" title="How to estimate $ V^θ(s) $"></a>How to estimate $ V^θ(s) $</h2><h3 id="Monte-Carlo-MC-based-approach"><a href="#Monte-Carlo-MC-based-approach" class="headerlink" title="Monte-Carlo (MC) based approach"></a>Monte-Carlo (MC) based approach</h3><p>MC：把 Actor 拿去跟环境互动很多轮，可以得到每轮的 DCR。</p>
+<p>那么 Value Function 就得到一笔训练资料，训练目标是：如果看到 $s_a$ 作为输入，那它的输出 $ V^θ(s_a) $ 应该要跟 G’a 越接近越好。</p>
+<img src="https://s2.loli.net/2022/07/02/jz5FaG1xdcvsWI7.png" alt="image-20220702161849346" style="zoom: 50%;" />
+
+
+
+<h3 id="Temporal-difference-TD-approach"><a href="#Temporal-difference-TD-approach" class="headerlink" title="Temporal-difference (TD) approach"></a>Temporal-difference (TD) approach</h3><p>一轮互动可能无法终止或者很长。</p>
+<p>TD：不用玩完整场游戏，才能得到训练 Value 的资料。虽然我们不知道，$ V^θ(s_t)$ 和 $ V^θ(s_{t+1})$ 应该是什么，但是我们可以让 $ V^θ(s_t)$  与 $ \gamma V^θ(s_{t+1})$ 的差值逼近已知的 $r_t$。</p>
+<img src="https://s2.loli.net/2022/07/02/lazNsUr4dnBRx1k.png" alt="image-20220702162248677" style="zoom:50%;" />
+
+<h3 id="MC-v-s-TD"><a href="#MC-v-s-TD" class="headerlink" title="MC v.s. TD"></a>MC v.s. TD</h3><img src="https://s2.loli.net/2022/07/03/SrMDN6TPgmFfh7v.png" alt="image-20220702162905728" style="zoom:50%;" />
+
+
+
+<h2 id="Version-3-5"><a href="#Version-3-5" class="headerlink" title="Version 3.5"></a>Version 3.5</h2><p>把 baseline 设成 $V^θ(S)$。把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; G’_t-V^θ(s_t)<br>$$<br>为什么这样可以？我们知道 $ V^θ(s_t)$是看到某一个画面 $s_t$ 以后，接下来会得到的 (加权) Reward。它其实是一个期望，因为有随机性，即每次的 $a_t$ 可能不同，故每次可能会得到不一样的 Reward。</p>
+<img src="https://s2.loli.net/2022/07/02/krBqTm6nCYiFKMG.png" alt="image-20220702163444448" style="zoom:50%;" />
+
+<p>图中 Gt’ 是 sample 某一个 trajectory 的结果，而$ V^θ(s_t)$ 是很多条路径平均以后的结果。</p>
+<p>问题在于：把一个 sample 去减掉平均，这样会准吗？也许这个sample 特别好或特别坏。为什麽不是拿平均去减掉平均？</p>
+<h2 id="Version-4"><a href="#Version-4" class="headerlink" title="Version 4"></a>Version 4</h2><p>最后一个版本：平均去减掉平均。这就是 &#x3D;&#x3D;Advantage Actor-Critic&#x3D;&#x3D;。</p>
+<p>把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; r_t+V^θ(s_{t+1})-V^θ(s_t)<br>$$<br><img src="https://s2.loli.net/2022/07/03/M72tBQOvFV5lpsX.png" alt="image-20220702163949638" style="zoom:50%;" /></p>
+<h2 id="Tip-of-Actor-Critic"><a href="#Tip-of-Actor-Critic" class="headerlink" title="Tip of Actor-Critic"></a>Tip of Actor-Critic</h2><p>Actor 和 Critic 都是 Network，他们的输入可以公用 CNN。</p>
+<h2 id="Sparse-Reward"><a href="#Sparse-Reward" class="headerlink" title="Sparse Reward"></a>Sparse Reward</h2><p>Sparse Reward：$r_t$ &#x3D; 0 in most cases。例如拧螺丝。</p>
+<p>解决办法：reward shaping。</p>
+<h2 id="Imitation-Learning"><a href="#Imitation-Learning" class="headerlink" title="Imitation Learning"></a>Imitation Learning</h2><p>Actor 可以与环境互动，但 reward function 不知道怎么定义。</p>
+<p>解决办法：根据专家的演示 ${\hat{\tau_1}, \hat{\tau_2}, …}$ 进行模仿学习。</p>
+<p>例子：自动驾驶，机械臂抓举。</p>
+<p>问题：专家们只对有限的观察进行抽样。</p>
+<h2 id="Inverse-Reinforcement-Learning"><a href="#Inverse-Reinforcement-Learning" class="headerlink" title="Inverse Reinforcement Learning"></a>Inverse Reinforcement Learning</h2><p>使用 reward function 找到最佳 actor。</p>
+<p>原则：The teacher is always the best。</p>
+<p>方法论：</p>
+<img src="https://s2.loli.net/2022/07/02/YR12xlTz8PwE7sG.png" alt="image-20220702164853222" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/07/02/FDgLe1CdnYfmhoU.png" alt="image-20220702165029388" style="zoom:50%;" />
+
+<p>和 GAN 的类比理解</p>
+<p>GAN 中 Generator 的优化目标是产生跟 Ground Truth 的很像的结果，IRL 中 Actor 的优化目标是产生跟 Expert 的很像的结果。</p>
+<p>GAN 中 Discriminator 的优化目标是产生分辨 Ground Truth 和 Generator 的输出值，给 Ground Truth 打高分，IRL 中 Reward 则是给 Expert 打高分。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 2401 words, 8 min 0 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-machine-learning-courses/">[ml][rv] sysu-courses</a></h3></div><div class="post-content"><div class="card"><p><h4 id="1-线性回归-逻辑回归"><a href="#1-线性回归-逻辑回归" class="headerlink" title="1. 线性回归 + 逻辑回归"></a>1. 线性回归 + 逻辑回归</h4><blockquote>
 <p>TIPS：什么是线性回归逻辑回归，损失函数有可能带正则项，为什么要加正则项因为要防止过拟合，损失函数要怎么定义，梯度下降好处有什么坏处有什么，最优参数表达式怎么写的</p>
 </blockquote>
 <p><strong>损失函数</strong></p>
@@ -689,112 +794,7 @@
 <p>评价准则：Acc, ROC, AP, Recall (TPR, true position rate), Precision, Bayes error, Bias-variance<br>概念掌握<br>Bayes error：取一个后验概率最大的去作为模型预测的输出<br>Bias-variance：把模型的误差做一个偏执方差分解，需要直到模型的偏置和方差，以及是由什么决定的</p>
 </blockquote>
 <p>PPT 3-4</p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 4526 words, 15 min 5 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-reinforcement-learning/">[rv] reinforcement learning</a></h3></div><div class="post-content"><div class="card"><p><h1 id="Reinforcement-Learning-P1-：Basics"><a href="#Reinforcement-Learning-P1-：Basics" class="headerlink" title="Reinforcement Learning P1 ：Basics"></a>Reinforcement Learning P1 ：Basics</h1><h2 id="Supervised-Learning→RL"><a href="#Supervised-Learning→RL" class="headerlink" title="Supervised Learning→RL"></a>Supervised Learning→RL</h2><p>Supervised Learning：给定 label</p>
-<p>Self Supervised Learning：自动生成 label</p>
-<p>Unsupervised Learning(Auto-encoder)：没用到人类的 label，但事实上仍然还有 label 只不过不需要用人力生成</p>
-<p>RL：机器当我们给它一个输入的时候，我们不知道最佳的输出（label）应该是什么。如下棋。</p>
-<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><img src="https://s2.loli.net/2022/07/02/47o2ubILgfhtE6w.png" alt="image-20220702145935497" style="zoom:50%;" />
-
-<h2 id="Machine-Learning-≈-Looking-for-a-Function"><a href="#Machine-Learning-≈-Looking-for-a-Function" class="headerlink" title="Machine Learning ≈ Looking for a Function"></a>Machine Learning ≈ Looking for a Function</h2><p>机器学习就是找一个 Function，Reinforcement Learning 也是，这个 Function 即 Actor 本身，要做的就是最大化 reward 之总和。</p>
-<p>例：Atari Space Invador。Actor：操作对象。环境：游戏场景。Observation：游戏画面。</p>
-<p>例：围棋。稀疏 Reward，只有游戏结束（输、赢）才能够拿到 Reward。</p>
-<h2 id="Machine-Learning-is-so-simple-……"><a href="#Machine-Learning-is-so-simple-……" class="headerlink" title="Machine Learning is so simple ……"></a>Machine Learning is so simple ……</h2><p>Machine Learning 三个步骤：</p>
-<ol>
-<li>定义含待求未知数的 Function</li>
-<li>定义 Loss Function</li>
-<li>Optimization，minimize loss</li>
-</ol>
-<p>而 RL 其实也是一模一样的三个步骤</p>
-<h3 id="Step-1-Function-with-Unknown"><a href="#Step-1-Function-with-Unknown" class="headerlink" title="Step 1: Function with Unknown"></a>Step 1: Function with Unknown</h3><p>Function (in RL) &#x3D; Actor, RL 中的 Actor 即神经网络，通称 Policy 的 Network。</p>
-<p>神经网络输入：the observation of machine represented as a vector or a matrix。</p>
-<p>神经网络输出：each action corresponds to a neuron in output layer。</p>
-<p><img src="https://s2.loli.net/2022/07/03/nj8qFcTSyQ1RCBM.png" alt="image-20220702151119061"></p>
-<p>为什么输出结果是概率分布？引入随机性。</p>
-<h3 id="Step-2-Define-“Loss”"><a href="#Step-2-Define-“Loss”" class="headerlink" title="Step 2: Define “Loss”"></a>Step 2: Define “Loss”</h3><p>从游戏开始到结束的这整个过程被称之为一个 &#x3D;&#x3D;Episode&#x3D;&#x3D;,</p>
-<p>将整个游戏的过程中 Actor 採取非常多的行为得到的 Reward 通通集合起来便是 &#x3D;&#x3D;Total Reward (Return)&#x3D;&#x3D;。$R &#x3D; \sum^{T}_{t&#x3D;1}r_t$ 。</p>
-<p>Return 是最大化的对象，我们要最小化 loss，可以定义 loss &#x3D; -R。</p>
-<h3 id="Step-3-Optimization"><a href="#Step-3-Optimization" class="headerlink" title="Step 3: Optimization"></a>Step 3: Optimization</h3><p>将整个游戏的过程中 s 跟 a 所形成的这个 Sequence 叫做 Trajectory。符号表示为 $\tau &#x3D; {s_1, a_1,s_2,a_2,…}$。</p>
-<p>通常说，Reward Function 在定义的时候和 Action 与 Observation 都有关联。即 $r_i$ 和 $s_i$  和 $a_i$ 有关系。优化 Return 就行。</p>
-<p>但是 RL 困难之处在于它不是一个一般的 Optimization 的问题。</p>
-<p>第一个问题是，Actor 的输出是有随机性的。 Network 裡面的某一个 Layer 每次产生出来结果是不一样的。第二，Environment 只是一个黑盒，且包含随机性。</p>
-<p>与 GAN 的对比。</p>
-<p>相同：GAN 中 调整 Generator 的参数让 Discriminator 的输出越大越好。RL 中调整 ACtor 的参数让 Environment 的 Reward 越大越好。</p>
-<p>不同：Discriminator 是 Network，但 Environment 只是个黑盒。不能用 GD 调整 Environment。</p>
-<h1 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h1><h3 id="How-to-control-your-actor"><a href="#How-to-control-your-actor" class="headerlink" title="How to control your actor"></a>How to control your actor</h3><img src="https://s2.loli.net/2022/07/02/v7TwXC5UEJWoGdL.png" alt="image-20220702152953732" style="zoom:50%;" />
-
-<p>可以把它想成一个分类的问题。即 s 是 Actor 的输入, $\hat{a}$(Ground Truth) 就是 Label。</p>
-<p>计算 Actor 的输出跟 Ground Truth 之间的 Cross-entropy，那接下来就可以定义一个 Loss。提示：根据交叉熵的定义，预测分布和真实分布有相同的分布时交叉熵最小。Loss 越小，就等价于预测值越接近真实值。</p>
-<img src="https://s2.loli.net/2022/07/02/Zb6yw2HEv38tVJM.png" alt="image-20220702153405916" style="zoom:50%;" />
-
-<p>模型训练</p>
-<img src="https://s2.loli.net/2022/07/02/T3mxPShAgQp6ZKY.png" alt="image-20220702153533859" style="zoom:50%;" />
-
-<p>用数值 A 表示代替 +1&#x2F;-1，就可以实现表示动作的好坏程度。Loss 改写为：<br>$$<br>L&#x3D;\sum A_ne_n<br>$$</p>
-<h2 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h2><h2 id="Version-0"><a href="#Version-0" class="headerlink" title="Version 0"></a>Version 0</h2><p>用随机的  Actor 去跟环境做互动收集训练资料获得 ${s_i, a_i}$。再根据情况好坏为之赋予 $r_i$。</p>
-<p>最简单的但不正确的版本。短视近利。事实上，每一个行为都会影响到接下来发生的事情。例：Space Invador 中，由于只有开火才能得到正 Reward，故他会一直开火。</p>
-<p>Reward Delay：牺牲短期的利益,以换取更长程的目标。</p>
-<h2 id="Version-1"><a href="#Version-1" class="headerlink" title="Version 1"></a>Version 1</h2><p>&#x3D;&#x3D;Cumulated Reward&#x3D;&#x3D;：把当下与未来所有的 Reward 加起来评估一个 Action 的好坏。<br>$$<br>G_t &#x3D; \sum^{N}_{n&#x3D;t} r_n<br>$$<br>用 $G_i$ 表示每个 ${s_i, a_i}$ 对应的 reward。</p>
-<p>问题在于：未来发生的影响中，有些影响大有些影响小。</p>
-<h2 id="Version-2"><a href="#Version-2" class="headerlink" title="Version 2"></a>Version 2</h2><p>加上递减权重 $\gamma$。未来的 reward 中，离当下近的表示影响更大。<br>$$<br>G’<em>t &#x3D; \sum^{N}</em>{n&#x3D;t} \gamma^{n-t}r_n<br>$$</p>
-<h2 id="Version-3"><a href="#Version-3" class="headerlink" title="Version 3"></a>Version 3</h2><p>做标准化，因为好或坏是相对的。</p>
-<p>一个最简单的方法就是：把所有的 G’ 都减掉一个 b，即&#x3D;&#x3D;Baseline&#x3D;&#x3D;。</p>
-<h2 id="Policy-Gradient-1"><a href="#Policy-Gradient-1" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h2><img src="https://s2.loli.net/2022/07/03/GJB31Hvkh4InrgR.png" alt="image-20220702155759971" style="zoom:50%;" />
-
-<p>其中，$L &#x3D; \sum A_n e_n$。$A_n$ 就是 Reward，$e_n$ 就是交叉熵。</p>
-<p>一般的 Training，Data Collection 都是在 For 循环之外。但在 RL 裡面收集资料是在 For 循环裡面。这意味着更新一次参数以后，就要重新收集资料，因此 RL 的训练过程非常花时间。</p>
-<p>为什么不把 Data Collection 放在 For 循环之外？彼之砒霜，吾之蜜糖。因为由 $θ_{i-1}$ 所收集出来的资料不一定适合拿来 Update $θ_{i}$ 的参数。</p>
-<p>故同一个 Action 同一个行为，对于不同的 Actor 而言，它的好是不一样的。更新后的 Actor，可能 Trajectory 就会跟之前出现区别。</p>
-<h3 id="On-policy-v-s-Off-policy"><a href="#On-policy-v-s-Off-policy" class="headerlink" title="On-policy v.s. Off-policy"></a>On-policy v.s. Off-policy</h3><p>被训练的 Actor 与跟环境互动的 Actor 是同一个叫做 &#x3D;&#x3D;On-policy  Learning&#x3D;&#x3D;。</p>
-<p>反之，为 &#x3D;&#x3D;Off-policy Learning&#x3D;&#x3D;。</p>
-<p>Off-policy 的好处：不用一直收集资料。可以收一次资料，就 Update 参数很多次。</p>
-<p>显然上文所述为 On-policy Learning。</p>
-<h3 id="Off-policy-→-Proximal-Policy-Optimization-PPO"><a href="#Off-policy-→-Proximal-Policy-Optimization-PPO" class="headerlink" title="Off-policy → Proximal Policy Optimization(PPO)"></a>Off-policy → Proximal Policy Optimization(PPO)</h3><p>Off-policy 的经典算法： Proximal Policy Optimization。</p>
-<p>Off-policy 的重点：在训练的那个 Network，要知道自己跟别人之间的差距，它要有意识到它跟环境互动的那个 Actor 是不一样的。</p>
-<p>例子：东施效颦，别瞎模仿。</p>
-<h3 id="Collection-Training-Data-Exploration"><a href="#Collection-Training-Data-Exploration" class="headerlink" title="Collection Training Data: Exploration"></a>Collection Training Data: Exploration</h3><p>Exploration：Actor 在採取行为的时候有随机性的。随机性大一点意味着能够收集到比较丰富的资料。实现方法：增大 Actor 的 Output（Distribution）的 Entropy；在 Actor 参数上加 Noise。</p>
-<h2 id="Critic"><a href="#Critic" class="headerlink" title="Critic"></a>Critic</h2><p>Critic 用以评估一个 Actor 的好坏。Given actor 𝜃, how good it is when observing 𝑠 (and taking action 𝑎)。</p>
-<p>本课程中 Critic 叫做 &#x3D;&#x3D;Value Function&#x3D;&#x3D;，用 $V^θ(s)$ 来表示。输出一个 scalar（Discounted Cumulated Reward）。</p>
-<p>故 Value Function 的作用就是：对某一个参数为 $\theta$ 的 Actor 来说，如果它已经看到某一个游戏画面 s，那接下来会得到的 Discounted Cumulated Reward 应该是多少。</p>
-<p>DCR 需要未来的 Reward 来计算。但当下怎么知道未来的 Reward 呢？Value Function 的能力就是要未卜先知。</p>
-<h2 id="How-to-estimate-V-θ-s"><a href="#How-to-estimate-V-θ-s" class="headerlink" title="How to estimate $ V^θ(s) $"></a>How to estimate $ V^θ(s) $</h2><h3 id="Monte-Carlo-MC-based-approach"><a href="#Monte-Carlo-MC-based-approach" class="headerlink" title="Monte-Carlo (MC) based approach"></a>Monte-Carlo (MC) based approach</h3><p>MC：把 Actor 拿去跟环境互动很多轮，可以得到每轮的 DCR。</p>
-<p>那么 Value Function 就得到一笔训练资料，训练目标是：如果看到 $s_a$ 作为输入，那它的输出 $ V^θ(s_a) $ 应该要跟 G’a 越接近越好。</p>
-<img src="https://s2.loli.net/2022/07/02/jz5FaG1xdcvsWI7.png" alt="image-20220702161849346" style="zoom: 50%;" />
-
-
-
-<h3 id="Temporal-difference-TD-approach"><a href="#Temporal-difference-TD-approach" class="headerlink" title="Temporal-difference (TD) approach"></a>Temporal-difference (TD) approach</h3><p>一轮互动可能无法终止或者很长。</p>
-<p>TD：不用玩完整场游戏，才能得到训练 Value 的资料。虽然我们不知道，$ V^θ(s_t)$ 和 $ V^θ(s_{t+1})$ 应该是什么，但是我们可以让 $ V^θ(s_t)$  与 $ \gamma V^θ(s_{t+1})$ 的差值逼近已知的 $r_t$。</p>
-<img src="https://s2.loli.net/2022/07/02/lazNsUr4dnBRx1k.png" alt="image-20220702162248677" style="zoom:50%;" />
-
-<h3 id="MC-v-s-TD"><a href="#MC-v-s-TD" class="headerlink" title="MC v.s. TD"></a>MC v.s. TD</h3><img src="https://s2.loli.net/2022/07/03/SrMDN6TPgmFfh7v.png" alt="image-20220702162905728" style="zoom:50%;" />
-
-
-
-<h2 id="Version-3-5"><a href="#Version-3-5" class="headerlink" title="Version 3.5"></a>Version 3.5</h2><p>把 baseline 设成 $V^θ(S)$。把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; G’_t-V^θ(s_t)<br>$$<br>为什么这样可以？我们知道 $ V^θ(s_t)$是看到某一个画面 $s_t$ 以后，接下来会得到的 (加权) Reward。它其实是一个期望，因为有随机性，即每次的 $a_t$ 可能不同，故每次可能会得到不一样的 Reward。</p>
-<img src="https://s2.loli.net/2022/07/02/krBqTm6nCYiFKMG.png" alt="image-20220702163444448" style="zoom:50%;" />
-
-<p>图中 Gt’ 是 sample 某一个 trajectory 的结果，而$ V^θ(s_t)$ 是很多条路径平均以后的结果。</p>
-<p>问题在于：把一个 sample 去减掉平均，这样会准吗？也许这个sample 特别好或特别坏。为什麽不是拿平均去减掉平均？</p>
-<h2 id="Version-4"><a href="#Version-4" class="headerlink" title="Version 4"></a>Version 4</h2><p>最后一个版本：平均去减掉平均。这就是 &#x3D;&#x3D;Advantage Actor-Critic&#x3D;&#x3D;。</p>
-<p>把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; r_t+V^θ(s_{t+1})-V^θ(s_t)<br>$$<br><img src="https://s2.loli.net/2022/07/03/M72tBQOvFV5lpsX.png" alt="image-20220702163949638" style="zoom:50%;" /></p>
-<h2 id="Tip-of-Actor-Critic"><a href="#Tip-of-Actor-Critic" class="headerlink" title="Tip of Actor-Critic"></a>Tip of Actor-Critic</h2><p>Actor 和 Critic 都是 Network，他们的输入可以公用 CNN。</p>
-<h2 id="Sparse-Reward"><a href="#Sparse-Reward" class="headerlink" title="Sparse Reward"></a>Sparse Reward</h2><p>Sparse Reward：$r_t$ &#x3D; 0 in most cases。例如拧螺丝。</p>
-<p>解决办法：reward shaping。</p>
-<h2 id="Imitation-Learning"><a href="#Imitation-Learning" class="headerlink" title="Imitation Learning"></a>Imitation Learning</h2><p>Actor 可以与环境互动，但 reward function 不知道怎么定义。</p>
-<p>解决办法：根据专家的演示 ${\hat{\tau_1}, \hat{\tau_2}, …}$ 进行模仿学习。</p>
-<p>例子：自动驾驶，机械臂抓举。</p>
-<p>问题：专家们只对有限的观察进行抽样。</p>
-<h2 id="Inverse-Reinforcement-Learning"><a href="#Inverse-Reinforcement-Learning" class="headerlink" title="Inverse Reinforcement Learning"></a>Inverse Reinforcement Learning</h2><p>使用 reward function 找到最佳 actor。</p>
-<p>原则：The teacher is always the best。</p>
-<p>方法论：</p>
-<img src="https://s2.loli.net/2022/07/02/YR12xlTz8PwE7sG.png" alt="image-20220702164853222" style="zoom:50%;" />
-
-<img src="https://s2.loli.net/2022/07/02/FDgLe1CdnYfmhoU.png" alt="image-20220702165029388" style="zoom:50%;" />
-
-<p>和 GAN 的类比理解</p>
-<p>GAN 中 Generator 的优化目标是产生跟 Ground Truth 的很像的结果，IRL 中 Actor 的优化目标是产生跟 Expert 的很像的结果。</p>
-<p>GAN 中 Discriminator 的优化目标是产生分辨 Ground Truth 和 Generator 的输出值，给 Ground Truth 打高分，IRL 中 Reward 则是给 Expert 打高分。</p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 2401 words, 8 min 0 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-domain-adaptation/">[ml][rv] domain adaptation</a></h3></div><div class="post-content"><div class="card"><p><h1 id="27-Domain-Adaptation"><a href="#27-Domain-Adaptation" class="headerlink" title="27 Domain Adaptation"></a>27 Domain Adaptation</h1><p>训练资料跟测试资料的分布是不一样的，叫做 &#x3D;&#x3D;Domain Shift&#x3D;&#x3D;。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 4526 words, 15 min 5 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-domain-adaptation/">[ml][rv] domain adaptation</a></h3></div><div class="post-content"><div class="card"><p><h1 id="27-Domain-Adaptation"><a href="#27-Domain-Adaptation" class="headerlink" title="27 Domain Adaptation"></a>27 Domain Adaptation</h1><p>训练资料跟测试资料的分布是不一样的，叫做 &#x3D;&#x3D;Domain Shift&#x3D;&#x3D;。</p>
 <p>解决办法是 &#x3D;&#x3D;Domain Adaptation&#x3D;&#x3D;，它也可以看做是 &#x3D;&#x3D;Transfer Learning&#x3D;&#x3D; 的一种。</p>
 <p>Transfer Learning ：在 A 任务上学到的技能可以被用在 B 任务上</p>
 <p>Domain Adaptation：你的训练资料是一个 Domain，你的测试资料是另外一个 Domain，你在训练资料上面学到的资讯可以要把它用到另外一个 Domain 上。</p>
