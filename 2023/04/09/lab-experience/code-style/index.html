@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Yourname"><title> · Hexo</title><meta name="description" content="1. 命名
+
+
+Type
+Public
+Internal
+
+
+
+Modules
+lower_with_under
+_lower_with_under
+
+
+Packages
+lower_with_under
+
+
+
+Classes
+CapWords
+_CapWords
+
+
+Exceptions
+CapW"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">Home</a></li><li> <a href="/archives">Archives</a></li><li> <a href="/tags">Tags</a></li><li> <a href="/about">About</a></li><li> <a href="/links">Links</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>A simple and beautiful blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/Lhcfl"><i class="fa fa-github"></i></a></li><li><a href="mailto:yourname@example.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/jin-xin-4-68"><i class="fa fa-mortar-board"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Yourname</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a></a></h3></div><div class="post-content"><p><h3 id="1-命名"><a href="#1-命名" class="headerlink" title="1. 命名"></a>1. 命名</h3><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Public</th>
+<th>Internal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Modules</td>
+<td>lower_with_under</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Packages</td>
+<td>lower_with_under</td>
+<td></td>
+</tr>
+<tr>
+<td>Classes</td>
+<td>CapWords</td>
+<td>_CapWords</td>
+</tr>
+<tr>
+<td>Exceptions</td>
+<td>CapWords</td>
+<td></td>
+</tr>
+<tr>
+<td>Functions</td>
+<td>lower_with_under()</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Global&#x2F;Class Constants</td>
+<td>CAPS_WITH_UNDER</td>
+<td>_CAPS_WITH_UNDER</td>
+</tr>
+<tr>
+<td>Global&#x2F;Class Variables</td>
+<td>lower_with_under</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Instance Variables</td>
+<td>lower_with_under</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Method Names</td>
+<td>lower_with_under()</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Function&#x2F;Method Paramters</td>
+<td>lower_with_under</td>
+<td></td>
+</tr>
+<tr>
+<td>Local Variables</td>
+<td>lower_with_under</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="2-函数长度"><a href="#2-函数长度" class="headerlink" title="2. 函数长度"></a>2. 函数长度</h3><p>一般不超过 40 行</p>
+<h3 id="3-行长度"><a href="#3-行长度" class="headerlink" title="3. 行长度"></a>3. 行长度</h3><p>一般不超过 80 个字符</p>
+<h3 id="4-注释"><a href="#4-注释" class="headerlink" title="4. 注释"></a>4. 注释</h3><h5 id="4-1-文档字符串"><a href="#4-1-文档字符串" class="headerlink" title="4.1 文档字符串"></a>4.1 文档字符串</h5><p>包、类、模块或者函数的第一句话，一般使用三重引号包裹，对于只有一行的注释来说，尾部引号应该在同一行。对于多行注释一般按如下方式组织：首先是一行以句号，问号或惊叹号结尾的概述。接着是一个空行，然后是文档字符串剩下的部分，它应该与文档字符串的第一行的第一个引号对齐。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;A one line summary of the module or program, terminated by a period.</span><br><span class="line"></span><br><span class="line">Leave one blank line. The rest of this docstring should contain anoverall description of the module or program. Optionally, it may alsocontain a brief description of exported classes and functions and/or usageexamples.</span><br><span class="line"></span><br><span class="line">Typical usage example:</span><br><span class="line"></span><br><span class="line">foo= CLa55Foo()</span><br><span class="line">bar = foo.FunctionBar()</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-2-块注释或行注释"><a href="#4-2-块注释或行注释" class="headerlink" title="4.2 块注释或行注释"></a>4.2 块注释或行注释</h5><p>对于复杂的操作，应该在其操作开始前写上若干行注释。对于不是一目了然的代码，应在其行尾添加注释。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># We use a weighted dictionary search to find out where i is in</span><br><span class="line"># the array. We extrapolate position based on the largest num</span><br><span class="line"># in the array and the array size and then do binary search to</span><br><span class="line"># get the exact number</span><br><span class="line"></span><br><span class="line">if i &amp; (i-1) == 0: # True if i is 0 or a power of 2.</span><br></pre></td></tr></table></figure>
+
+<p>为了提高可读性，注释应该至少离开代码 2 个空格。</p>
+<h3 id="5-空行"><a href="#5-空行" class="headerlink" title="5. 空行"></a>5. 空行</h3><p>顶级定义之间空两行，比如函数或者类定义。方法定义，类定义与第一个方法之间，都应该空一行。函数或方法中，某些地方要是你觉得合适，就空行。</p>
+</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>Author: Yourname</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 495 words, 1 min 39 sec  read</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://example.com/2023/04/09/lab-experience/code-style/,Hexo,,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2023/04/09/lab-experience/lab-notes/" title="">Previous</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2023/04/09/machine-learning/lec5_%E9%9A%90%E5%90%AB%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B/" title="">Next</a></li></ul></div><script src="/js/visitors.js"></script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"Posts",PAGES:"Pages",CATEGORIES:"Categories",TAGS:"Tags",UNTITLED:"(Untitled)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Search..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>

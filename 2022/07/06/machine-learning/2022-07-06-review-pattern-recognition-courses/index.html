@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Yourname"><title>[ml][rv] pattern recognition · Hexo</title><meta name="description" content="1. 总览
+
+考核形式
+主要考对概念的一些理解，例如说偏置方差分解和过拟合欠拟合之间的关系
+计算有但不是太多
+在理解的基础上对算法进行记忆，比如 PCA &amp;amp; LDA，他们的目标函数优化这些都是要知道的
+2. 提取特征
+提取特征：Normalization(Chap. 9), PCA(Chap"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">Home</a></li><li> <a href="/archives">Archives</a></li><li> <a href="/tags">Tags</a></li><li> <a href="/about">About</a></li><li> <a href="/links">Links</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>A simple and beautiful blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/Lhcfl"><i class="fa fa-github"></i></a></li><li><a href="mailto:yourname@example.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/jin-xin-4-68"><i class="fa fa-mortar-board"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Yourname</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>[ml][rv] pattern recognition</a></h3></div><div class="post-content"><p><h3 id="1-总览"><a href="#1-总览" class="headerlink" title="1. 总览"></a>1. 总览</h3><img src="https://s2.loli.net/2022/06/25/NcpDeYXjQLCB7wb.png" alt="image-20220625120156682" style="zoom: 67%;" />
+
+<p><strong>考核形式</strong></p>
+<p>主要考对概念的一些理解，例如说偏置方差分解和过拟合欠拟合之间的关系</p>
+<p>计算有但不是太多</p>
+<p>在理解的基础上对算法进行记忆，比如 PCA &amp; LDA，他们的目标函数优化这些都是要知道的</p>
+<h3 id="2-提取特征"><a href="#2-提取特征" class="headerlink" title="2. 提取特征"></a>2. 提取特征</h3><blockquote>
+<p>提取特征：Normalization(Chap. 9), PCA(Chap. 5), FLD(Chap. 6), Sparse(Chap. 11), …<br>PCA 无监督，FLD 有监督地利用标签去提取特征的方法<br>Sparse 没有详细地去讲</p>
+</blockquote>
+<h4 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h4><img src="https://s2.loli.net/2022/06/25/Vu6rQ4LS8Rylxvb.png" alt="image-20220625122340062" style="zoom: 67%;" />
+
+<img src="https://s2.loli.net/2022/06/25/OfLYdTHaN3JwQX8.png" alt="image-20220625122352658" style="zoom:67%;" />
+
+<p>可以把范围从 [0, 1] 拉伸至任意范围。</p>
+<p>如果某一维度的最大值等于最小值，这个维度的数据可以丢掉。</p>
+<p>如果 0 值在原始数据中代表 “空”，那么应该把它规范成0。</p>
+<p>如果测试样例的数据范围大于 0 或 大于 1，有时候算法必须要求 [0, 1]，那么可以把小于 0 的值设为 0，大于 1 同理，如果算法不要求其实也可以这么做。</p>
+<p>如果能看出某维数据符合高斯分布，那么也可以化为标准高斯分布：</p>
+<img src="https://s2.loli.net/2022/06/25/5P1Z49mjxLMqrBH.png" alt="image-20220625122726742" style="zoom: 67%;" />
+
+<p>L-1 规范化：如果值非负，规范化后样例各维之和为 1</p>
+<img src="https://s2.loli.net/2022/06/25/cNhxoSBs9TGaEyZ.png" alt="image-20220625122931565" style="zoom:67%;" />
+
+<p>L-2 规范化：把数据规范化为单位向量</p>
+<img src="https://s2.loli.net/2022/06/25/G9Fc2trETn1ZvoU.png" alt="image-20220625122925127" style="zoom:67%;" />
+
+<h4 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h4><p>首先要会做 SVD 分解。</p>
+<img src="https://s2.loli.net/2022/06/25/Hn4AO2M1Ze8hL9v.png" alt="image-20220625155915036" style="zoom: 67%;" />
+
+<p><img src="https://s2.loli.net/2022/06/25/3rj7boJ9OiTKktw.png" alt="image-20220625155923920"></p>
+<h4 id="FLD"><a href="#FLD" class="headerlink" title="FLD"></a>FLD</h4><p>思想：把数据点进行投影，使得不同类别之间的数据距离尽可能大。</p>
+<p> <img src="https://s2.loli.net/2022/06/25/oudrltBzY3psvSE.png" alt="image-20220625160821944" style="zoom: 50%;" />     <img src="https://s2.loli.net/2022/06/25/v5VHwi7oY9ELePM.png" alt="image-20220625162319955" style="zoom: 50%;" /></p>
+<p>可分性的绝对要素：两个均值之间的距离 + 两个标准差。要实现分类，就需要最大化这二者的比例。</p>
+<p>注：PCA 和 FLD 中的 X 的尺寸都是 (dim x 1) 。因而，$$a^Ta$$ 的结果是一个值，$$aa^T$$ 的结果是一个矩阵。</p>
+<p>二分类的 FLD：</p>
+<img src="https://s2.loli.net/2022/06/25/1UghbLr4SEZizaY.png" alt="image-20220625165356810" style="zoom: 50%;" />
+
+<p>$$w$$：投影方向</p>
+<p>$$m_i$$ ：集合 i 的均值</p>
+<p>$$C_i$$ ：集合 i 的协方差矩阵</p>
+<p>$$<br>C_i &#x3D; \frac{1}{N_i} \sum_{x \in X_i} (x-m_i)(x-m_i)^T<br>$$</p>
+<p>传统 FLD 用散度矩阵而不是用协方差矩阵，散度矩阵 $$S_i &#x3D; N_iC_i$$</p>
+<p>类间散度矩阵 &amp; 类内散度矩阵：</p>
+<p>$$<br>S_B&#x3D;(m_1-m_2)(m_1-m_2)^T \<br>S_W &#x3D; S_1+S_2<br>$$</p>
+<p>目标函数（第一行的 m 是投影后的均值，第二行的 m 是向量）：</p>
+<p>$$<br>J &#x3D; \frac{(m_1-m_2)^2}{\sigma_1^2+\sigma_2^2} \<br>&#x3D; \frac{(m_1^T w-m_2^Tw) ^ 2}{\sigma_1^2+\sigma_2^2} \<br>&#x3D; \frac{w^T(m_1-m_2)(m_1-m_2)^Tw}{w^T(C_1+C_2)w} \<br>&#x3D; \frac{w^TS_Bw}{w^TS_Ww} \<br>$$</p>
+<p>如果一个均值向量扮演了所属类别的所有样本的代理，那么就可以用均值向量集合的散度矩阵代替 $$S_B$$</p>
+<p>$$<br>\sum^{2}_{i&#x3D;1}(m_i - \overline{m})(m_i - \overline{m}) ^T \<br>\overline{m} &#x3D; \frac{m_1+m_2}{2}<br>$$</p>
+<p>之后就可以计算以及规范化了。</p>
+<p>考虑至多类别呢？</p>
+<p>类内散度矩阵 </p>
+<p>$$<br>S_W &#x3D; \sum ^{K}<em>{k&#x3D;1} S_k &#x3D; \sum ^{K}</em>{k&#x3D;1}N_kC_k &#x3D; \sum ^{K}<em>{k&#x3D;1} \sum</em>{x \ in X_k}(x-m_i)(x-m_i)^T<br>$$</p>
+<p>总散度矩阵</p>
+<p>$$<br>S_T &#x3D; \sum ^{N}<em>{i&#x3D;1}(x_i-m)(x_i-m)^T \<br>m &#x3D; \frac{1}{N} \sum^{N}</em>{i&#x3D;1}x_i<br>$$</p>
+<p>类间散度矩阵</p>
+<p>$$<br>S_B &#x3D;\sum ^{K}_{k&#x3D;1}N_k(m_k-m)(m_k-m)^T<br>$$</p>
+<p>规律：总散度矩阵 &#x3D;  类内散度矩阵 + 类间散度矩阵。</p>
+<p>多分类问题中，类间散度矩阵不再是秩为 1 的矩阵，算法 6.1 不可用，故求解如下广义特征值问题来找最佳投影方向：</p>
+<p>$$<br>S_B w &#x3D; \lambda S_W w<br>$$</p>
+<p>当 $S_W$ 可逆，广义特征值问题等价于：</p>
+<p>$$<br>S_W ^ {-1} S_B w &#x3D; \lambda  w<br>$$</p>
+<p>那么如何找更多投影方向（降低更多维度）呢？类似 PCA，只要使用与前 K-1 个最大广义特征值对应的广义特征向量即可</p>
+<h4 id="Sparse"><a href="#Sparse" class="headerlink" title="Sparse"></a>Sparse</h4><p>含义：最小化 $$l_0$$$ norm（向量 x 的非零元素个数）</p>
+<p>$$<br>minimize\  ||x||_0 \<br>subject\ to\ Ax&#x3D;y<br>$$</p>
+<h3 id="3-分类器"><a href="#3-分类器" class="headerlink" title="3. 分类器"></a>3. 分类器</h3><blockquote>
+<p>分类器：kNN, SVM, Decision Tree, Ensemble, Regression, NN, CNN<br>kNN, SVM 前两个重要，后面都是简单提一下<br>CNN 也可以看作是个特征提取的方法</p>
+</blockquote>
+<h4 id="kNN（机器学习）"><a href="#kNN（机器学习）" class="headerlink" title="kNN（机器学习）"></a>kNN（机器学习）</h4><p>理解且会用</p>
+<p>缺陷以及解决办法</p>
+<ol>
+<li><p>出现平局：可以给不同的样本施加不同的权重，加强依赖样本的权重，降低不可信赖样本的影响。</p>
+</li>
+<li><p>离群点</p>
+</li>
+</ol>
+<p>复杂度 O(nd) [d是计算距离的代价]</p>
+<h4 id="SVM（机器学习）"><a href="#SVM（机器学习）" class="headerlink" title="SVM（机器学习）"></a>SVM（机器学习）</h4><h4 id="Decision-Tree-Regression（机器学习）"><a href="#Decision-Tree-Regression（机器学习）" class="headerlink" title="Decision Tree + Regression（机器学习）"></a>Decision Tree + Regression（机器学习）</h4><h4 id="Ensemble"><a href="#Ensemble" class="headerlink" title="Ensemble"></a>Ensemble</h4><h4 id="NN"><a href="#NN" class="headerlink" title="NN"></a>NN</h4><h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><h3 id="4-概率模型"><a href="#4-概率模型" class="headerlink" title="4. 概率模型"></a>4. 概率模型</h3><blockquote>
+<p>概率模型 (Chap. 8)：参数估计，非参，HMM，GMM<br>参数估计：点估计，贝叶斯估计，HMM<br>非参数估计：KDE<br>要知道 HMM 的隐马尔可夫性质 + 要知道 GMM 的概念</p>
+</blockquote>
+<p>概率模型：计算变量的概率或者概率分布的模型。</p>
+<p>参数估计：假设 PDF 服从某种函数形式，当指定其所有参数值之后，PDF 就完全确定，估计 PDF 就是估计参数。</p>
+<p>非参数估计：非参数不代表无参数（允许无限），用训练数据直接估计空间中任意点的密度 p(x|D)。</p>
+<p>生成模型：估计 p(x|y&#x3D;i) 和 p(y&#x3D;i)，根据贝叶斯定理求 p(y&#x3D;i|x)</p>
+<p>判别模型：直接估计 p(y&#x3D;i|x)</p>
+<p>这些模型都有两个步骤：推理和决策，分别是估计各种密度函数，根据估计得到的PDF对任意的？给出输出。</p>
+<h4 id="点估计（参）"><a href="#点估计（参）" class="headerlink" title="点估计（参）"></a>点估计（参）</h4><p>点估计（point estimation）是用样本统计量来估计总体参数，典型的如 MLE 和 MAP，把 $$\theta$$ 视作固定参数，目的是找这个最佳参数。</p>
+<p>p(D|theta) 不是 PDF，但 p(x|theta) 是。</p>
+<p>likelihood function of MLE：</p>
+<p>$$<br>l(\theta) &#x3D; p(D|\theta) &#x3D; \prod_{i}p(x_i|\theta)<br>$$</p>
+<p>高斯分布的最大似然估计，可以通过对 $ll(\theta)$ 求偏微分得到结果：</p>
+<p>$$<br>\mu &#x3D; \frac{1}{n} \sum^{n}<em>{i&#x3D;1}x_i \<br>\sigma^2 &#x3D; \frac{1}{n} \sum^{n}</em>{i&#x3D;1}(x_i-\mu)(x_i-\mu)^T<br>$$</p>
+<p>最大后验估计（MAP）：把参数 theta 自身的取值可能性考虑进来。如果一无所知就等价于 MLE。</p>
+<p>$$<br>\theta &#x3D; argmax_{\theta} l(\theta)p(\theta)<br>$$</p>
+<p>渐进性质（asymptotic property），如一致性（consistency）：随样本容量增大收敛到参数真值的估计量</p>
+<p>其他性质，无偏估计（unbiased estimate）：指估计量的期望和被估计量的真值相等</p>
+<p>完成 inference 后，如何决策？根据参数得到后验概率 p(y|x;theta) 得出结果，在 0-1 风险时，选择概率大的就行。</p>
+<img src="https://s2.loli.net/2022/06/29/rTozyVmcjG6n1RC.png" alt="image-20220625193547900" style="zoom: 33%;" />
+
+<h4 id="贝叶斯估计（参）"><a href="#贝叶斯估计（参）" class="headerlink" title="贝叶斯估计（参）"></a>贝叶斯估计（参）</h4><p>点估计是把 $\theta$ 看成固定参数，而贝叶斯估计 p(theta|D) 是估计一个 $$\theta$$ 的分布，而不是一个值（点）！</p>
+<p>高斯分布参数的贝叶斯估计：设参数 theta 的先验分布 p(theta)，数据 X &#x3D; {x1, … , xn}，估计 p(theta|D)。这里假设单变量，只估计 p(theta|D) 的高斯分布的均值 mu，方差 sigma^2 已知：</p>
+<ol>
+<li><p>根据已知的先验高斯分布 P(theta) &#x3D; N(mu0, sigma0^2)</p>
+</li>
+<li><p>根据贝叶斯定理和独立性，可以得 p(theta|D) &#x3D;</p>
+</li>
+</ol>
+<img src="https://s2.loli.net/2022/06/25/9nU37YI5kqDdj8A.png" alt="image-20220625191741658" style="zoom:50%;" />
+
+<p>估计均值 &amp; 方差为：</p>
+<img src="https://s2.loli.net/2022/06/29/mwhWvl2gLouRy8a.png" alt="image-20220625192656515" style="zoom:50%;" />
+
+<p>共轭先验conjugate prior：若 p(x|theta) ，存在先验 p(theta)，使得 p(x|theta) 和 p(theta) 有相同的函数形式，从而简化推导和计算。如高斯分布的共轭先验分布仍然是高斯分布。</p>
+<p>完成 inference 后，如何决策？输出一个分布，结果通常根据期望决定。</p>
+<h4 id="KDE（非参）"><a href="#KDE（非参）" class="headerlink" title="KDE（非参）"></a>KDE（非参）</h4><p>常用的参数形式基本都是单模的，不足以描述复杂的数据分布。因此应该直接以训练数据自身来估计分布。</p>
+<p>例：直方图。每维 n 个bin，那么 n 维应该保存多少个bin的参数？$$n^d$$。太大了，且不光滑！</p>
+<p>给定一组提取于未知分布 p(x) 的数据 $x_1,x_2,…,x_n$ ，任一点 x 处的核密度估计定义为：</p>
+<p>$$<br>\hat{p}(x) &#x3D; \frac{1}{nh} \sum^{n}_{i&#x3D;1}K(\frac{x-x_i}{h})<br>$$</p>
+<p>$$<br>K(x) \ge0, \int K(x)dx&#x3D;1<br>$$</p>
+<p>KDE 核函数与 SVM 的不同：在概率估计中被用于估计目标点周围的概率密度。而在SVM中，被用于计算两点间的核空间距离。</p>
+<img src="https://s2.loli.net/2022/06/25/OzKfk6DU5dah1Ng.png" alt="image-20220625193832796" style="zoom: 33%;" />
+
+<p>连续的。</p>
+<p>窗宽确定：使得估计的积分均方误差 (mean integral square error,MISE) 达到最小，如下式</p>
+<p>$$<br>MISE{\hat{p}<em>h(x)}&#x3D;E[\int^{\inf}</em>{-\inf}{\hat{p}_h(x)-p(x)}dx]<br>$$</p>
+<h4 id="HMM（机器学习）"><a href="#HMM（机器学习）" class="headerlink" title="HMM（机器学习）"></a>HMM（机器学习）</h4><p><strong>隐马尔可夫性质</strong></p>
+<p>$$P(X_t|X_{1:t-1})&#x3D;P(X_t|X_{t-1})$$ ，无记忆性，当前状态的只跟上一个状态有关系。</p>
+<p><strong>随机过程（stochastic process）</strong></p>
+<p>$${X(t), t\in T}$$ 是一系列随机变量的集合，用于描述一些过程的时间进化，目的是希望过去对现在有帮助。也就是说，对于每个 $$t \in T$$, $$X(t)$$ 是一个随机变量。索引 t 通常被解释为时间，因此把 $$X(t)$$ 作为 t 时流程的状态。</p>
+<p>B：emission probability 发出观察值的概率。$$b_j(k)&#x3D;Pr(O_t&#x3D;V_k|Q_t&#x3D;S_j)$$。当未知状态为 $$S_j$$ 时观察到为 $$V_k$$ 的概率。</p>
+<p><strong>Problem 1. Evaluation</strong></p>
+<p>概念：给定已知 $$\lambda &#x3D; (A,B,\pi)$$ 的 HMM 模型，以及一个完整的输出序列 $$o&#x3D;o_{1:T}$$，求该模型观察到该输出序列的概率 $$P(O|\lambda)$$。</p>
+<p>作用：看出此模型对该观察序列的成绩，从而在多个模型中选择最适合的模型。</p>
+<p>算法</p>
+<ol>
+<li>Naive</li>
+</ol>
+<p>假设隐状态序列 $q_{1:T}$ 已知：</p>
+<p>$$<br>Pr(o_{1:T}|\lambda, q_{ 1:T}) &#x3D; \prod^{T}<em>{t&#x3D;1}Pr(o_t|q_t, \lambda) &#x3D; \prod^{T}</em>{t&#x3D;1}b_{q_i}(o_i)<br>$$</p>
+<p>则必有</p>
+<p>$$<br>Pr(o_{1:T}|\lambda) &#x3D; Pr(o_{1:T}, q_{1:T}|\lambda) &#x3D;\sum_{all\ Q}Pr(o_{1:T}|\lambda, q_{ 1:T})Pr(q_{1:T}|\lambda)<br>$$</p>
+<p>时间复杂度 $$O(TN^T)$$</p>
+<ol start="2">
+<li>对 Naive 的观察与优化——提取 $$b_i(o_i)$$</li>
+</ol>
+<p>$$<br>Pr(o_{1:T}|\lambda)&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T},Q_T&#x3D;S_i|\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)Pr(O_T&#x3D;V_k|Q_T&#x3D;S_i,\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)b_i(o_T)<br>$$</p>
+<ol start="3">
+<li>对 Naive 的观察与优化——提取 $$A_{ji}$$</li>
+</ol>
+<p>$$<br>Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda) &#x3D; \sum_{j&#x3D;1}^{N}Pr(o_{1:T-1},Q_{T-1}&#x3D;S_j|\lambda)A_{ji}<br>$$</p>
+<p>根据 2. 和 3. 的提取优化，可得</p>
+<p>$$<br>Pr(o_{1:T}|\lambda)&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T},Q_T&#x3D;S_i|\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)b_i(o_T)\<br>&#x3D;\sum_{i&#x3D;1}^{N}(b_i(o_T)\sum_{j&#x3D;1}^{N}Pr(o_{1:T-1},Q_{T-1}&#x3D;S_j|\lambda)A_{ji}) \<br>$$</p>
+<ol start="4">
+<li>前向算法 forward</li>
+</ol>
+<p>定义 $$\alpha_{t}(i)&#x3D;Pr(o_{1:t},Q_t&#x3D;S_i|\lambda)$$。含义：对于已知参数 $$\lambda$$ 的模型，获得观测序列 $$o_{1:T}$$ 且 t 时刻隐状态为 $$S_i$$ 的概率。</p>
+<p>初始化：$$\alpha_1(i)&#x3D;Pr(o_{1},Q_1&#x3D;S_i|\lambda) &#x3D; Pr(Q_1&#x3D;S_i|\lambda)Pr(o_{1}|Q_1&#x3D;S_i,\lambda) &#x3D; Pr(Q_1&#x3D;S_i|\lambda)b_i(o_1)$$</p>
+<p>前向递推：</p>
+<p>$$<br>\alpha_{t+1}(i)&#x3D;[\sum^{N}<em>{j&#x3D;1} Pr(o</em>{1:t},Q_t&#x3D;S_j|\lambda)A_{ji}]b_i(o_{t+1})\<br>&#x3D;[\sum^{N}<em>{j&#x3D;1} a</em>{t}(j)A_{ji}]b_i(o_{t+1})<br>$$</p>
+<p>结果：$$Pr(o_{1:T}|\lambda)&#x3D;\sum^{N}<em>{i&#x3D;1}Pr(o</em>{1:T},Q_T&#x3D;S_i|\lambda)&#x3D;\sum^{N}_{i&#x3D;1} \alpha_T(i) $$</p>
+<p>复杂度：$$O(TN^2)$$</p>
+<p>⑤ 后向算法 backward</p>
+<p>定义 $$\beta_t(i) &#x3D; Pr(o_{t+1:T}|Q_t&#x3D;S_i, \lambda)$$。含义：对于已知参数 $$\lambda$$ 的模型，已知 t 时刻状态为 $$S_i$$，未来观测到 $$o_{t+1:T}$$ 的概率。</p>
+<p>初始化：$$\beta_T(i) &#x3D; 1$$。</p>
+<p>反向更新：</p>
+<p>$$<br>\beta_t(i) &#x3D; \sum^{N}<em>{j&#x3D;1}A</em>{ij}b_j(o_{t+1})\beta_{t+1}(j)<br>$$</p>
+<p>输出：$$Pr(o_{1:T}|\lambda)&#x3D;\sum^{N}<em>{i&#x3D;1}\pi</em>{i}b_i(o_{1})\beta_{1}(i)$$</p>
+<p><strong>Problem 2：Decoding</strong></p>
+<p>概念：给定已知 $$\lambda &#x3D; (A,B,\pi)$$ 的 HMM 模型，以及一个完整的输出序列 $$o&#x3D;o_{1:T}$$，求一个完全指定的隐变量序列 $$q_{1:T}$$ 的值。</p>
+<p>作用：语音识别中状态可能有实际意义（各音节），可以用来观察模型结构，优化模型。</p>
+<p>算法：</p>
+<img src="https://s2.loli.net/2022/06/29/LWcKyRP9Zk8xB4Y.png" alt="image-20220629185728038" style="zoom: 50%;" />
+
+<p><strong>Problem 3：Learning</strong></p>
+<p>概念：发现 $$\lambda &#x3D; (A,B,\pi)$$，使得对于固定的 N，T，和观察值 O，似然概率 $$P(O|\lambda)$$ 最大。</p>
+<p>作用：最重要的问题</p>
+<p>目前无法发现全局最优解，常用 Baum-Welch 算法。</p>
+<h3 id="5-优化方法"><a href="#5-优化方法" class="headerlink" title="5. 优化方法"></a>5. 优化方法</h3><blockquote>
+<p>优化方法：极值条件，对偶，KKT，GD，SGD，EM，<br>要知道凸优化和非凸优化，要知道凸优化的话，极值就是最优点，那么找最优点就是导数等于0<br>要直到 SVM 里面的对偶问题，SVM 没有显式最优解，因此可以用 GD，Regression 有显式最优解<br>在神经网络里面一般用 SGD，SGD 要有一个概念，为什么我们要用 SGD 和 GD？要知道二者区别，还得知道 SGD 优点<br>要对概率模型的参数进行估计的话，可以考虑用 EM 进行参数估计，比如 HMM</p>
+</blockquote>
+<p>凸优化定义：</p>
+<p>$$<br>minimize \ f_0(x)  \<br>subject \ to \ f_i(x)&lt;&#x3D;b_i,\ \ i&#x3D;1,…,m<br>$$</p>
+<p>其中，目标函数和约束函数都是凸函数，即</p>
+<p>$$<br>f_i(\alpha x+\beta y) &lt;&#x3D; \alpha f_i(x) + \beta f_i(y) \<br>\alpha + \beta &#x3D; 1,\  \alpha &gt;&#x3D;0, \ \beta&gt;&#x3D;0<br>$$</p>
+<h4 id="SVM-中的对偶-amp-KKT（机器学习）"><a href="#SVM-中的对偶-amp-KKT（机器学习）" class="headerlink" title="[SVM 中的对偶 &amp; KKT（机器学习）"></a>[SVM 中的对偶 &amp; KKT（机器学习）</h4><h4 id="GD-amp-SGD"><a href="#GD-amp-SGD" class="headerlink" title="GD &amp; SGD"></a>GD &amp; SGD</h4><p>随机梯度下降每次只用一个样本，对于最优化凸问题，虽然不是每次迭代得到的损失函数都向着全局最优方向， 但是大的整体的方向是向全局最优解的，最终的结果往往是在全局最优解附近。但是相比于批量梯度，这样的方法更快，更快收敛。</p>
+<p>批量梯度下降每次更新时用所有样本。对于最优化凸问题，可以达到一个全局最优。如果样本不多的情况下，当然是这样收敛的速度会更快。但是很多时候，样本很多，更新一次要很久。</p>
+<h4 id="EM-amp-GMM（机器学习）"><a href="#EM-amp-GMM（机器学习）" class="headerlink" title="EM &amp; GMM（机器学习）"></a>EM &amp; GMM（机器学习）</h4><p>浙大</p>
+<h3 id="6-距离度量"><a href="#6-距离度量" class="headerlink" title="6. 距离度量"></a>6. 距离度量</h3><blockquote>
+<p>（样本之间的）距离度量：l-p 范数, DTW, …<br>要知道如何度量两个不同时间序列的样本之间的距离<br>DTW 动态时间规整</p>
+</blockquote>
+<p>$$l_0$$ 范数：向量 x 的非零元素的个数</p>
+<img src="https://s2.loli.net/2022/06/29/QEPADFUZL5hbsfv.png" alt="image-20220625200150788" style="zoom:50%;" />
+
+<p>DTW（Dynamic Time Warping）：动态时间规整</p>
+<p>性质：1. 匹配是顺序的 2. 每个 $$x_i$$ 或 $$y_i$$ 都要有对应的匹配 3. 一个 $$x_i$$ 可以和多个 $$y_j$$ 匹配，反之亦然</p>
+<img src="https://s2.loli.net/2022/06/29/UdA6mkPbKY1phcR.png" alt="image-20220625202602917" style="zoom:50%;" />
+
+<p>递推公式：</p>
+<img src="https://s2.loli.net/2022/06/29/OeASiJYFf952cZh.png" alt="image-20220625202654161" style="zoom:50%;" />
+
+<h4 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h4><p>单变量</p>
+<p>$$<br>H&#x3D;-\sum^{m}_{i&#x3D;1}p_ilog_2p_i<br>$$</p>
+<p>$$<br>h&#x3D;-\int p(x)ln(p(x))dx<br>$$</p>
+<p>双变量</p>
+<p>$$<br>H(x,y)&#x3D;-\sum_{x}\sum_{y}P(x,y)log_2P(x,y)<br>$$</p>
+<p>$$<br>h&#x3D;-\int p(x,y)ln(p(x,y))dxdy<br>$$</p>
+<p>$$<br>H(X|Y) &#x3D; \sum_{y}P(y)H(X|Y&#x3D;y) &#x3D;<br>-\sum_{y}P(y)\sum_{x}P(X&#x3D;x|Y&#x3D;y)log_2P(X&#x3D;x|Y&#x3D;y) \<br>&#x3D; -\sum_{x,y}P(x,y)log_2 \frac{P(x,y)}{p(y)}<br>$$</p>
+<p>$$<br>h(x,y) &#x3D; -\int p(x,y)ln\frac{p(x,y)}{p(y)}dxdy<br>$$</p>
+<p>熵之间的关系</p>
+<p>H(X,Y)&#x3D;H(X)+H(Y|X)&#x3D;H(Y)+H(X|Y)</p>
+<p>H(X|Y)&lt;H(X)</p>
+<p>H(Y|X)&lt;H(Y)</p>
+<p>互信息</p>
+<p>$$<br>I(X;Y)&#x3D;H(X)-H(X|Y) &#x3D; \sum_{x,y}P(x,y)log_2 \frac{P(x,y)}{P(x)P(y)}<br>$$</p>
+<p>KL 散度</p>
+<p>$$<br>KL(P||Q)&#x3D;\sum_{i} P_ilog_2\frac{P_i}{Q_i}<br>$$</p>
+<p>$$KL(P||Q) \ge 0$$，等号成立条件：$$P_i&#x3D;Q_i$$。不对称。</p>
+<p>交叉熵</p>
+<p>$$<br>CE(P,Q)&#x3D;-\sum_{i}P_ilog_2Q_i \<br>CE(P,Q)&#x3D;H(p)+KL(P||Q)&#x3D;-\sum_{i}P_ilog_2P_i+\sum_{i} P_ilog_2\frac{P_i}{Q_i}<br>$$</p>
+<h3 id="7-损失函数"><a href="#7-损失函数" class="headerlink" title="7. 损失函数"></a>7. 损失函数</h3><blockquote>
+<p>损失函数：square, hinge, exponential, logistic, cross entropy, …<br>线性回归：square<br>SVM：hinge<br>Adaboost：exp<br>逻辑回归：logistic<br>神经网络：cross entropy</p>
+</blockquote>
+<h4 id="Square（机器学习）"><a href="#Square（机器学习）" class="headerlink" title="Square（机器学习）"></a>Square（机器学习）</h4><p>形式：</p>
+<p>$$<br>L(f,y)&#x3D;(f-y)^2<br>$$</p>
+<p>线性回归中的 Square：</p>
+<p>$$<br>L&#x3D;\sum^{N}_{i&#x3D;1}(y_i-\theta^Tx_i)<br>$$</p>
+<h4 id="Hinge"><a href="#Hinge" class="headerlink" title="Hinge"></a>Hinge</h4><p>译为铰链损失。</p>
+<p>形式：</p>
+<p>$$<br>L(y,f(x)) &#x3D; max(0,1-yf(x)),<br>$$</p>
+<p>SVM 中的 Hinge：</p>
+<p>$$<br>L &#x3D; \frac{1}{2C}||w||^2+\sum^{N}_{i&#x3D;1}max(0, 1-y_i(\theta^Tx_i+b))<br>$$</p>
+<h4 id="Exp"><a href="#Exp" class="headerlink" title="Exp"></a>Exp</h4><p>译为指数损失。</p>
+<p>形式：</p>
+<p>$$<br>L(y, f(x)) &#x3D; exp[-yf(x)]<br>$$</p>
+<p>Adaboost 中的 Exp：</p>
+<p>$$<br>L(y, f(x)) &#x3D; \frac{1}{n} \sum^{n}_{i&#x3D;1} exp[-y_if(x_i)]<br>$$</p>
+<h4 id="Logistic（机器学习）"><a href="#Logistic（机器学习）" class="headerlink" title="Logistic（机器学习）"></a>Logistic（机器学习）</h4><p>形式：</p>
+<p>$$<br>L(y,f(x))&#x3D;\sum_{l}y^l ln P(y^l&#x3D;1|x^l,w)+(1-y^l)ln P(y^l&#x3D;0|x^l,w) \<br>&#x3D;\sum_{l}y^l(w_0+\sum^{n}<em>{i&#x3D;1}w_ix_i^l)-ln(1+exp(w_0+\sum^{n}</em>{i&#x3D;1}w_ix_i^l))<br>$$</p>
+<h4 id="Cross-entropy"><a href="#Cross-entropy" class="headerlink" title="Cross entropy"></a>Cross entropy</h4><p>形式：</p>
+<p>$$<br>L(y,f(x)) &#x3D; -\sum^{n}_{i&#x3D;1}y_i logf(x_i)<br>$$</p>
+<h3 id="8-评价准则"><a href="#8-评价准则" class="headerlink" title="8. 评价准则"></a>8. 评价准则</h3><blockquote>
+<p>评价准则：Acc, ROC, AP, Recall (TPR, true position rate), Precision, Bayes error, Bias-variance<br>概念掌握<br>Bayes error：取一个后验概率最大的去作为模型预测的输出<br>Bias-variance：把模型的误差做一个偏执方差分解，需要直到模型的偏置和方差，以及是由什么决定的</p>
+</blockquote>
+<p>PPT 3-4</p>
+</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>Author: Yourname</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/courses/" title="courses">courses </a><span class="leancloud_visitors"></span><span>About 4526 words, 15 min 5 sec  read</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://example.com/2022/07/06/machine-learning/2022-07-06-review-pattern-recognition-courses/,Hexo,[ml][rv] pattern recognition,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2023/04/09/hello/hello-world/" title="Hello World">Previous</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2022/07/06/machine-learning/2022-07-06-review-machine-learning-courses/" title="[ml][rv] sysu-courses">Next</a></li></ul></div><script src="/js/visitors.js"></script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"Posts",PAGES:"Pages",CATEGORIES:"Categories",TAGS:"Tags",UNTITLED:"(Untitled)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Search..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>

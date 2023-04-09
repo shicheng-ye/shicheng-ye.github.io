@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Yourname"><title>[ml][nt] support vector machine · Hexo</title><meta name="description" content="没有免费的午餐定理：在不考虑先验概率的情况下，所有算法的性能一样。即没有不存在适用于所有的问题的算法，不存在普适性的算法，任何两个算法，以及它们训练出来的模型，在所有的现实问题的集合面前是无优劣的，它们的性能的数学期望值是一样的。
+尽管如此，适合大部分情况的算法依然是存在的。
+线性可分（Linear"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">Home</a></li><li> <a href="/archives">Archives</a></li><li> <a href="/tags">Tags</a></li><li> <a href="/about">About</a></li><li> <a href="/links">Links</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>A simple and beautiful blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/Lhcfl"><i class="fa fa-github"></i></a></li><li><a href="mailto:yourname@example.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/jin-xin-4-68"><i class="fa fa-mortar-board"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Yourname</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>[ml][nt] support vector machine</a></h3></div><div class="post-content"><p><p>没有免费的午餐定理：在不考虑先验概率的情况下，所有算法的性能一样。即没有不存在适用于所有的问题的算法，不存在普适性的算法，任何两个算法，以及它们训练出来的模型，在所有的现实问题的集合面前是无优劣的，它们的性能的数学期望值是一样的。</p>
+<p>尽管如此，适合大部分情况的算法依然是存在的。</p>
+<p>线性可分（Linear Separable）：存在一条直线分开两类。线性不可分（Linear Unseparable）：反之。</p>
+<p><img src="https://s2.loli.net/2022/05/31/w8QjIJaoXu4NWqL.png" alt="image-20220531150521269" style="zoom: 50%;" />                              <img src="https://s2.loli.net/2022/05/31/lhHLk8BOqdR6Kji.png" alt="image-20220531150559805" style="zoom:50%;" /></p>
+<p>同样地，可以延伸至高维。用数学方式表示：</p>
+<p><img src="https://s2.loli.net/2022/05/31/lNSTWmDonyPLdZr.png" alt="image-20220531150850968"></p>
+<p>两侧正负号是人为定义的，将权重和偏置取反，两侧符号也便取反。</p>
+<p>线性可分的严格定义：一个样本训练集 $${(X_i, y_i), …, (X_N,y_N)}$$ 在 i&#x3D;1-N 线性可分，是指存在 $$(w_1, w_2, b)$$ 使得对 i&#x3D;1-N，都有：</p>
+<p>$$<br>(1)\ 若y_i&#x3D;+1, 则w_1x_{i1}+w_2x_{i2}+b&gt;0 \<br>(2)\ 若y_i&#x3D;-1, 则w_1x_{i1}+w_2x_{i2}+b&lt;0<br>$$</p>
+<p>线性可分定义的简化形式：</p>
+<p>如果 $$y_i$$ &#x3D; +1 或 -1，一个样本训练集 $${(X_i, y_i), …, (X_N,y_N)}$$ 在 i&#x3D;1-N 线性可分，是指存在 $$(w_1, w_2, b)$$ 使得对 i&#x3D;1-N，都有：</p>
+<p>$$<br>y_i(w^TX_i+b)&gt;0<br>$$</p>
+<p>课后思考：</p>
+<p>① 你能否给出实际生活中训练样本集是线性可分和线性不可分的例子？大多数实际生活中的例子是线性可分还是线性不可分？</p>
+<p>② 我们对于线性可分和线性不可分的定义只是局限于二分类间题，请对类别数大于 2 的情况，给出线性可分与线性不分严格的数学定义。</p>
+<p>③ 请通过数学定义严格证明，在二分类情况下，如果一个数据集是线性可分的，那么一定存在无数多个超平面可以把这两个类别完全分开。</p>
+<h3 id="线性可分的解法"><a href="#线性可分的解法" class="headerlink" title="线性可分的解法"></a>线性可分的解法</h3><p>支持向量机算法步骤：① 解决线性可分问题 ② 再将线性可分问题中获得的结论推广到线性不可分情况</p>
+<p>例子：三种分割按照免费午餐定理应该都一样，为什么会觉得 2 比较好？因为建立在这样一个先验假设：训练样本的位置在特征空间上有测量误差，这样的话 2 会有更高的容错率。</p>
+<img src="https://s2.loli.net/2022/05/31/1IF4TA2aVRfx8Ee.png" alt="image-20220531151537298" style="zoom:50%;" />
+
+<p>那么如何画出2线？也就是SVM算法的步骤①。</p>
+<p>把一条分割线平行地往两侧移动，直到擦到两边的样本。令平行线擦到的样本为支持向量（support vector），平行线的间隔称为间隔（margin），SVM就是要让间隔做最大的那一个分割线。</p>
+<p>但该方法不唯一，与该线平行的线都是间隔最大的。为保证唯一性，应使这条线在两条平行线中央。</p>
+<p>总结条件：① 该直线分开了两类 ② 该直线最大化间隔 ③该直线处于间隔的中间，到所有支持向量距离相等。</p>
+<p>基于以下事实：</p>
+<p>① 相同超平面</p>
+<p>$$<br>w^Tx+b&#x3D;0 与\<br>(\alpha w^T)x+(ab)&#x3D;0是同一个超平面(\alpha \neq 0)<br>$$</p>
+<p>② 点到直线&#x2F;面的距离公式</p>
+<p>$$<br>d&#x3D;\frac{|w^Tx+b|}{||w||}<br>$$</p>
+<p>我们要的就是最大化 margin 到 support vector 之间的距离！</p>
+<p>据事实一，引出SVM最难理解的部分：用 a 去缩放 w 和 b。在 SVM 中，我们会发现我们会令支持向量到点的距离这一分式的分子是 1，为什么可以这么设呢？</p>
+<p>因为对于对于一个 $$(w, b)$$，可以对齐进行任意的等比例放缩得到  $$(aw, ab)$$，二者所表示的超平面是不变的，但是会使得分子的大小变化，因此可以使得：</p>
+<p>$$<br>|w^Tx_0+b|&#x3D;1, \ x_0为支持向量 \<br> |w^Tx_0+b|&gt;1, \  x_0非支持向量<br>$$</p>
+<p>这样我们就大幅简化了要优化的对象。也即</p>
+<p>$$<br>d&#x3D;\frac{|w^Tx+b|}{||w||} &#x3D; \frac{1}{||w||}<br>$$</p>
+<p>因而问题转换为最小化 w 的模。实操中为方便求导定义作如下形式：</p>
+<p>$$<br>最小化：\frac{1}{2}||w||^2 \<br>限制条件：y_i(w^TX_i+b) &gt;&#x3D; 1,(i&#x3D;1-N) \<br>||w||^2 &#x3D; \sum^{m}_{i&#x3D;1}w_i^2<br>$$</p>
+<p>其中，$$y_i$$ 的作用是协调超平面的作用，同线性可分中的作用一样。上述的 1 可以改成别的整数，相当于放缩的时候采用了不同的尺度。</p>
+<p>因而，SVM问题转为一个凸优化中的二次规划问题。</p>
+<p>二次规划问题的定义：①目标函数(Objective Function)是二次项。②限制条件是一次项（这里的不等式就是一次项）。这样的问题要么无解，要么有唯一最小值。</p>
+<p>已知凸优化问题，必有全局唯一的极值，可以用梯度下降解决。具体的解决方法，需学习《最优化》。</p>
+<p>课后思考：</p>
+<p>① 支持向量机的限制条件如果从大于等于1变成大于等于2，则(w, b)会变成(aw , ab) 。如果 Xi 和 w 是 M 维向量，那么 a 是多少？</p>
+<p>② 证明在线性可分条件下，有且只有唯一一条直线满足 SVM 的三个条件。</p>
+<h3 id="线性不可分的解法"><a href="#线性不可分的解法" class="headerlink" title="线性不可分的解法"></a>线性不可分的解法</h3><p>考虑线性不可分的情况，需要适当放松限制条件，否则以上问题无解。</p>
+<p>基本思路有为为每个训练样本及其标签设置松弛变量（slack variable）δ。</p>
+<p>因此，限制条件改写为：</p>
+<p>$$<br>y_i(w^TX_i+b) &gt;&#x3D; 1-\delta_i,(i&#x3D;1-N)<br>$$</p>
+<p>当然还要加入新的限制使得 $$\delta$$ 在一个合理范围内。最终，该问题改写为：</p>
+<p>$$<br>最小化：\frac{1}{2}||w||^2 + C\sum^{N}<em>{i&#x3D;1}\delta_i\  或\ \frac{1}{2}||w||^2 + C\sum^{N}</em>{i&#x3D;1}\delta_i^2 \<br>限制条件： (1)\ \delta_i&gt;&#x3D;0,(i&#x3D;1-N)\<br>(2)\ y_i(w^TX_i+b) &gt;&#x3D; 1-\delta_i,(i&#x3D;1-N)<br>$$</p>
+<p>比例因子C，起到平衡加法两侧的作用，是人为设定的超参数。实操中，要不断变化C，同时测试算法的效果，然后选个最好的。两个最小化形式都是二次型。C 设尽可能大，可以尽可能向线性的结果靠拢。</p>
+<p>一个失败的情况：线性模型的表现力是不够的。</p>
+<img src="https://s2.loli.net/2022/05/31/plhyxCJ6fLFswrd.png" alt="image-20220531154900234" style="zoom:50%;" />
+
+<p>课后思考：</p>
+<p>① 在这个例子中，你能否设计出一个这样的非线性变换，将这个分类问题转化为线性可分呢？</p>
+<h3 id="非线性变换"><a href="#非线性变换" class="headerlink" title="非线性变换"></a>非线性变换</h3><p>针对线性模型表现力不够的情况，因而需要扩大可选函数范围。SVM中，会将特征空间把低维映射到高维，再使用线性超平面分类。</p>
+<p>定理：在一个 M 维空间上随机取 N 个训练样本随机的对每个训练样本赋予标签 +1 或 -1，这些训练样本线性可分的概率为 P(M)，当 M 趋于无穷大时，P(M) &#x3D; 1。</p>
+<p>构造映射 $$\varphi(x)$$ 便是关键。假设已知映射 $$\varphi(x)$$，则改为：</p>
+<p>$$<br>最小化：\frac{1}{2}||w||^2 + C\sum^{N}<em>{i&#x3D;1}\delta_i\  或\ \frac{1}{2}||w||^2 + C\sum^{N}</em>{i&#x3D;1}\delta_i^2 \<br>限制条件： (1)\ \delta_i&gt;&#x3D;0,(i&#x3D;1-N)\<br>(2)\ y_i(w^T\varphi(X_i)+b) &gt;&#x3D; 1-\delta_i,(i&#x3D;1-N)<br>$$</p>
+<p>此时，w 的维度和映射后的向量维度相同。解法是和低维完全类似的。</p>
+<p>为研究 $$\varphi(x)$$ 的形式，引入核函数的概念。实操中我们不用知道 $$\varphi(x)$$ 的具体形式，取而代之的是核函数：</p>
+<p>即对于任意两个向量，有</p>
+<p>$$<br>K(X_1,X_2)&#x3D;\varphi(X_1)^T\varphi(X_2)<br>$$</p>
+<p>那么仍然能通过一些技巧获得样本的类别，从而完成对样本类别的预测。具体通过为什么技巧将在之后描述。在此先举例说明核函数以及低维到高维的映射 $$\varphi(x)$$ 之间的相互关系。</p>
+<p>假设 $$\varphi(x)$$ 是一个把二维向量映射为三维向量的映射：</p>
+<p>$$<br>X&#x3D;[x_1,x_2]^T \<br>\phi(X)&#x3D;\phi([x_1,x_2]^T)&#x3D;[x_1^2,x_1x_2,x_2^2]<br>$$</p>
+<p>假设有 X1 和 X2，那么核函数为：</p>
+<p>$$<br>K(X_1,X_2)&#x3D;\phi(X_1)^T\phi(X_2) \<br>&#x3D;[x_{11}^2,x_{11}x_{12},x_{12}^2][x_{21}^2,x_{21}x_{22},x_{22}^2]^T \<br>&#x3D; x_{11}^2x_{21}^2+x_{11}x_{12}x_{21}x_{22}+x_{12}^2x_{22}^2<br>$$</p>
+<p>反之，已知核函数 K 求 phi（x）。</p>
+<p>$$<br>K(X_1,X_2)&#x3D;(x_{11}x_{21}+x_{12}x_{22}+1)^2 \<br>&#x3D; x_{11}^2x_{21}^2+x_{12}^2x_{22}^2+1+2x_{11}x_{21}x_{12}x_{22}+2x_{11}x_{21}+2x_{12}x_{22} \<br>&#x3D; \phi(X_1)^T\phi(X_2)<br>$$</p>
+<p>根据定义和观察，</p>
+<p>$$<br>\phi(X)&#x3D;\phi([x_1,x_2]^t) \<br>&#x3D; [x_1^2,x_2^2,1,\sqrt{2}x_1x_2,\sqrt{2}x_1,\sqrt{2}x_2]^T<br>$$</p>
+<p>因而，核函数 K 和映射 phi 一一映射。但是 K 需要满足一定条件才可写作两个 phi 内积的形式。具体条件如下：（Mercer’s Theorem）</p>
+<p>$$<br>K(X_1,X_2) 能写成 \phi(X_1)^T\phi(X_2)的充要条件：<br>$$</p>
+<p>$$<br>① K(X_1,X_2)&#x3D;K(X_2,X_1)（交换性）\<br>② \forall C_i(i&#x3D; 1\sim N),\forall N有\sum^{N}<em>{i&#x3D;1}\sum^{N}</em>{j&#x3D;1}C_iC_jK(X_i,X_j) \ge0 （半正定性质）<br>$$</p>
+<p>虽然无法知道 phi 的具体形式，但是可以知道 wx+b 的值，进而知道所属类别。</p>
+<h3 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h3><p>具体研究已知 K 不知 phi 求 SVM 的优化问题。</p>
+<p>原问题（Prime problem）</p>
+<p>$$<br>最小化：f(w) \<br>限制条件：g_i(w) \le 0,i&#x3D;1\sim K \<br>h_i(w) &#x3D; 0,i&#x3D;1\sim K<br>$$</p>
+<p>对偶问题（Dual problem）</p>
+<p>$$<br>L(w,\alpha,\beta)&#x3D;f(w)+\sum^{K}<em>{i&#x3D;1}\alpha_ig_i(w)+\sum^{M}</em>{i&#x3D;1}\beta_ih_i(w) \<br>&#x3D;f(w)+\alpha^Tg(w)+\beta^Th(w)<br>$$</p>
+<p>其中，</p>
+<p>$$<br>\alpha &#x3D; [\alpha_1,\alpha_2,…,\alpha_K]^T \<br>\beta &#x3D; [\beta_1,\beta_2,…,\beta_M]^T \<br>g(w) &#x3D; [g_1(w),g_2(w),…,g_K(w)]^T \<br>h(w) &#x3D; [h_1(w),h_2(w),…,h_M(w)]^T<br>$$</p>
+<p>在定义了 L 函数的基础上，定义对偶问题如下：遍历定义域里的 w，找到使得 L 最小的那个 w，同时把最小的这个函数值赋值给 theta 函数。</p>
+<p>个人理解：先通过遍历 w 得到最小的 L。得到最小的 L 后就找到了对应的 w，此时 w 已知，alpha 和 beta 未知，因而得到 alpha 和 beta 的 theta 函数。之后再最大化这个函数。</p>
+<img src="https://s2.loli.net/2022/05/31/OchJDWYZtAbgxas.png" alt="image-20220531162651917" style="zoom:50%;" />
+
+<p>综合两个问题的定义，得到以下定理：</p>
+<p>定理一：</p>
+<img src="https://s2.loli.net/2022/06/01/VwJj5YStWBUAdru.png" alt="image-20220601212739070" style="zoom:50%;" />
+
+<p>这个定理告诉我们原问题的解总是大于等于对偶问题的解。我们把 f(w*) - theta(alpha*, beta*) 定义为对偶差距（DUALITY GAP）。对偶差距显然大于等于0。</p>
+<p>强对偶定理：</p>
+<img src="https://s2.loli.net/2022/06/01/bFMSpKvQGjXTyBd.png" alt="image-20220601212922525" style="zoom:50%;" />
+
+<p>简单点说，原问题的目标函数是凸函数，限制条件是线性函数，那么对偶差距为0。具体证明可以课后阅读。</p>
+<p>根据定理一推出的不等式：</p>
+<p>若 f(w*) &#x3D; theta(alpha*, beta*) （简单点说，就是原问题和对偶问题的解相等的时候），则根据定理一，显然可以推出，对于所有的 i&#x3D;1~K，要么 alpha_i &#x3D; 0，要么 g(w*) &#x3D; 0。这个条件就是 <strong>KKT 条件</strong>。</p>
+<img src="https://s2.loli.net/2022/07/06/xWPny7HlMKkjC8A.webp" alt="tt" style="zoom: 80%;" />
+
+
+
+<h3 id="最终求解"><a href="#最终求解" class="headerlink" title="最终求解"></a>最终求解</h3><p>将原问题转换为对偶问题，以完成问题的求解。</p>
+<p>支持向量机的原问题满足强对偶定理。回顾 SVM 的优化问题：</p>
+<img src="https://s2.loli.net/2022/05/31/oVqRixPIAESOwvZ.png" alt="image-20220531155717872" style="zoom:50%;" />
+
+<p>结合原问题的定义，需要把前两个限制条件改成小于等于 0 的定义。限制条件取反，那么最小化中也要取反。</p>
+<img src="https://s2.loli.net/2022/06/01/uI5UCYjaOpxh4qr.png" alt="image-20220601213714343" style="zoom:50%;" />
+
+<p>两个限制条件都线性的，目标函数是凸的，满足强对偶定理。 SVM 中不存在 h(x) 的情况。因此，可以把 SVM 的对偶问题写作如下形式：</p>
+<p><img src="https://s2.loli.net/2022/06/04/EQX89ehCZy6fgJM.png" alt="image-20220604100525102"></p>
+<p>tips：对偶问题中的 w 指的是未知变量，此时，未知变量 w 包括 (w, sigma, beta)。求微分，得下式：</p>
+<p><img src="https://s2.loli.net/2022/06/04/GvA6azXVfTZdjRn.png" alt="image-20220604101500136"></p>
+<p>根据 ② 消去红框，根据 ③ 消去蓝框：</p>
+<p><img src="https://s2.loli.net/2022/06/04/QoWi9dD48xhbeaK.png" alt="image-20220604101613674"></p>
+<p>原式还剩三项：</p>
+<p><img src="https://s2.loli.net/2022/06/04/uCDWijhQARV6azJ.png" alt="image-20220604101835441"></p>
+<p><img src="https://s2.loli.net/2022/06/04/xSnw8R5I1odiZeH.png" alt="image-20220604101959039"></p>
+<p>整理之后，化简为：</p>
+<p><img src="https://s2.loli.net/2022/06/04/ZXldJepLO4mzkjh.png" alt="image-20220604102209717"></p>
+<p>问题中，已知的是所有的 x，y 以及核函数 K。这是一个凸的问题，可以用 SMO 算法求解。</p>
+<p>但化成这样后，还没完。这样求出了 alpha 还要求 omega 和 bias。</p>
+<p><img src="https://s2.loli.net/2022/06/04/ImYC5iEnyph7X4R.png" alt="image-20220604102442932"></p>
+<p>但是求 omega 岂不是又得知道映射函数？实则不用，因为实际上我们不需要知道 omega。考虑测试流程：</p>
+<p>测试样本 x 输入，若 omega^T phi(x) + b&gt;&#x3D; 0 则 y&#x3D;+1，反之 y&#x3D;-1。</p>
+<p>实际上， omega^T phi(x) &#x3D; sum_i_N alpha_i y_i K(xi, x)。又把 phi 化简掉了，只需要用核函数 K 去算就行。</p>
+<p>接下来分析求 bias，先把 SVM 问题中的 KKT 条件列出：</p>
+<p><img src="https://s2.loli.net/2022/06/04/en27UgKdAiz5ayw.png" alt="image-20220604103437775"></p>
+<p>假定 alpha_i 都算出来了，那么一定能找出一个 alpha_i 是 0&lt;alpha_i&lt;C 的【？】。首先取一个 alpha_i 是 0&lt;alpha_i&lt;C 的，可得 beta_i &#x3D; c-alpha_i &gt; 0，可得 epsilon_i &#x3D; 0。有 alpha_i !&#x3D; 0 可得 ② 中后半式，根据该式求解 b：</p>
+<p><img src="https://s2.loli.net/2022/06/04/Jr4OdHjYlGpCAiu.png" alt="image-20220604103518915"></p>
+<p>在实际运算中，可以取所有满足条件 0&lt;alpha_i&lt;C 的 alpha_i，求出对应 b ，然后做平均。</p>
+<p>总结如下：</p>
+<img src="https://s2.loli.net/2022/06/04/8CQ5dEPj4wMyXAY.png" alt="image-20220604104117394" style="zoom:50%;" />
+
+<p><img src="https://s2.loli.net/2022/06/04/ui7bZSk4YcTox6K.png" alt="image-20220604104219998"></p>
+</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>Author: Yourname</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/machine-learning/" title="machine-learning">machine-learning </a><span class="leancloud_visitors"></span><span>About 3556 words, 11 min 51 sec  read</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://example.com/2022/07/06/machine-learning/2022-07-06-support-vector-machine/,Hexo,[ml][nt] support vector machine,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2022/07/06/machine-learning/2022-07-06-review-generative-adversarial-network.md/" title="[ml][rv] generative adversarial network">Previous</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2021/07/06/data-structure-algorithms/2021-07-06-fragmentary-knowledge/" title="[da] fragmentary knowledge">Next</a></li></ul></div><script src="/js/visitors.js"></script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"Posts",PAGES:"Pages",CATEGORIES:"Categories",TAGS:"Tags",UNTITLED:"(Untitled)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Search..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>

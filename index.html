@@ -1,0 +1,545 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Yourname"><title>Hexo</title><meta name="description" content="A simple and beautiful blog"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a class="current" href="/">Home</a></li><li> <a href="/archives">Archives</a></li><li> <a href="/tags">Tags</a></li><li> <a href="/about">About</a></li><li> <a href="/links">Links</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>A simple and beautiful blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/Lhcfl"><i class="fa fa-github"></i></a></li><li><a href="mailto:yourname@example.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/jin-xin-4-68"><i class="fa fa-mortar-board"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Yourname</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/mavros-tutorials/Amovlab%20MAVROS%20offboard/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/1-3minimal_nodes/1-3minimal_nodes/minimal_nodes/README/"></a></h3></div><div class="post-content"><div class="card"><p><h1 id="MINIMAL-NODES"><a href="#MINIMAL-NODES" class="headerlink" title="MINIMAL_NODES"></a>MINIMAL_NODES</h1><p>here are source examples for minimal nodes, as covered in the text Part 1, Chapter 1.</p>
+<p>This package ncludes a minimal publisher, minimal subscriber, minimal simulator and<br>minimal controller, as well as a launch file.  </p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 33 words, 6 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/mavros-tutorials/MAVROS%20topics/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="Mavros"><a href="#Mavros" class="headerlink" title="Mavros"></a>Mavros</h2><hr>
+<h3 id="1-mavros-脚本语法"><a href="#1-mavros-脚本语法" class="headerlink" title="1. mavros 脚本语法"></a>1. mavros 脚本语法</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;功能包的名字&quot;</span> <span class="attr">type</span>=<span class="string">&quot;功能包下你想启动节点的名字&quot;</span> <span class="attr">name</span>=<span class="string">&quot;对这个节点再命个名&quot;</span> <span class="attr">output</span>=<span class="string">&quot;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    output 结果输出在屏幕上，没有这个参数默认记录在log里</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;&quot;</span>&gt;</span> 传参:https://blog.csdn.net/taste_cyn/article/details/82737225</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-mavros-数据传输"><a href="#2-mavros-数据传输" class="headerlink" title="2. mavros 数据传输"></a>2. mavros 数据传输</h3><p>关注 px4_pos_estimator.cpp，可能是向飞控传飞机的姿态数据。他们传数据，都是用ros订阅的方式，飞控又是只看得懂mavlink协议里面的东西。所以飞控怎么拿数据呢？</p>
+<p>main：先在从t265订阅（subscribe）的消息中，拿到飞机的姿态数据。</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151053255.png" alt="image-20211022151053255"></p>
+<p>main：开辟一个话题（advertise），用以表示无人机的位置和姿态。</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151133647.png" alt="image-20211022151133647"></p>
+<p>send_to_fcu：利用 publish 将消息发布。</p>
+ <img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151351191.png" alt="image-20211022151351191" style="zoom:67%;" />
+
+<p>问：mavros 通过订阅和发布实现消息的传输，飞控又遵循的是mavlink协议，所以飞控怎么拿数据呢？</p>
+<p>思路：应存在有一部分会发送 mavlink 消息，那收到 mavlink 消息前，有需要先收到 send_to_fcu 发送的 mavros 消息。既然有 publish，那就应该有 subscribe，那怎么找到哪里有 subscribe？</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -r <span class="string">&quot;/mavros/vision_pose/pose&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>关注 vision_pose_esimate.cpp，该文件订阅了该消息，并将该消息封装成 mavlink 消息发给飞控。</p>
+<h3 id="3-PX4-amp-Ardupilot"><a href="#3-PX4-amp-Ardupilot" class="headerlink" title="3. PX4 &amp; Ardupilot"></a>3. PX4 &amp; Ardupilot</h3><p>px4和ardupilot原本是两套独立的开源飞控，各自有软件和硬件。后来ardupilot看中了px4的硬件，就把代码移植到px4上了。所以目前px4和apm主流是运行在一种硬件上的两种软件。各自都是完备的系统。</p>
+<p>px4是基于实时操作系统的，传感器采集、导航、控制、存储等等都是单独的应用程序，因此apm的代码也被封装成了一个应用程序，跟px4的代码栈在一起。而且apm还用到了一部分px4的底层应用。</p>
+<p>飞控控制的想法：rospy + pymavlink。</p>
+<p>虽然pymavlink好像是ardu家的实现，但底层其实有直接做px4兼容映射的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/23298764-7d83b5f35397ea0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="f7a2606d23b7c5a61e8fd4e0c930690.png"></p>
+<p>这些标题下的例程，优先试试。试代码的时候记得不要无脑试，要验证 mavlink 能不能通。看设计痕迹，pymavlink还是有点针对ardupilot的。</p>
+<p><a target="_blank" rel="noopener" href="https://www.ardusub.com/developers/pymavlink.html">https://www.ardusub.com/developers/pymavlink.html</a></p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 643 words, 2 min 8 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/mavros-tutorials/MAVROS%20notes/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="MAVROS-教程-——-Offboard-模式下自主飞行"><a href="#MAVROS-教程-——-Offboard-模式下自主飞行" class="headerlink" title="MAVROS 教程 —— Offboard 模式下自主飞行"></a>MAVROS 教程 —— Offboard 模式下自主飞行</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://bbs.amovlab.com/plugin.php?id=zhanmishu_video:video&mod=video&cid=11">AMOV 视频教程</a></p>
+</blockquote>
+<h3 id="1-1-工具链安装"><a href="#1-1-工具链安装" class="headerlink" title="1.1 工具链安装"></a>1.1 工具链安装</h3><p>MAVROS 操作无人机的软硬件架构</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112101000509.png" alt="image-20211112101000509"></p>
+<p>Mavros 工具包可以把接收到的 Mavlink 消息（状态数据）转换成 ROS 消息发送给 ROS 系统，亦可以把 ROS 系统发送的 ROS 消息（控制消息）转换成 Mavlink 消息发送给飞控。</p>
+<p>工具链：VMware 虚拟机 + 18.04 Ubuntu + ROS Melodic + mavros 包 + gazebo 仿真工具</p>
+<p>ROS 安装</p>
+<ul>
+<li>换源，如中科大、阿里、清华。vim(gedit) &#x2F;etc&#x2F;apt&#x2F;source.list。</li>
+<li>sudo apt-get update。sudo apt-get update</li>
+<li><a href="wiki.ros.org/melodic/installation/ubuntu">安装</a>。最后两行代码容易失败，建议科学上网或者多试几次。</li>
+<li>检验安装：roscore</li>
+</ul>
+<p>Mavros 安装</p>
+<ul>
+<li><p>二进制安装：已经编译好的工具</p>
+</li>
+<li><p>源码安装[推荐]：<a href="docs.px4.io/master/en/ros/mavros_installation.html">安装</a>。都是原始代码，必须编译成可以执行的二进制文件才可以执行，可以修改代码，进行开发等等。注：教程处用的是 kinetic 版本，实际中记得换成 melodic。</p>
+</li>
+<li><p>检验安装：roslaunch mavros px4.launch</p>
+</li>
+</ul>
+<h3 id="1-2-ROS-创建节点与编译"><a href="#1-2-ROS-创建节点与编译" class="headerlink" title="1.2 ROS 创建节点与编译"></a>1.2 ROS 创建节点与编译</h3><p>ROS 的通信方式：</p>
+<ul>
+<li>server 点对点，响应快</li>
+<li>topic 多对多</li>
+</ul>
+<p>ROS 文件系统组织</p>
+<p>编译基于 catkin，CMakeList.txt 用于后续的编译。</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112102122959.png" alt="image-20211112102122959"></p>
+<p><a target="_blank" rel="noopener" href="http://wiki.ros.org/ROS/Tutorials/NavigatingTheFilesystem">常用命令</a></p>
+<ul>
+<li>rospack<ul>
+<li>获取有关包的信息，本教程仅以 find 为例，返回包的路径。</li>
+<li>rospack find [pacakge name]</li>
+</ul>
+</li>
+<li>roscd<ul>
+<li>将目录改为包或堆栈，或者其子目录</li>
+<li>roscd &lt;package-or-stack&gt;[&#x2F;subdir]</li>
+</ul>
+</li>
+<li>rosls<ul>
+<li>直接查看包中文件，或者其子目录</li>
+<li>rosls &lt;package-or-stack&gt;[&#x2F;subdir]</li>
+</ul>
+</li>
+</ul>
+<p>节点创建与编译</p>
+<ul>
+<li>创建工作空间并进入 src。mkdir -p catkin_ws&#x2F;src，cd catkin_ws&#x2F;src</li>
+<li>创建功能包。crakin_create_pkg [package-name] roscpp std_msgs<ul>
+<li>roscpp：用 cpp 编译</li>
+<li>std_msgs：用已有的数据结构</li>
+</ul>
+</li>
+<li>进入功能包的 src 并创建源文件。cd package-name&#x2F;src。</li>
+</ul>
+ <img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112103129639.png" alt="image-20211112103129639" style="zoom: 67%;" />
+
+<ul>
+<li>回到上级目录，修改 CMakeLists.txt。<ul>
+<li><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112103252704.png" alt="image-20211112103252704"></li>
+<li>第一个参数是为生成的可以执行文件定义一个名字，第二个是默认的源代码目录，需要修改。</li>
+<li><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112103454634.png" alt="image-20211112103454634"></li>
+<li>第一个参数需要和前者对应。</li>
+</ul>
+</li>
+<li>回到工作空间目录，编译。catkin build。会产生 build、devel 文件夹。</li>
+<li>编译成功后，roscore，source ~&#x2F;catkin_ws&#x2F;devel&#x2F;setup.sh。之后便可 rosrun [结点名]。</li>
+</ul>
+<h3 id="1-3-ROS-编程基础"><a href="#1-3-ROS-编程基础" class="headerlink" title="1.3 ROS 编程基础"></a>1.3 ROS 编程基础</h3><p>例程：简单的发布和订阅</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112103916004.png" alt="image-20211112103916004"></p>
+<p>[代码讲解]</p>
+<p>运行方式（注意各个命令用独立的终端）</p>
+<ul>
+<li>roscore</li>
+<li>rosrun minimal_nodes[包名] minimal_publisher[节点名]</li>
+<li>rosrun minimal_nodes[包名] minimal_subscriber[节点名]</li>
+<li>rostopic list，rostopic info topic1[话题名]，rostopic hz topic1[话题名]。</li>
+</ul>
+<p>例程：简单的控制器和仿真器</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112104339826.png" alt="image-20211112104339826"></p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112104410098.png" alt="image-20211112104410098"></p>
+<p>[代码讲解]</p>
+<p>运行方式</p>
+<ul>
+<li>roscore</li>
+<li>rosrun minimal_nodes[包名] minimal_simulator[节点名]</li>
+<li>rosrun minimal_nodes[包名] minimal_controller[节点名]</li>
+<li>发送预定速度：rostopic pub -r 10[hz] vel_cmd[话题名] std_msgs&#x2F;Float64[数据类型] 1.0</li>
+</ul>
+<p>C++ 类的使用</p>
+<p>ROS代码如果订阅很多个消息，发布多个消息的话，很快会变得过于冗长，若要提高代码效率和代码复用，最好使用类。</p>
+<p>在头文件中定义类:</p>
+<ul>
+<li><p>定义所有成员函数的原型</p>
+</li>
+<li><p>定义私有和公共数据成员</p>
+</li>
+<li><p>定义构造函数的原型</p>
+</li>
+</ul>
+<p>编写一个单独的实现文件</p>
+<ul>
+<li>包含上面的头文件</li>
+<li>包含已经声明成员函数的工作代码</li>
+<li>包含在构造函数中封装的必要的初始化的代码</li>
+</ul>
+<p>构建文件系统</p>
+<ul>
+<li><p>在功能包目录下创建一个inlcude&#x2F;minimal_controller_class [结点名]的文件夹</p>
+</li>
+<li><p>并在该文件夹下创建一个minimal_controller_class.h的文件</p>
+</li>
+<li><p>在src目录下创建minimal_controller_class.cpp文件</p>
+</li>
+</ul>
+<p>修改CMakeLists.txt，使得ros结点包含进include文件夹所包含的头文件</p>
+<img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112105212272.png" alt="image-20211112105212272" style="zoom:50%;" />
+
+<p>没看完，先跳过。</p>
+<h3 id="1-4-Mavros-消息的订阅与发布"><a href="#1-4-Mavros-消息的订阅与发布" class="headerlink" title="1.4 Mavros 消息的订阅与发布"></a>1.4 Mavros 消息的订阅与发布</h3><p>1.4.1 应用mavros控制无人机的消息流</p>
+<ul>
+<li>如何去查阅mavros的消息与mavlink协议之间的关系</li>
+<li>如何去找到mavlink协议与uorb消息之间的对应关系</li>
+</ul>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112105445856.png" alt="image-20211112105445856"></p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112105635483.png" alt="image-20211112105635483"></p>
+<p>1.4.2 example offboard例程的仿真与解析</p>
+<ul>
+<li>使用gazebo进行软件在环仿真</li>
+<li>搭载机载计算机的无人机的实际飞行测试</li>
+</ul>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112112529657.png" alt="image-20211112112529657"></p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112120815187.png" alt="image-20211112120815187"></p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112121128801.png" alt="image-20211112121128801"></p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112121212743.png" alt="image-20211112121212743"></p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112121253406.png" alt="image-20211112121253406"></p>
+<p>ENU 坐标系，z&#x3D;2，升高两米。</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112122001643.png" alt="image-20211112122001643"></p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112122159260.png" alt="image-20211112122159260"></p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112122300241.png" alt="image-20211112122300241"></p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 1125 words, 3 min 45 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/youcompleteme-installation/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="YouCompleteMe-安装"><a href="#YouCompleteMe-安装" class="headerlink" title="YouCompleteMe 安装"></a>YouCompleteMe 安装</h2><p>github 项目地址：<a target="_blank" rel="noopener" href="https://github.com/ycm-core/YouCompleteMe">https://github.com/ycm-core/YouCompleteMe</a></p>
+<p>该项目有子模块，github 被墙的情况下很难克隆。我 ssh 连接导实验室的无人机为之 vim 配置该插件，不是很懂怎么命令行翻墙。因此，我是本地电脑翻墙克隆后，再输入如下指令克隆它的子模块。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule update --init --recursive</span><br></pre></td></tr></table></figure>
+
+<p>针对 github 被墙，可用工具：dev-sidecar，pigcha。</p>
+<p>克隆了子模块后，上传至 onedrive，并获取下载链接。在 linux 终端输入如下指令下载：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c &lt;url&gt; -O &lt;/path/name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>解压 zip</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+
+<p>按教程安装依赖包：<a target="_blank" rel="noopener" href="https://github.com/ycm-core/YouCompleteMe#linux-64-bit">https://github.com/ycm-core/YouCompleteMe#linux-64-bit</a></p>
+<p>在 .vimrc 中加入 ycm-core&#x2F;YouCompleteMe 后，编译 YCM。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.vim/bundle/YouCompleteMe</span><br><span class="line">python3 install.py --all(所有语言语法检查) </span><br><span class="line">or python3 install.py --clangd-completer(C系列语言语法检查) </span><br><span class="line">or python3 install.py (没有语法检查)</span><br></pre></td></tr></table></figure>
+
+<p>可能出现的问题： Your C++ compiler does NOT fully support C++17</p>
+<p>解决：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/65284572/your-c-compiler-does-not-fully-support-c17">https://stackoverflow.com/questions/65284572/your-c-compiler-does-not-fully-support-c17</a></p>
+<p>下载 clangd：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zi-wang/p/13550305.html">https://www.cnblogs.com/zi-wang/p/13550305.html</a></p>
+<p>编译生成 ycm_core，<a target="_blank" rel="noopener" href="https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide">https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide</a></p>
+<p>注意：更新 Vim 至 8.1</p>
+<p>先克隆 8.1.2424 版本的 vim</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b &lt;tag&gt; url</span><br></pre></td></tr></table></figure>
+
+<p>按照如下教程配置：<a target="_blank" rel="noopener" href="https://github.com/ycm-core/YouCompleteMe/wiki/Building-Vim-from-source">https://github.com/ycm-core/YouCompleteMe/wiki/Building-Vim-from-source</a></p>
+<p>查看版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim --version |grep VIM</span><br></pre></td></tr></table></figure>
+
+<p>查看是否支持 python3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim --version |grep python</span><br></pre></td></tr></table></figure>
+
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 363 words, 1 min 12 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/server-operation/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="服务器基本操作"><a href="#服务器基本操作" class="headerlink" title="服务器基本操作"></a>服务器基本操作</h2><h3 id="服务器上的服务"><a href="#服务器上的服务" class="headerlink" title="服务器上的服务"></a>服务器上的服务</h3><table>
+<thead>
+<tr>
+<th>一号服</th>
+<th>二号服</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>frpc</td>
+<td>frpc</td>
+</tr>
+<tr>
+<td>dokuwiki</td>
+<td></td>
+</tr>
+<tr>
+<td>jupyterlab</td>
+<td></td>
+</tr>
+<tr>
+<td>svn</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="frpc服务"><a href="#frpc服务" class="headerlink" title="frpc服务"></a>frpc服务</h3><p>位置： &#x2F;home&#x2F;chensiji&#x2F; （如果是服务器2位置是&#x2F;home&#x2F;asus）</p>
+<p>1.开启服务指令：nohup .&#x2F;frpc -c frpc.ini &amp;</p>
+<p>*如果显示无法执行该指令，可以在开头加个sudo</p>
+<p>解释：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.&#x2F;</td>
+<td>执行</td>
+</tr>
+<tr>
+<td>frpc</td>
+<td>可执行文件frpc</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>使用配置文件</td>
+</tr>
+<tr>
+<td>frpc.ini</td>
+<td>配置文件名称</td>
+</tr>
+<tr>
+<td>nohup {} &amp;</td>
+<td>使后台运行，运行日志输出到当前目录的nohup.out</td>
+</tr>
+</tbody></table>
+<p>2.查看配置文件：cat frpc.ini</p>
+<p>会显示类似如下的内容：</p>
+<p>[common]</p>
+<p>server_addr &#x3D; 39.107.92.9</p>
+<p>server_port &#x3D; 7000</p>
+<p>[ssh]</p>
+<p>type &#x3D; tcp</p>
+<p>local_ip &#x3D; 192.169.0.200</p>
+<p>local_port &#x3D; 22</p>
+<p>…</p>
+<p>3.关闭进程：</p>
+<p>首先用如下指令查看当前正在运行的进程号：</p>
+<p>ps -ef|grep frp</p>
+<p>上图中显示的11665、11666那一列的数字为进程的进程号。根据进程号我们可以关闭相应的进程。</p>
+<p>正常关闭：sudo kill &lt;进程号&gt;</p>
+<p>强制关闭: sudo kill -9 &lt;进程号&gt;</p>
+<p>在将上述所有进程都’kill’后，可以发现众多服务的网络连接都失效了（grep那个进程不用’kill’，查询过程本身就是个进程）：</p>
+<p>之后需要用开启服务的指令开启这部分服务(见1)</p>
+<h3 id="dokuwiki"><a href="#dokuwiki" class="headerlink" title="dokuwiki"></a>dokuwiki</h3><p>不用维护，开机就有</p>
+<h3 id="jupyterlab"><a href="#jupyterlab" class="headerlink" title="jupyterlab"></a>jupyterlab</h3><h4 id="需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter-lab可能会导致权限访问问题"><a href="#需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter-lab可能会导致权限访问问题" class="headerlink" title="需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter lab可能会导致权限访问问题"></a>需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter lab可能会导致权限访问问题</h4><p>切换用户： su ub-d504（用户名）</p>
+<p>*密码可以询问有关负责人</p>
+<h4 id="需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务"><a href="#需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务" class="headerlink" title="需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务"></a>需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务</h4><p>*具体可见conda部分</p>
+<p>1.启动指令</p>
+<p>nohup jupyter lab &amp;</p>
+<p>要让jupyter lab在后台运行，否则退出直连连接后jupyter lab的服务也失效。</p>
+<p>2.关闭进程</p>
+<p>ps -ef|grep jupyter|awk {‘print $2’}|xargs kill</p>
+<p>解释：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td>管道符号，将前者的输出作为后者的输入</td>
+</tr>
+<tr>
+<td>grep jupyter</td>
+<td>对于输入进来的内容，按行查找包含”jupyter”的内容并输出</td>
+<td></td>
+</tr>
+<tr>
+<td>awk {‘print $2’}</td>
+<td>把输入按空格分开成多项，打印第二项</td>
+<td></td>
+</tr>
+<tr>
+<td>xargs</td>
+<td>把前面的输入作为后面命令的参数</td>
+<td></td>
+</tr>
+<tr>
+<td>kill</td>
+<td>直接根据进程号关闭进程</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="svn"><a href="#svn" class="headerlink" title="svn"></a>svn</h3><p>位置 &#x2F;srv&#x2F;svn_repo&#x2F;Lab</p>
+<p>1.启动指令</p>
+<p>sudo svnserve -d -r &#x2F;srv&#x2F;svn_repo –listen-port 3501</p>
+<p>-d: 已守护模式启动</p>
+<p>-r：指定svn版本库根目录，这样是便于客户端不用输入全路径就可以访问版本库</p>
+<p>2.停止服务</p>
+<p>ps -ef|grep svn 查询进程号</p>
+<p>kill &lt;进程号&gt;</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 720 words, 2 min 24 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/rl-notes/"></a></h3></div><div class="post-content"><div class="card"><p><p>Q-learning 为什么不用重要性采样？Q-learning 是单步更新的，target是直接获得的，而不是根据策略接下来得到的。反之，TD(2)及以上就需要重要性采样。</p>
+<p>softmax 溢出问题：e的10000次方，pytorch的源码怎么处理的？数列所有数减去数列的最大值，这样和减之前一模一样的。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 107 words, 21 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/lab-notes/"></a></h3></div><div class="post-content"><div class="card"><p><p>ssh连接：finalshell+<strong>指令操作？</strong></p>
+<p>公钥登录。</p>
+<p>添加公钥，这一段是写给在服务器上已经有账号的。反之，cd home+mkdir 用户名。</p>
+<p>拿到新的公钥，并且创建新的账号的文件夹底下 </p>
+<p>shell) 先查看文件夹下是否存在.ssh文件夹 否则运行sudo mkdir .&#x2F;.ssh</p>
+<p>然后将公钥id_rsa.pub上传到对应的账户的.ssh文件夹下，并且改名为authorized_keys</p>
+<p>用 sudo chown 用户名 authorized_keys 修改公钥的所有人</p>
+<p>用 sudo chmod 600 authorized_keys 给公钥添加运行权限</p>
+<p>Vim：Bundle，Nerdtree，TagBar，jedi-python</p>
+<p>jupyterlab的关闭：ps -ef|grep jupyter|awk {‘print $2’}|xargs kill</p>
+<p>svn操作：权限修改，文件夹创建</p>
+<p>frp账号密码：nomad + nomad123</p>
+<p>jupyter密码：Lab504jupyter</p>
+<p>sudo操作：ub-d504 + lab504ubd</p>
+<p>tail nohup.out：在当前路径生成一个nohup.out</p>
+<p>查看进程：top htop ps -ef grep pstree</p>
+<p>2号服切换到asus账户：</p>
+<p>​	su asus + D504y2021</p>
+<p>​	ssh <a href="mailto:&#x75;&#98;&#x2d;&#100;&#x35;&#48;&#52;&#x40;&#x31;&#57;&#x32;&#x2e;&#x31;&#54;&#x39;&#x2e;&#x30;&#46;&#x32;&#x30;&#x30;">&#x75;&#98;&#x2d;&#100;&#x35;&#48;&#52;&#x40;&#x31;&#57;&#x32;&#x2e;&#x31;&#54;&#x39;&#x2e;&#x30;&#46;&#x32;&#x30;&#x30;</a></p>
+<p>然后可以通过该方式，ssh到1号服</p>
+<p>从1号服copy文件到2号服使用scp</p>
+<p><a target="_blank" rel="noopener" href="http://39.107.92.9:5636/dokuwiki/doku.php?id=linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">linux基本操作</a></p>
+<p>服务器上传下载文件：scp</p>
+<p>公钥与私钥：公钥加密，私钥解密。私钥签名，公钥验证。</p>
+<p>SSH对于公钥和私钥的用法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34649947/article/details/80140465">https://blog.csdn.net/qq_34649947/article/details/80140465</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/csm201314/article/details/78453579">https://blog.csdn.net/csm201314/article/details/78453579</a></p>
+<p>终端：人与机器交互的接口。终端具有两个基本功能：向主机输入信息和向外部输出信息。所以终端可以分为输入设备和输出设备。</p>
+<p>ssh：Secure Shell（安全外壳协议），为建立在应用层基础上的可靠，专为远程登录会话和其他网络服务提供安全性的协议。运用如finalshell。</p>
+<p>端口：客户端可以通过ip地址找到对应的服务器端，但是服务器端是有很多端口的，每个应用程序对应一个端口号，通过端口号，客户端才能真正的访问到该服务器。</p>
+<p>定时器：keep alive保活机制？</p>
+<p>防火墙：就是专门给服务器提供防御、保障数据安全的防火墙。</p>
+<p>frp，svn，jupyter维护：<a target="_blank" rel="noopener" href="http://39.107.92.9:5636/dokuwiki/doku.php?id=term_script">http://39.107.92.9:5636/dokuwiki/doku.php?id=term_script</a></p>
+<p>sz：从Linux下载文件到本机 , 在Linux终端输入命令回车后，选择本地存储路径即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">命令格式：    sz filename   下载文件filename</span><br><span class="line">　　　　　　	sz file1 file2   下载多个文件	</span><br><span class="line">　　　　　　	sz dir/*　　　下载dir目录下所有文件</span><br></pre></td></tr></table></figure>
+
+<p>rz：从本地上传文件到Linux，在Linux终端输入命令回车后，选择本地要上传的文件即可，可一次指定多个文件</p>
+<p>scp：Linux scp 命令用于 Linux 之间复制文件和目录</p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-scp.html">https://www.runoob.com/linux/linux-comm-scp.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scp，sz，rz			 </span><br><span class="line">nc					# Netcat (网络刀)，端口扫描，远程拷贝等等</span><br><span class="line">					# https://blog.csdn.net/freeking101/article/details/53289198</span><br><span class="line">vim</span><br><span class="line">cat					# 查看文件内容</span><br><span class="line">grep				# grep jupyter对于输入进来的内容，按行查找包含“jupyter”的内容并输出</span><br><span class="line">ps -ef				# ps查看进程 -e代表显示所有进程 -f代表全格式</span><br><span class="line">kill 		</span><br><span class="line">nohup &#123;&#125; &amp; 			# 使后台运行，运行日志输出到当前目录的nohup.out</span><br></pre></td></tr></table></figure>
+
+<p>关注服务器状态的指令：htop + nvidia-smi</p>
+<p>nvidia-smi：显示GPU当前的状态。训练的时候，可以用这条指令每隔1秒看一下显卡状态：watch -n 1 ‘nvidia-smi’</p>
+<p>htop：是Linux系统中的一个互动的进程查看器</p>
+<p>vscode关闭文件夹：[Ctrl + K F]</p>
+<p>串口调试 arm相机的包 开学两周突破</p>
+<p>tail nohup.out：在当前路径生成一个nohup.out</p>
+<p>top htop ps -ef grep pstree：查看进程</p>
+<p>scp -r &#x2F;root&#x2F;lk <a href="mailto:&#x72;&#111;&#x6f;&#x74;&#64;&#x34;&#x33;&#x2e;&#50;&#50;&#x34;&#x2e;&#x33;&#52;&#x2e;&#x37;&#x33;">&#x72;&#111;&#x6f;&#x74;&#64;&#x34;&#x33;&#x2e;&#50;&#50;&#x34;&#x2e;&#x33;&#52;&#x2e;&#x37;&#x33;</a>:&#x2F;home&#x2F;lk&#x2F;cpfile：Linux 之间拷贝Secure Copy</p>
+<p>nautilus &#x2F;file：终端打开文件 </p>
+<h5 id="操作服务器时遇到的问题"><a href="#操作服务器时遇到的问题" class="headerlink" title="操作服务器时遇到的问题"></a>操作服务器时遇到的问题</h5><p>鼠标不见了&#x2F;卡死？ctrl+alt+f1 回到登陆界面，重新登录。</p>
+<p>终端如何粘贴？ctrl+shift+v。</p>
+<p>找不到home？点开文件界面，左侧最下栏。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 1115 words, 3 min 43 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/code-style/"></a></h3></div><div class="post-content"><div class="card"><p><h3 id="1-命名"><a href="#1-命名" class="headerlink" title="1. 命名"></a>1. 命名</h3><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Public</th>
+<th>Internal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Modules</td>
+<td>lower_with_under</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Packages</td>
+<td>lower_with_under</td>
+<td></td>
+</tr>
+<tr>
+<td>Classes</td>
+<td>CapWords</td>
+<td>_CapWords</td>
+</tr>
+<tr>
+<td>Exceptions</td>
+<td>CapWords</td>
+<td></td>
+</tr>
+<tr>
+<td>Functions</td>
+<td>lower_with_under()</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Global&#x2F;Class Constants</td>
+<td>CAPS_WITH_UNDER</td>
+<td>_CAPS_WITH_UNDER</td>
+</tr>
+<tr>
+<td>Global&#x2F;Class Variables</td>
+<td>lower_with_under</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Instance Variables</td>
+<td>lower_with_under</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Method Names</td>
+<td>lower_with_under()</td>
+<td>_lower_with_under</td>
+</tr>
+<tr>
+<td>Function&#x2F;Method Paramters</td>
+<td>lower_with_under</td>
+<td></td>
+</tr>
+<tr>
+<td>Local Variables</td>
+<td>lower_with_under</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="2-函数长度"><a href="#2-函数长度" class="headerlink" title="2. 函数长度"></a>2. 函数长度</h3><p>一般不超过 40 行</p>
+<h3 id="3-行长度"><a href="#3-行长度" class="headerlink" title="3. 行长度"></a>3. 行长度</h3><p>一般不超过 80 个字符</p>
+<h3 id="4-注释"><a href="#4-注释" class="headerlink" title="4. 注释"></a>4. 注释</h3><h5 id="4-1-文档字符串"><a href="#4-1-文档字符串" class="headerlink" title="4.1 文档字符串"></a>4.1 文档字符串</h5><p>包、类、模块或者函数的第一句话，一般使用三重引号包裹，对于只有一行的注释来说，尾部引号应该在同一行。对于多行注释一般按如下方式组织：首先是一行以句号，问号或惊叹号结尾的概述。接着是一个空行，然后是文档字符串剩下的部分，它应该与文档字符串的第一行的第一个引号对齐。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;A one line summary of the module or program, terminated by a period.</span><br><span class="line"></span><br><span class="line">Leave one blank line. The rest of this docstring should contain anoverall description of the module or program. Optionally, it may alsocontain a brief description of exported classes and functions and/or usageexamples.</span><br><span class="line"></span><br><span class="line">Typical usage example:</span><br><span class="line"></span><br><span class="line">foo= CLa55Foo()</span><br><span class="line">bar = foo.FunctionBar()</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-2-块注释或行注释"><a href="#4-2-块注释或行注释" class="headerlink" title="4.2 块注释或行注释"></a>4.2 块注释或行注释</h5><p>对于复杂的操作，应该在其操作开始前写上若干行注释。对于不是一目了然的代码，应在其行尾添加注释。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># We use a weighted dictionary search to find out where i is in</span><br><span class="line"># the array. We extrapolate position based on the largest num</span><br><span class="line"># in the array and the array size and then do binary search to</span><br><span class="line"># get the exact number</span><br><span class="line"></span><br><span class="line">if i &amp; (i-1) == 0: # True if i is 0 or a power of 2.</span><br></pre></td></tr></table></figure>
+
+<p>为了提高可读性，注释应该至少离开代码 2 个空格。</p>
+<h3 id="5-空行"><a href="#5-空行" class="headerlink" title="5. 空行"></a>5. 空行</h3><p>顶级定义之间空两行，比如函数或者类定义。方法定义，类定义与第一个方法之间，都应该空一行。函数或方法中，某些地方要是你觉得合适，就空行。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 495 words, 1 min 39 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/machine-learning/lec5_%E9%9A%90%E5%90%AB%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B/"></a></h3></div><div class="post-content"><div class="card"><p><p>���������ɷ�ģ�ͣ�Hidden Markov Models��HMM��</p>
+<p>һ��Ӧ�õ�����������ʶ�𡣶���һ�����������ǵ������ǣ���֪����ô���������Σ���֪��ÿ��״̬��ʱ���ж೤����Ҳ��֪��ÿ�������ζ�Ӧ�����֡�</p>
+<p>����ǰ������⣬һ�����ܵķ������� kmeans �����࣬������״̬�������е���֮����ģ���ش��Ĵ��ڣ���ʵ����������ô����ʵ���У����� ni shi shui��һ�㲻�Ƿֳ� ni �� shi �� shui���Ữ�ֵظ�ϸ��</p>
+<p>�����������ɷ�ģ�ͣ��൱��˵���ʱ������ѭ����˵�ǵ�ʱ������ѭ��…</p>
+<p><img src="https://s2.loli.net/2022/06/07/Jmsju18kPflFUcR.png" alt="image-20220607222833016"></p>
+<p>һ�� HMM ������������ɣ�lambda &#x3D; {A, B, pi}</p>
+<p><img src="https://s2.loli.net/2022/06/07/dsFzUgbTe1Yci3X.png" alt="image-20220607214649518"></p>
+<p>Ϊ�˽�ģ���㣬��һ��ʱ��״ֻ̬��ǰһ��ʱ��״̬�йأ����������Ʒ�����������ǰ���״̬��</p>
+<p>ÿ�����������ĸ��ʷֲ�һ����в�ͬ��GMMָ��˹���ģ�͡�b_j(O) ��ʾ�������� O ���� S_j �ĸ��ʡ�</p>
+<p>���������壺����ֻ֪������� O�����ǲ�֪������״̬ Q��Q �Ǳ������� O ��ģ���Ҫ������������ġ�</p>
+<p>�����������������⡣</p>
+<p>��һ��ʶ�����⣨Evaluation�����ٸ����ӣ�����1-10������ʶ�𣬽���10��ģ�ͣ�����ÿ��ģ����һ��P��˭��P�󣬾�˵�����ĸ����֡�</p>
+<p><img src="https://s2.loli.net/2022/06/08/Ra3siTuSQUoz8YN.png" alt="image-20220608144446756"></p>
+<p>��Щ����Ϊʲô��Ҫ�� b ����� pi ����� O1 ��״̬�� q1����ô����ͨ�� b ����� O1 ���� q1 �ĸ��ʡ����ǵؼ���һ�㣬���� b �����ȷ�еطֱ� O1 ��״̬������Ӧ��״̬ q1������ 1���Ƕ�Ӧ��״̬������ 0����ô��ô�������� q1 ״̬��ʼ�Ŀ����� pi ��û�����壬�ʸ���� pi ��һ�� 0�������˵������һ��������������ʣ��������ܱ����ϳ�ĳһ����һЩ�ض��Ĵʡ�</p>
+<p>���ǵ�һ�� b ��������� O1 ��״̬�����ϵĸ��ʷֲ���Ҳ���� O1 ���ڸ���״̬�ĸ���ֵ������ O1 ������ p1 ���� s1����ô�ڵ�ǰ���� O1 �������� s1 ״̬�����ĸ��ʾ��ǵ���״̬ s1 �ĸ��ʳ���p1��ͬ���ģ����ǵڶ��� b ����� O2 ������ p2 ���� s2����ô�ڵ�ǰ���� O2 �������� s2 ״̬�����ĸ��ʾ��ǵ���״̬ s2 �ĸ��ʳ��� p2��</p>
+<p><strong>Ҳ���Ƕ���ĳ������ O��������� O ����ĳ��״̬�ĸ��ʣ��� O ����ĳ��״̬������Ȩ�أ��������뵽�����״̬�ĸ��ʡ�</strong></p>
+<p>һ��ʼû�뵽 b ���ԭ�򣺰�����״̬������֪�ˡ���֪�����ȷʵû�� b ���Ϊ�ȼ��� 1��ͬʱҲû�� sum �������δ֪������£���Ҫ����ÿ������Ŀ����ԣ��ͻ��и��ʷֲ�������������֪������� 1��0��0��0 �ĸ��ʷֲ���</p>
+<p><img src="https://s2.loli.net/2022/06/07/T3hABPGWLm7SpXu.png" alt="image-20220607221145394"></p>
+<p>��Ȼ�����������⣬��ʽ�ӻ���̫�����ˣ����������⡪������󷨡�</p>
+<p><img src="https://s2.loli.net/2022/06/08/vFnMfT4NgHGkeSw.png" alt="image-20220608144702781"></p>
+<p>alpha_t(i) ����Ϊ�����������ۻ��� t ʱ��ʱ���Ѹ�ʱ�̵���״̬���� s_i �����ĸ��ʡ�</p>
+<p>b_i(O_1) &#x3D; P(O_1|q_t&#x3D;s_i, lambda) ����Ϊ��O1 ����״̬������ s_i ������Ȩ�ء�</p>
+<p><img src="https://s2.loli.net/2022/06/08/Uf1EphGoldsq7Dg.png" alt="image-20220608145551371"></p>
+<p>�������Decoding����</p>
+<p>����һ�Ǹ���ģ�ͺ������������ڵ�ǰģ�͵������ƥ��������������ĳ̶ȣ������Ǹ���ģ�ͺ����������������������������ƥ�����״̬���С�</p>
+<p><img src="C:%5CUsers%5Cysc%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220608151907284.png" alt="image-20220608151907284"></p>
+<p>��������ά�ر��㷨��</p>
+<p><img src="C:%5CUsers%5Cysc%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220608152130883.png" alt="image-20220608152130883"></p>
+<p><img src="C:%5CUsers%5Cysc%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220608152611205.png" alt="image-20220608152611205"></p>
+<p>ÿ��ʱ�䶼����ѡ p ��״̬�е�һ���������൱����ͼ����ÿ��ʱ���ѡһ��״̬��Ȼ�����һ��·����ѡ���Ӧ״̬�󣬼����Ӧ״̬�ļ�ֵ��</p>
+<p>ÿ��ʱ��Σ�ÿ��������һʱ��ε����нڵ����ߣ�����ֵ���ڵ�ǰ�������ֵ�Լ�������ֵʱǰһ���������һ����������Ի��ݵõ�һ����õ�·�ߣ�Ҳ����һ������ E(Q)��</p>
+<p>ά�ر��㷨���̣�</p>
+<p><img src="C:%5CUsers%5Cysc%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220608152629433.png" alt="image-20220608152629433"></p>
+<p>���ϵõ������� E(Q)�����൱�ڶ��ڸ�ÿ������� O ����һ����ǩ��</p>
+<p>�������������Ϊһ������ HMM ģ�ʹ��ǩ�Ĳ������������ѧϰ���������ô�����ı�ǩ������ȵ����磬�Զ�ͨ�� O ѧϰ�����ǩ���Ӷ��滻���й۲�� b �</p>
+<p>����������ѵ�����⣨Learning����</p>
+<p><img src="https://s2.loli.net/2022/06/08/sUVBmfRTdir8xvM.png" alt="image-20220608154357784"></p>
+<p>��͹���������Ż����������������˼��㣺</p>
+<p><img src="https://s2.loli.net/2022/06/08/RoAqE136Fvy5pNK.png" alt="image-20220608154429833"></p>
+<p><img src="https://s2.loli.net/2022/06/08/7BkSH3PstWvzgqY.png" alt="image-20220608154711950"></p>
+<p><img src="https://s2.loli.net/2022/06/08/2R4P7ajJx8KeTfI.png" alt="image-20220608154733259"></p>
+<p>b ���󷨣�</p>
+<p><img src="https://s2.loli.net/2022/06/08/uP9rFgNSbKDqoJL.png" alt="image-20220608154757287"></p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 2051 words, 6 min 50 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/machine-learning/lec4_EM%E7%AE%97%E6%B3%95/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="EM��Expectation-Maximization���㷨"><a href="#EM��Expectation-Maximization���㷨" class="headerlink" title="EM��Expectation-Maximization���㷨"></a><center>EM��Expectation-Maximization���㷨</center></h2><h3 id="1-���"><a href="#1-���" class="headerlink" title="1. ���"></a>1. ���</h3><p>��ֲ���ֵ���㷨��ֻ��ĳһ��ֲ���ֵ����ɽ⡣</p>
+<p>�ŵ㣺�� ����Ҫ���κβ��� �� ��̼�</p>
+<p>���⣺�������֪��ÿһ����������ĸ���˹�ֲ�����ô�����ܹ����׵ع���ÿ����˹�ֲ��ľ�ֵ�ͷ�������������ǲ�֪��ÿһ����������ĸ���˹�ֲ�����������ƣ�EM�㷨��</p>
+<h3 id="2-GMM-�е�-EM"><a href="#2-GMM-�е�-EM" class="headerlink" title="2. GMM �е� EM"></a>2. GMM �е� EM</h3><p>�� ������������裺Ҫô a. �����ÿһ����ķֲ�������Ҫô b. �������˹�ֲ��Ĳ���</p>
+<p>�� b. Ϊ����Ȼ�������Ĺ�����Ȼ�������˹�ֲ��Ĳ�����</p>
+<p>�� E-step��</p>
+<p><img src="https://s2.loli.net/2022/06/06/Gysjb84E7Apgclx.png" alt="image-20220606100216870"></p>
+<p>�� M-step��</p>
+<p><img src="https://s2.loli.net/2022/06/06/2ascSdWmEr67wA9.png" alt="image-20220606100550644"></p>
+<p>�� �ص� �ڣ�����ѭ����ֱ��������</p>
+<h3 id="3-K-Means-�е�-EM"><a href="#3-K-Means-�е�-EM" class="headerlink" title="3. K-Means �е� EM"></a>3. K-Means �е� EM</h3><p>�ٿ���һ�� EM �㷨������ ���� K-means��</p>
+<p>�޼ලѧϰ��һ�֡�</p>
+<p>���⣺���� N ������ {X_i}_{i&#x3D;1-N}����� N ����������� {Z_i}_{i&#x3D;1-N}��</p>
+<p><img src="https://s2.loli.net/2022/06/06/mb9ogI1siFK4Lln.png" alt="image-20220606101157744"></p>
+<p>֤�� k-means �㷨��</p>
+<p>���ȶ�������һ��Ŀ�꺯����</p>
+<p><img src="https://s2.loli.net/2022/06/06/hJnb35HdoOpcmfj.png" alt="image-20220606101527303"></p>
+<p>Ȼ�󿴵� �� ���������� �� ������ʹ�� E ��С��</p>
+<p>�ٿ��ǵ� �� ���� ���ڴ������������</p>
+<p><img src="https://s2.loli.net/2022/06/06/j7TQNYWmxbE4hAO.png" alt="image-20220606101830189"></p>
+<p>��ˣ��� �� ���ľ�ֵ��������Ҳ���� E ��С�����ϣ��� E �½� 0���������һ�� ���� ʹ�� E �����½����� E һ��������</p>
+<h3 id="4-EM-�㷨һ����ʽ"><a href="#4-EM-�㷨һ����ʽ" class="headerlink" title="4. EM �㷨һ����ʽ"></a>4. EM �㷨һ����ʽ</h3><p>�����������ӣ��ó� EM �㷨��һ����ʽ��������֪�����Ϸֲ���<br>$$<br>p(x,z;\theta)<br>$$<br>���У�x �ǹ۲쵽�ı�����z ��Ǳ�ڱ���������Ҫ������������µĶ��������Ȼ���ƣ�<br>$$<br>\theta &#x3D; argmax_{\theta}logp(x;\theta)\<br>p(x;\theta) &#x3D; \sum_{z}p(x,z;\theta)<br>$$<br>��˹���ģ���е�����������ÿ��������ĳ����˹�ֲ��ĸ���</p>
+<p>K-Means �е�����������ÿ�����Ƿ�����ĳ������</p>
+<p><img src="https://s2.loli.net/2022/06/07/UgaT2WLBPjD8cGk.png" alt="image-20220607200553293"></p>
+<p>ͬ��ͬ���ȼ�</p>
+<p>���� Jensen ����ʽ�Ƶ��������f(x) &#x3D; logx��E(x) &#x3D; log[] �������ڵĶ�������ô X �����Ǹ���ʽ��</p>
+<p><img src="https://s2.loli.net/2022/06/07/s1lUNEP4jqkG5ST.png" alt="image-20220607201340238"></p>
+<p>���һ������Ϊ�����½�ȼ��� E(theta)������������˵�ʽ���Ƶ���Ҳ����˵���ڵȼ۵�����£��������½������󻯶�����Ȼ�����ˡ�</p>
+<p>���һ�е��Ƶ����£�</p>
+<p><img src="https://s2.loli.net/2022/06/07/qpMyfvmV84D52jC.png" alt="image-20220607203857799"></p>
+<p>ͨ�� E �����ҵ���ʹ�õȺų����� $Q_i(z^{(i)})$�������Ժ����ǾͿ������ E(f(x)) �ˣ�Ҳ���ǵȼ������ f(E(x))��</p>
+<p>���������Ƶ����õ� EM �㷨��һ����ʽ��</p>
+<p><img src="https://s2.loli.net/2022/06/07/dkWnjMyzvGBDwbI.png" alt="image-20220607203956530"></p>
+<p>֮����֤��</p>
+<p><img src="https://s2.loli.net/2022/06/07/XKRqbY4rVck8wJQ.png" alt="image-20220607205107298"></p>
+<p>����������һ��� EM �㷨�� kmeans �㷨�Ĺ�����</p>
+<p>z_i �Ķ��壺�� i �����ĸ����ࡣ</p>
+<p>Ϊʲô p ��ô���壿</p>
+<p><img src="https://s2.loli.net/2022/06/07/UigG9DXkeLtv5Zh.png" alt="image-20220607205447457"></p>
+<p>���һ�е�ʽ����</p>
+<p><img src="https://s2.loli.net/2022/06/07/y2CeMFlgcnTLkA6.png" alt="image-20220607210820263"></p>
+<p>֮�������΢�֣�</p>
+<p><img src="https://s2.loli.net/2022/06/07/blL2e59Ak3fDtRx.png" alt="image-20220607212116393"></p>
+<p>�ܽ��ص㣺��ֵѡ�񲻺ûᵼ�²��õĽ�������������ֲ���ֵ��</p>
+<p>�ο����ϣ�</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Matrix_cc/article/details/105266141">https://blog.csdn.net/Matrix_cc/article/details/105266141</a></p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 1227 words, 4 min 5 sec  read</span></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/2/">Next</a></li></ul></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"Posts",PAGES:"Pages",CATEGORIES:"Categories",TAGS:"Tags",UNTITLED:"(Untitled)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Search..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
