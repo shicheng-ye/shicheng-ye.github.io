@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Yourname"><title> · Hexo</title><meta name="description" content="服务器基本操作服务器上的服务
+
+
+一号服
+二号服
+
+
+
+frpc
+frpc
+
+
+dokuwiki
+
+
+
+jupyterlab
+
+
+
+svn
+
+
+
+frpc服务位置： &amp;#x2F;home&amp;#x2F;chensiji&amp;#x2F; （如果是服务器2位置是&amp;#x2F;home&amp;#x2F;asus）
+1.开"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">Home</a></li><li> <a href="/archives">Archives</a></li><li> <a href="/tags">Tags</a></li><li> <a href="/about">About</a></li><li> <a href="/links">Links</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>A simple and beautiful blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/Lhcfl"><i class="fa fa-github"></i></a></li><li><a href="mailto:yourname@example.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/jin-xin-4-68"><i class="fa fa-mortar-board"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Yourname</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a></a></h3></div><div class="post-content"><p><h2 id="服务器基本操作"><a href="#服务器基本操作" class="headerlink" title="服务器基本操作"></a>服务器基本操作</h2><h3 id="服务器上的服务"><a href="#服务器上的服务" class="headerlink" title="服务器上的服务"></a>服务器上的服务</h3><table>
+<thead>
+<tr>
+<th>一号服</th>
+<th>二号服</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>frpc</td>
+<td>frpc</td>
+</tr>
+<tr>
+<td>dokuwiki</td>
+<td></td>
+</tr>
+<tr>
+<td>jupyterlab</td>
+<td></td>
+</tr>
+<tr>
+<td>svn</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="frpc服务"><a href="#frpc服务" class="headerlink" title="frpc服务"></a>frpc服务</h3><p>位置： &#x2F;home&#x2F;chensiji&#x2F; （如果是服务器2位置是&#x2F;home&#x2F;asus）</p>
+<p>1.开启服务指令：nohup .&#x2F;frpc -c frpc.ini &amp;</p>
+<p>*如果显示无法执行该指令，可以在开头加个sudo</p>
+<p>解释：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.&#x2F;</td>
+<td>执行</td>
+</tr>
+<tr>
+<td>frpc</td>
+<td>可执行文件frpc</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>使用配置文件</td>
+</tr>
+<tr>
+<td>frpc.ini</td>
+<td>配置文件名称</td>
+</tr>
+<tr>
+<td>nohup {} &amp;</td>
+<td>使后台运行，运行日志输出到当前目录的nohup.out</td>
+</tr>
+</tbody></table>
+<p>2.查看配置文件：cat frpc.ini</p>
+<p>会显示类似如下的内容：</p>
+<p>[common]</p>
+<p>server_addr &#x3D; 39.107.92.9</p>
+<p>server_port &#x3D; 7000</p>
+<p>[ssh]</p>
+<p>type &#x3D; tcp</p>
+<p>local_ip &#x3D; 192.169.0.200</p>
+<p>local_port &#x3D; 22</p>
+<p>…</p>
+<p>3.关闭进程：</p>
+<p>首先用如下指令查看当前正在运行的进程号：</p>
+<p>ps -ef|grep frp</p>
+<p>上图中显示的11665、11666那一列的数字为进程的进程号。根据进程号我们可以关闭相应的进程。</p>
+<p>正常关闭：sudo kill &lt;进程号&gt;</p>
+<p>强制关闭: sudo kill -9 &lt;进程号&gt;</p>
+<p>在将上述所有进程都’kill’后，可以发现众多服务的网络连接都失效了（grep那个进程不用’kill’，查询过程本身就是个进程）：</p>
+<p>之后需要用开启服务的指令开启这部分服务(见1)</p>
+<h3 id="dokuwiki"><a href="#dokuwiki" class="headerlink" title="dokuwiki"></a>dokuwiki</h3><p>不用维护，开机就有</p>
+<h3 id="jupyterlab"><a href="#jupyterlab" class="headerlink" title="jupyterlab"></a>jupyterlab</h3><h4 id="需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter-lab可能会导致权限访问问题"><a href="#需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter-lab可能会导致权限访问问题" class="headerlink" title="需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter lab可能会导致权限访问问题"></a>需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter lab可能会导致权限访问问题</h4><p>切换用户： su ub-d504（用户名）</p>
+<p>*密码可以询问有关负责人</p>
+<h4 id="需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务"><a href="#需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务" class="headerlink" title="需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务"></a>需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务</h4><p>*具体可见conda部分</p>
+<p>1.启动指令</p>
+<p>nohup jupyter lab &amp;</p>
+<p>要让jupyter lab在后台运行，否则退出直连连接后jupyter lab的服务也失效。</p>
+<p>2.关闭进程</p>
+<p>ps -ef|grep jupyter|awk {‘print $2’}|xargs kill</p>
+<p>解释：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td>管道符号，将前者的输出作为后者的输入</td>
+</tr>
+<tr>
+<td>grep jupyter</td>
+<td>对于输入进来的内容，按行查找包含”jupyter”的内容并输出</td>
+<td></td>
+</tr>
+<tr>
+<td>awk {‘print $2’}</td>
+<td>把输入按空格分开成多项，打印第二项</td>
+<td></td>
+</tr>
+<tr>
+<td>xargs</td>
+<td>把前面的输入作为后面命令的参数</td>
+<td></td>
+</tr>
+<tr>
+<td>kill</td>
+<td>直接根据进程号关闭进程</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="svn"><a href="#svn" class="headerlink" title="svn"></a>svn</h3><p>位置 &#x2F;srv&#x2F;svn_repo&#x2F;Lab</p>
+<p>1.启动指令</p>
+<p>sudo svnserve -d -r &#x2F;srv&#x2F;svn_repo –listen-port 3501</p>
+<p>-d: 已守护模式启动</p>
+<p>-r：指定svn版本库根目录，这样是便于客户端不用输入全路径就可以访问版本库</p>
+<p>2.停止服务</p>
+<p>ps -ef|grep svn 查询进程号</p>
+<p>kill &lt;进程号&gt;</p>
+</p><div class="tip">本文采用CC-BY-SA-3.0协议，转载请注明出处<br>Author: Yourname</div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 720 words, 2 min 24 sec  read</span></div></div></div></div><script src="/js/visitors.js"></script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"Posts",PAGES:"Pages",CATEGORIES:"Categories",TAGS:"Tags",UNTITLED:"(Untitled)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Search..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>

@@ -1,385 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Yourname"><title>Hexo</title><meta name="description" content="A simple and beautiful blog"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a class="current" href="/">Home</a></li><li> <a href="/archives">Archives</a></li><li> <a href="/tags">Tags</a></li><li> <a href="/about">About</a></li><li> <a href="/links">Links</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/logo.webp"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/logo@2x.webp" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Hexo</a></h3><div class="description"><p>A simple and beautiful blog</p></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/Lhcfl"><i class="fa fa-github"></i></a></li><li><a href="mailto:yourname@example.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/jin-xin-4-68"><i class="fa fa-mortar-board"></i></a></li></ul></div></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Yourname</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/mavros-tutorials/Amovlab%20MAVROS%20offboard/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/1-3minimal_nodes/1-3minimal_nodes/minimal_nodes/README/"></a></h3></div><div class="post-content"><div class="card"><p><h1 id="MINIMAL-NODES"><a href="#MINIMAL-NODES" class="headerlink" title="MINIMAL_NODES"></a>MINIMAL_NODES</h1><p>here are source examples for minimal nodes, as covered in the text Part 1, Chapter 1.</p>
 <p>This package ncludes a minimal publisher, minimal subscriber, minimal simulator and<br>minimal controller, as well as a launch file.  </p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 33 words, 6 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/mavros-tutorials/MAVROS%20topics/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="Mavros"><a href="#Mavros" class="headerlink" title="Mavros"></a>Mavros</h2><hr>
-<h3 id="1-mavros-脚本语法"><a href="#1-mavros-脚本语法" class="headerlink" title="1. mavros 脚本语法"></a>1. mavros 脚本语法</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;功能包的名字&quot;</span> <span class="attr">type</span>=<span class="string">&quot;功能包下你想启动节点的名字&quot;</span> <span class="attr">name</span>=<span class="string">&quot;对这个节点再命个名&quot;</span> <span class="attr">output</span>=<span class="string">&quot;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    output 结果输出在屏幕上，没有这个参数默认记录在log里</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;&quot;</span>&gt;</span> 传参:https://blog.csdn.net/taste_cyn/article/details/82737225</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-mavros-数据传输"><a href="#2-mavros-数据传输" class="headerlink" title="2. mavros 数据传输"></a>2. mavros 数据传输</h3><p>关注 px4_pos_estimator.cpp，可能是向飞控传飞机的姿态数据。他们传数据，都是用ros订阅的方式，飞控又是只看得懂mavlink协议里面的东西。所以飞控怎么拿数据呢？</p>
-<p>main：先在从t265订阅（subscribe）的消息中，拿到飞机的姿态数据。</p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151053255.png" alt="image-20211022151053255"></p>
-<p>main：开辟一个话题（advertise），用以表示无人机的位置和姿态。</p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151133647.png" alt="image-20211022151133647"></p>
-<p>send_to_fcu：利用 publish 将消息发布。</p>
- <img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151351191.png" alt="image-20211022151351191" style="zoom:67%;" />
-
-<p>问：mavros 通过订阅和发布实现消息的传输，飞控又遵循的是mavlink协议，所以飞控怎么拿数据呢？</p>
-<p>思路：应存在有一部分会发送 mavlink 消息，那收到 mavlink 消息前，有需要先收到 send_to_fcu 发送的 mavros 消息。既然有 publish，那就应该有 subscribe，那怎么找到哪里有 subscribe？</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -r <span class="string">&quot;/mavros/vision_pose/pose&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>关注 vision_pose_esimate.cpp，该文件订阅了该消息，并将该消息封装成 mavlink 消息发给飞控。</p>
-<h3 id="3-PX4-amp-Ardupilot"><a href="#3-PX4-amp-Ardupilot" class="headerlink" title="3. PX4 &amp; Ardupilot"></a>3. PX4 &amp; Ardupilot</h3><p>px4和ardupilot原本是两套独立的开源飞控，各自有软件和硬件。后来ardupilot看中了px4的硬件，就把代码移植到px4上了。所以目前px4和apm主流是运行在一种硬件上的两种软件。各自都是完备的系统。</p>
-<p>px4是基于实时操作系统的，传感器采集、导航、控制、存储等等都是单独的应用程序，因此apm的代码也被封装成了一个应用程序，跟px4的代码栈在一起。而且apm还用到了一部分px4的底层应用。</p>
-<p>飞控控制的想法：rospy + pymavlink。</p>
-<p>虽然pymavlink好像是ardu家的实现，但底层其实有直接做px4兼容映射的。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/23298764-7d83b5f35397ea0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="f7a2606d23b7c5a61e8fd4e0c930690.png"></p>
-<p>这些标题下的例程，优先试试。试代码的时候记得不要无脑试，要验证 mavlink 能不能通。看设计痕迹，pymavlink还是有点针对ardupilot的。</p>
-<p><a target="_blank" rel="noopener" href="https://www.ardusub.com/developers/pymavlink.html">https://www.ardusub.com/developers/pymavlink.html</a></p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 643 words, 2 min 8 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/mavros-tutorials/MAVROS%20notes/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="MAVROS-教程-——-Offboard-模式下自主飞行"><a href="#MAVROS-教程-——-Offboard-模式下自主飞行" class="headerlink" title="MAVROS 教程 —— Offboard 模式下自主飞行"></a>MAVROS 教程 —— Offboard 模式下自主飞行</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://bbs.amovlab.com/plugin.php?id=zhanmishu_video:video&mod=video&cid=11">AMOV 视频教程</a></p>
-</blockquote>
-<h3 id="1-1-工具链安装"><a href="#1-1-工具链安装" class="headerlink" title="1.1 工具链安装"></a>1.1 工具链安装</h3><p>MAVROS 操作无人机的软硬件架构</p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112101000509.png" alt="image-20211112101000509"></p>
-<p>Mavros 工具包可以把接收到的 Mavlink 消息（状态数据）转换成 ROS 消息发送给 ROS 系统，亦可以把 ROS 系统发送的 ROS 消息（控制消息）转换成 Mavlink 消息发送给飞控。</p>
-<p>工具链：VMware 虚拟机 + 18.04 Ubuntu + ROS Melodic + mavros 包 + gazebo 仿真工具</p>
-<p>ROS 安装</p>
-<ul>
-<li>换源，如中科大、阿里、清华。vim(gedit) &#x2F;etc&#x2F;apt&#x2F;source.list。</li>
-<li>sudo apt-get update。sudo apt-get update</li>
-<li><a href="wiki.ros.org/melodic/installation/ubuntu">安装</a>。最后两行代码容易失败，建议科学上网或者多试几次。</li>
-<li>检验安装：roscore</li>
-</ul>
-<p>Mavros 安装</p>
-<ul>
-<li><p>二进制安装：已经编译好的工具</p>
-</li>
-<li><p>源码安装[推荐]：<a href="docs.px4.io/master/en/ros/mavros_installation.html">安装</a>。都是原始代码，必须编译成可以执行的二进制文件才可以执行，可以修改代码，进行开发等等。注：教程处用的是 kinetic 版本，实际中记得换成 melodic。</p>
-</li>
-<li><p>检验安装：roslaunch mavros px4.launch</p>
-</li>
-</ul>
-<h3 id="1-2-ROS-创建节点与编译"><a href="#1-2-ROS-创建节点与编译" class="headerlink" title="1.2 ROS 创建节点与编译"></a>1.2 ROS 创建节点与编译</h3><p>ROS 的通信方式：</p>
-<ul>
-<li>server 点对点，响应快</li>
-<li>topic 多对多</li>
-</ul>
-<p>ROS 文件系统组织</p>
-<p>编译基于 catkin，CMakeList.txt 用于后续的编译。</p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112102122959.png" alt="image-20211112102122959"></p>
-<p><a target="_blank" rel="noopener" href="http://wiki.ros.org/ROS/Tutorials/NavigatingTheFilesystem">常用命令</a></p>
-<ul>
-<li>rospack<ul>
-<li>获取有关包的信息，本教程仅以 find 为例，返回包的路径。</li>
-<li>rospack find [pacakge name]</li>
-</ul>
-</li>
-<li>roscd<ul>
-<li>将目录改为包或堆栈，或者其子目录</li>
-<li>roscd &lt;package-or-stack&gt;[&#x2F;subdir]</li>
-</ul>
-</li>
-<li>rosls<ul>
-<li>直接查看包中文件，或者其子目录</li>
-<li>rosls &lt;package-or-stack&gt;[&#x2F;subdir]</li>
-</ul>
-</li>
-</ul>
-<p>节点创建与编译</p>
-<ul>
-<li>创建工作空间并进入 src。mkdir -p catkin_ws&#x2F;src，cd catkin_ws&#x2F;src</li>
-<li>创建功能包。crakin_create_pkg [package-name] roscpp std_msgs<ul>
-<li>roscpp：用 cpp 编译</li>
-<li>std_msgs：用已有的数据结构</li>
-</ul>
-</li>
-<li>进入功能包的 src 并创建源文件。cd package-name&#x2F;src。</li>
-</ul>
- <img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112103129639.png" alt="image-20211112103129639" style="zoom: 67%;" />
-
-<ul>
-<li>回到上级目录，修改 CMakeLists.txt。<ul>
-<li><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112103252704.png" alt="image-20211112103252704"></li>
-<li>第一个参数是为生成的可以执行文件定义一个名字，第二个是默认的源代码目录，需要修改。</li>
-<li><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112103454634.png" alt="image-20211112103454634"></li>
-<li>第一个参数需要和前者对应。</li>
-</ul>
-</li>
-<li>回到工作空间目录，编译。catkin build。会产生 build、devel 文件夹。</li>
-<li>编译成功后，roscore，source ~&#x2F;catkin_ws&#x2F;devel&#x2F;setup.sh。之后便可 rosrun [结点名]。</li>
-</ul>
-<h3 id="1-3-ROS-编程基础"><a href="#1-3-ROS-编程基础" class="headerlink" title="1.3 ROS 编程基础"></a>1.3 ROS 编程基础</h3><p>例程：简单的发布和订阅</p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112103916004.png" alt="image-20211112103916004"></p>
-<p>[代码讲解]</p>
-<p>运行方式（注意各个命令用独立的终端）</p>
-<ul>
-<li>roscore</li>
-<li>rosrun minimal_nodes[包名] minimal_publisher[节点名]</li>
-<li>rosrun minimal_nodes[包名] minimal_subscriber[节点名]</li>
-<li>rostopic list，rostopic info topic1[话题名]，rostopic hz topic1[话题名]。</li>
-</ul>
-<p>例程：简单的控制器和仿真器</p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112104339826.png" alt="image-20211112104339826"></p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112104410098.png" alt="image-20211112104410098"></p>
-<p>[代码讲解]</p>
-<p>运行方式</p>
-<ul>
-<li>roscore</li>
-<li>rosrun minimal_nodes[包名] minimal_simulator[节点名]</li>
-<li>rosrun minimal_nodes[包名] minimal_controller[节点名]</li>
-<li>发送预定速度：rostopic pub -r 10[hz] vel_cmd[话题名] std_msgs&#x2F;Float64[数据类型] 1.0</li>
-</ul>
-<p>C++ 类的使用</p>
-<p>ROS代码如果订阅很多个消息，发布多个消息的话，很快会变得过于冗长，若要提高代码效率和代码复用，最好使用类。</p>
-<p>在头文件中定义类:</p>
-<ul>
-<li><p>定义所有成员函数的原型</p>
-</li>
-<li><p>定义私有和公共数据成员</p>
-</li>
-<li><p>定义构造函数的原型</p>
-</li>
-</ul>
-<p>编写一个单独的实现文件</p>
-<ul>
-<li>包含上面的头文件</li>
-<li>包含已经声明成员函数的工作代码</li>
-<li>包含在构造函数中封装的必要的初始化的代码</li>
-</ul>
-<p>构建文件系统</p>
-<ul>
-<li><p>在功能包目录下创建一个inlcude&#x2F;minimal_controller_class [结点名]的文件夹</p>
-</li>
-<li><p>并在该文件夹下创建一个minimal_controller_class.h的文件</p>
-</li>
-<li><p>在src目录下创建minimal_controller_class.cpp文件</p>
-</li>
-</ul>
-<p>修改CMakeLists.txt，使得ros结点包含进include文件夹所包含的头文件</p>
-<img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112105212272.png" alt="image-20211112105212272" style="zoom:50%;" />
-
-<p>没看完，先跳过。</p>
-<h3 id="1-4-Mavros-消息的订阅与发布"><a href="#1-4-Mavros-消息的订阅与发布" class="headerlink" title="1.4 Mavros 消息的订阅与发布"></a>1.4 Mavros 消息的订阅与发布</h3><p>1.4.1 应用mavros控制无人机的消息流</p>
-<ul>
-<li>如何去查阅mavros的消息与mavlink协议之间的关系</li>
-<li>如何去找到mavlink协议与uorb消息之间的对应关系</li>
-</ul>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112105445856.png" alt="image-20211112105445856"></p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112105635483.png" alt="image-20211112105635483"></p>
-<p>1.4.2 example offboard例程的仿真与解析</p>
-<ul>
-<li>使用gazebo进行软件在环仿真</li>
-<li>搭载机载计算机的无人机的实际飞行测试</li>
-</ul>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112112529657.png" alt="image-20211112112529657"></p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112120815187.png" alt="image-20211112120815187"></p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112121128801.png" alt="image-20211112121128801"></p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112121212743.png" alt="image-20211112121212743"></p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112121253406.png" alt="image-20211112121253406"></p>
-<p>ENU 坐标系，z&#x3D;2，升高两米。</p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112122001643.png" alt="image-20211112122001643"></p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112122159260.png" alt="image-20211112122159260"></p>
-<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211112122300241.png" alt="image-20211112122300241"></p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 1125 words, 3 min 45 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/youcompleteme-installation/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="YouCompleteMe-安装"><a href="#YouCompleteMe-安装" class="headerlink" title="YouCompleteMe 安装"></a>YouCompleteMe 安装</h2><p>github 项目地址：<a target="_blank" rel="noopener" href="https://github.com/ycm-core/YouCompleteMe">https://github.com/ycm-core/YouCompleteMe</a></p>
-<p>该项目有子模块，github 被墙的情况下很难克隆。我 ssh 连接导实验室的无人机为之 vim 配置该插件，不是很懂怎么命令行翻墙。因此，我是本地电脑翻墙克隆后，再输入如下指令克隆它的子模块。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule update --init --recursive</span><br></pre></td></tr></table></figure>
-
-<p>针对 github 被墙，可用工具：dev-sidecar，pigcha。</p>
-<p>克隆了子模块后，上传至 onedrive，并获取下载链接。在 linux 终端输入如下指令下载：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c &lt;url&gt; -O &lt;/path/name&gt;</span><br></pre></td></tr></table></figure>
-
-<p>解压 zip</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-
-<p>按教程安装依赖包：<a target="_blank" rel="noopener" href="https://github.com/ycm-core/YouCompleteMe#linux-64-bit">https://github.com/ycm-core/YouCompleteMe#linux-64-bit</a></p>
-<p>在 .vimrc 中加入 ycm-core&#x2F;YouCompleteMe 后，编译 YCM。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.vim/bundle/YouCompleteMe</span><br><span class="line">python3 install.py --all(所有语言语法检查) </span><br><span class="line">or python3 install.py --clangd-completer(C系列语言语法检查) </span><br><span class="line">or python3 install.py (没有语法检查)</span><br></pre></td></tr></table></figure>
-
-<p>可能出现的问题： Your C++ compiler does NOT fully support C++17</p>
-<p>解决：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/65284572/your-c-compiler-does-not-fully-support-c17">https://stackoverflow.com/questions/65284572/your-c-compiler-does-not-fully-support-c17</a></p>
-<p>下载 clangd：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zi-wang/p/13550305.html">https://www.cnblogs.com/zi-wang/p/13550305.html</a></p>
-<p>编译生成 ycm_core，<a target="_blank" rel="noopener" href="https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide">https://github.com/ycm-core/YouCompleteMe/wiki/Full-Installation-Guide</a></p>
-<p>注意：更新 Vim 至 8.1</p>
-<p>先克隆 8.1.2424 版本的 vim</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b &lt;tag&gt; url</span><br></pre></td></tr></table></figure>
-
-<p>按照如下教程配置：<a target="_blank" rel="noopener" href="https://github.com/ycm-core/YouCompleteMe/wiki/Building-Vim-from-source">https://github.com/ycm-core/YouCompleteMe/wiki/Building-Vim-from-source</a></p>
-<p>查看版本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim --version |grep VIM</span><br></pre></td></tr></table></figure>
-
-<p>查看是否支持 python3</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim --version |grep python</span><br></pre></td></tr></table></figure>
-
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 363 words, 1 min 12 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/server-operation/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="服务器基本操作"><a href="#服务器基本操作" class="headerlink" title="服务器基本操作"></a>服务器基本操作</h2><h3 id="服务器上的服务"><a href="#服务器上的服务" class="headerlink" title="服务器上的服务"></a>服务器上的服务</h3><table>
-<thead>
-<tr>
-<th>一号服</th>
-<th>二号服</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>frpc</td>
-<td>frpc</td>
-</tr>
-<tr>
-<td>dokuwiki</td>
-<td></td>
-</tr>
-<tr>
-<td>jupyterlab</td>
-<td></td>
-</tr>
-<tr>
-<td>svn</td>
-<td></td>
-</tr>
-</tbody></table>
-<h3 id="frpc服务"><a href="#frpc服务" class="headerlink" title="frpc服务"></a>frpc服务</h3><p>位置： &#x2F;home&#x2F;chensiji&#x2F; （如果是服务器2位置是&#x2F;home&#x2F;asus）</p>
-<p>1.开启服务指令：nohup .&#x2F;frpc -c frpc.ini &amp;</p>
-<p>*如果显示无法执行该指令，可以在开头加个sudo</p>
-<p>解释：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>.&#x2F;</td>
-<td>执行</td>
-</tr>
-<tr>
-<td>frpc</td>
-<td>可执行文件frpc</td>
-</tr>
-<tr>
-<td>-c</td>
-<td>使用配置文件</td>
-</tr>
-<tr>
-<td>frpc.ini</td>
-<td>配置文件名称</td>
-</tr>
-<tr>
-<td>nohup {} &amp;</td>
-<td>使后台运行，运行日志输出到当前目录的nohup.out</td>
-</tr>
-</tbody></table>
-<p>2.查看配置文件：cat frpc.ini</p>
-<p>会显示类似如下的内容：</p>
-<p>[common]</p>
-<p>server_addr &#x3D; 39.107.92.9</p>
-<p>server_port &#x3D; 7000</p>
-<p>[ssh]</p>
-<p>type &#x3D; tcp</p>
-<p>local_ip &#x3D; 192.169.0.200</p>
-<p>local_port &#x3D; 22</p>
-<p>…</p>
-<p>3.关闭进程：</p>
-<p>首先用如下指令查看当前正在运行的进程号：</p>
-<p>ps -ef|grep frp</p>
-<p>上图中显示的11665、11666那一列的数字为进程的进程号。根据进程号我们可以关闭相应的进程。</p>
-<p>正常关闭：sudo kill &lt;进程号&gt;</p>
-<p>强制关闭: sudo kill -9 &lt;进程号&gt;</p>
-<p>在将上述所有进程都’kill’后，可以发现众多服务的网络连接都失效了（grep那个进程不用’kill’，查询过程本身就是个进程）：</p>
-<p>之后需要用开启服务的指令开启这部分服务(见1)</p>
-<h3 id="dokuwiki"><a href="#dokuwiki" class="headerlink" title="dokuwiki"></a>dokuwiki</h3><p>不用维护，开机就有</p>
-<h3 id="jupyterlab"><a href="#jupyterlab" class="headerlink" title="jupyterlab"></a>jupyterlab</h3><h4 id="需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter-lab可能会导致权限访问问题"><a href="#需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter-lab可能会导致权限访问问题" class="headerlink" title="需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter lab可能会导致权限访问问题"></a>需要先切换到用户ub-d504，因为之前的文件都在这个用户下开启的，用别的用户在同样位置启动jupyter lab可能会导致权限访问问题</h4><p>切换用户： su ub-d504（用户名）</p>
-<p>*密码可以询问有关负责人</p>
-<h4 id="需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务"><a href="#需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务" class="headerlink" title="需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务"></a>需要先进入conda环境，才能使用指令，因为我们的jupyter是安装conda时附带的服务</h4><p>*具体可见conda部分</p>
-<p>1.启动指令</p>
-<p>nohup jupyter lab &amp;</p>
-<p>要让jupyter lab在后台运行，否则退出直连连接后jupyter lab的服务也失效。</p>
-<p>2.关闭进程</p>
-<p>ps -ef|grep jupyter|awk {‘print $2’}|xargs kill</p>
-<p>解释：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-<td>管道符号，将前者的输出作为后者的输入</td>
-</tr>
-<tr>
-<td>grep jupyter</td>
-<td>对于输入进来的内容，按行查找包含”jupyter”的内容并输出</td>
-<td></td>
-</tr>
-<tr>
-<td>awk {‘print $2’}</td>
-<td>把输入按空格分开成多项，打印第二项</td>
-<td></td>
-</tr>
-<tr>
-<td>xargs</td>
-<td>把前面的输入作为后面命令的参数</td>
-<td></td>
-</tr>
-<tr>
-<td>kill</td>
-<td>直接根据进程号关闭进程</td>
-<td></td>
-</tr>
-</tbody></table>
-<h3 id="svn"><a href="#svn" class="headerlink" title="svn"></a>svn</h3><p>位置 &#x2F;srv&#x2F;svn_repo&#x2F;Lab</p>
-<p>1.启动指令</p>
-<p>sudo svnserve -d -r &#x2F;srv&#x2F;svn_repo –listen-port 3501</p>
-<p>-d: 已守护模式启动</p>
-<p>-r：指定svn版本库根目录，这样是便于客户端不用输入全路径就可以访问版本库</p>
-<p>2.停止服务</p>
-<p>ps -ef|grep svn 查询进程号</p>
-<p>kill &lt;进程号&gt;</p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 720 words, 2 min 24 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/rl-notes/"></a></h3></div><div class="post-content"><div class="card"><p><p>Q-learning 为什么不用重要性采样？Q-learning 是单步更新的，target是直接获得的，而不是根据策略接下来得到的。反之，TD(2)及以上就需要重要性采样。</p>
-<p>softmax 溢出问题：e的10000次方，pytorch的源码怎么处理的？数列所有数减去数列的最大值，这样和减之前一模一样的。</p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 107 words, 21 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/lab-notes/"></a></h3></div><div class="post-content"><div class="card"><p><p>ssh连接：finalshell+<strong>指令操作？</strong></p>
-<p>公钥登录。</p>
-<p>添加公钥，这一段是写给在服务器上已经有账号的。反之，cd home+mkdir 用户名。</p>
-<p>拿到新的公钥，并且创建新的账号的文件夹底下 </p>
-<p>shell) 先查看文件夹下是否存在.ssh文件夹 否则运行sudo mkdir .&#x2F;.ssh</p>
-<p>然后将公钥id_rsa.pub上传到对应的账户的.ssh文件夹下，并且改名为authorized_keys</p>
-<p>用 sudo chown 用户名 authorized_keys 修改公钥的所有人</p>
-<p>用 sudo chmod 600 authorized_keys 给公钥添加运行权限</p>
-<p>Vim：Bundle，Nerdtree，TagBar，jedi-python</p>
-<p>jupyterlab的关闭：ps -ef|grep jupyter|awk {‘print $2’}|xargs kill</p>
-<p>svn操作：权限修改，文件夹创建</p>
-<p>frp账号密码：nomad + nomad123</p>
-<p>jupyter密码：Lab504jupyter</p>
-<p>sudo操作：ub-d504 + lab504ubd</p>
-<p>tail nohup.out：在当前路径生成一个nohup.out</p>
-<p>查看进程：top htop ps -ef grep pstree</p>
-<p>2号服切换到asus账户：</p>
-<p>​	su asus + D504y2021</p>
-<p>​	ssh <a href="mailto:&#x75;&#98;&#x2d;&#100;&#x35;&#x30;&#x34;&#x40;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#57;&#46;&#x30;&#46;&#x32;&#x30;&#48;">&#x75;&#98;&#x2d;&#100;&#x35;&#x30;&#x34;&#x40;&#x31;&#x39;&#x32;&#x2e;&#49;&#x36;&#57;&#46;&#x30;&#46;&#x32;&#x30;&#48;</a></p>
-<p>然后可以通过该方式，ssh到1号服</p>
-<p>从1号服copy文件到2号服使用scp</p>
-<p><a target="_blank" rel="noopener" href="http://39.107.92.9:5636/dokuwiki/doku.php?id=linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">linux基本操作</a></p>
-<p>服务器上传下载文件：scp</p>
-<p>公钥与私钥：公钥加密，私钥解密。私钥签名，公钥验证。</p>
-<p>SSH对于公钥和私钥的用法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34649947/article/details/80140465">https://blog.csdn.net/qq_34649947/article/details/80140465</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/csm201314/article/details/78453579">https://blog.csdn.net/csm201314/article/details/78453579</a></p>
-<p>终端：人与机器交互的接口。终端具有两个基本功能：向主机输入信息和向外部输出信息。所以终端可以分为输入设备和输出设备。</p>
-<p>ssh：Secure Shell（安全外壳协议），为建立在应用层基础上的可靠，专为远程登录会话和其他网络服务提供安全性的协议。运用如finalshell。</p>
-<p>端口：客户端可以通过ip地址找到对应的服务器端，但是服务器端是有很多端口的，每个应用程序对应一个端口号，通过端口号，客户端才能真正的访问到该服务器。</p>
-<p>定时器：keep alive保活机制？</p>
-<p>防火墙：就是专门给服务器提供防御、保障数据安全的防火墙。</p>
-<p>frp，svn，jupyter维护：<a target="_blank" rel="noopener" href="http://39.107.92.9:5636/dokuwiki/doku.php?id=term_script">http://39.107.92.9:5636/dokuwiki/doku.php?id=term_script</a></p>
-<p>sz：从Linux下载文件到本机 , 在Linux终端输入命令回车后，选择本地存储路径即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">命令格式：    sz filename   下载文件filename</span><br><span class="line">　　　　　　	sz file1 file2   下载多个文件	</span><br><span class="line">　　　　　　	sz dir/*　　　下载dir目录下所有文件</span><br></pre></td></tr></table></figure>
-
-<p>rz：从本地上传文件到Linux，在Linux终端输入命令回车后，选择本地要上传的文件即可，可一次指定多个文件</p>
-<p>scp：Linux scp 命令用于 Linux 之间复制文件和目录</p>
-<p><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-scp.html">https://www.runoob.com/linux/linux-comm-scp.html</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scp，sz，rz			 </span><br><span class="line">nc					# Netcat (网络刀)，端口扫描，远程拷贝等等</span><br><span class="line">					# https://blog.csdn.net/freeking101/article/details/53289198</span><br><span class="line">vim</span><br><span class="line">cat					# 查看文件内容</span><br><span class="line">grep				# grep jupyter对于输入进来的内容，按行查找包含“jupyter”的内容并输出</span><br><span class="line">ps -ef				# ps查看进程 -e代表显示所有进程 -f代表全格式</span><br><span class="line">kill 		</span><br><span class="line">nohup &#123;&#125; &amp; 			# 使后台运行，运行日志输出到当前目录的nohup.out</span><br></pre></td></tr></table></figure>
-
-<p>关注服务器状态的指令：htop + nvidia-smi</p>
-<p>nvidia-smi：显示GPU当前的状态。训练的时候，可以用这条指令每隔1秒看一下显卡状态：watch -n 1 ‘nvidia-smi’</p>
-<p>htop：是Linux系统中的一个互动的进程查看器</p>
-<p>vscode关闭文件夹：[Ctrl + K F]</p>
-<p>串口调试 arm相机的包 开学两周突破</p>
-<p>tail nohup.out：在当前路径生成一个nohup.out</p>
-<p>top htop ps -ef grep pstree：查看进程</p>
-<p>scp -r &#x2F;root&#x2F;lk <a href="mailto:&#x72;&#111;&#111;&#116;&#x40;&#x34;&#x33;&#x2e;&#x32;&#50;&#x34;&#46;&#x33;&#52;&#x2e;&#55;&#51;">&#x72;&#111;&#111;&#116;&#x40;&#x34;&#x33;&#x2e;&#x32;&#50;&#x34;&#46;&#x33;&#52;&#x2e;&#55;&#51;</a>:&#x2F;home&#x2F;lk&#x2F;cpfile：Linux 之间拷贝Secure Copy</p>
-<p>nautilus &#x2F;file：终端打开文件 </p>
-<h5 id="操作服务器时遇到的问题"><a href="#操作服务器时遇到的问题" class="headerlink" title="操作服务器时遇到的问题"></a>操作服务器时遇到的问题</h5><p>鼠标不见了&#x2F;卡死？ctrl+alt+f1 回到登陆界面，重新登录。</p>
-<p>终端如何粘贴？ctrl+shift+v。</p>
-<p>找不到home？点开文件界面，左侧最下栏。</p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 1109 words, 3 min 41 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/code-style/"></a></h3></div><div class="post-content"><div class="card"><p><h3 id="1-命名"><a href="#1-命名" class="headerlink" title="1. 命名"></a>1. 命名</h3><table>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 33 words, 6 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/code-style/">code-style</a></h3></div><div class="post-content"><div class="card"><p><h3 id="1-命名"><a href="#1-命名" class="headerlink" title="1. 命名"></a>1. 命名</h3><table>
 <thead>
 <tr>
 <th>Type</th>
@@ -453,93 +74,961 @@
 
 <p>为了提高可读性，注释应该至少离开代码 2 个空格。</p>
 <h3 id="5-空行"><a href="#5-空行" class="headerlink" title="5. 空行"></a>5. 空行</h3><p>顶级定义之间空两行，比如函数或者类定义。方法定义，类定义与第一个方法之间，都应该空一行。函数或方法中，某些地方要是你觉得合适，就空行。</p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 495 words, 1 min 39 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/machine-learning/lec5_%E9%9A%90%E5%90%AB%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B/"></a></h3></div><div class="post-content"><div class="card"><p><p>���������ɷ�ģ�ͣ�Hidden Markov Models��HMM��</p>
-<p>һ��Ӧ�õ�����������ʶ�𡣶���һ�����������ǵ������ǣ���֪����ô���������Σ���֪��ÿ��״̬��ʱ���ж೤����Ҳ��֪��ÿ�������ζ�Ӧ�����֡�</p>
-<p>����ǰ������⣬һ�����ܵķ������� kmeans �����࣬������״̬�������е���֮����ģ���ش��Ĵ��ڣ���ʵ����������ô����ʵ���У����� ni shi shui��һ�㲻�Ƿֳ� ni �� shi �� shui���Ữ�ֵظ�ϸ��</p>
-<p>�����������ɷ�ģ�ͣ��൱��˵���ʱ������ѭ����˵�ǵ�ʱ������ѭ��…</p>
-<p><img src="https://s2.loli.net/2022/06/07/Jmsju18kPflFUcR.png" alt="image-20220607222833016"></p>
-<p>һ�� HMM ������������ɣ�lambda &#x3D; {A, B, pi}</p>
-<p><img src="https://s2.loli.net/2022/06/07/dsFzUgbTe1Yci3X.png" alt="image-20220607214649518"></p>
-<p>Ϊ�˽�ģ���㣬��һ��ʱ��״ֻ̬��ǰһ��ʱ��״̬�йأ����������Ʒ�����������ǰ���״̬��</p>
-<p>ÿ�����������ĸ��ʷֲ�һ����в�ͬ��GMMָ��˹���ģ�͡�b_j(O) ��ʾ�������� O ���� S_j �ĸ��ʡ�</p>
-<p>���������壺����ֻ֪������� O�����ǲ�֪������״̬ Q��Q �Ǳ������� O ��ģ���Ҫ������������ġ�</p>
-<p>�����������������⡣</p>
-<p>��һ��ʶ�����⣨Evaluation�����ٸ����ӣ�����1-10������ʶ�𣬽���10��ģ�ͣ�����ÿ��ģ����һ��P��˭��P�󣬾�˵�����ĸ����֡�</p>
-<p><img src="https://s2.loli.net/2022/06/08/Ra3siTuSQUoz8YN.png" alt="image-20220608144446756"></p>
-<p>��Щ����Ϊʲô��Ҫ�� b ����� pi ����� O1 ��״̬�� q1����ô����ͨ�� b ����� O1 ���� q1 �ĸ��ʡ����ǵؼ���һ�㣬���� b �����ȷ�еطֱ� O1 ��״̬������Ӧ��״̬ q1������ 1���Ƕ�Ӧ��״̬������ 0����ô��ô�������� q1 ״̬��ʼ�Ŀ����� pi ��û�����壬�ʸ���� pi ��һ�� 0�������˵������һ��������������ʣ��������ܱ����ϳ�ĳһ����һЩ�ض��Ĵʡ�</p>
-<p>���ǵ�һ�� b ��������� O1 ��״̬�����ϵĸ��ʷֲ���Ҳ���� O1 ���ڸ���״̬�ĸ���ֵ������ O1 ������ p1 ���� s1����ô�ڵ�ǰ���� O1 �������� s1 ״̬�����ĸ��ʾ��ǵ���״̬ s1 �ĸ��ʳ���p1��ͬ���ģ����ǵڶ��� b ����� O2 ������ p2 ���� s2����ô�ڵ�ǰ���� O2 �������� s2 ״̬�����ĸ��ʾ��ǵ���״̬ s2 �ĸ��ʳ��� p2��</p>
-<p><strong>Ҳ���Ƕ���ĳ������ O��������� O ����ĳ��״̬�ĸ��ʣ��� O ����ĳ��״̬������Ȩ�أ��������뵽�����״̬�ĸ��ʡ�</strong></p>
-<p>һ��ʼû�뵽 b ���ԭ�򣺰�����״̬������֪�ˡ���֪�����ȷʵû�� b ���Ϊ�ȼ��� 1��ͬʱҲû�� sum �������δ֪������£���Ҫ����ÿ������Ŀ����ԣ��ͻ��и��ʷֲ�������������֪������� 1��0��0��0 �ĸ��ʷֲ���</p>
-<p><img src="https://s2.loli.net/2022/06/07/T3hABPGWLm7SpXu.png" alt="image-20220607221145394"></p>
-<p>��Ȼ�����������⣬��ʽ�ӻ���̫�����ˣ����������⡪������󷨡�</p>
-<p><img src="https://s2.loli.net/2022/06/08/vFnMfT4NgHGkeSw.png" alt="image-20220608144702781"></p>
-<p>alpha_t(i) ����Ϊ�����������ۻ��� t ʱ��ʱ���Ѹ�ʱ�̵���״̬���� s_i �����ĸ��ʡ�</p>
-<p>b_i(O_1) &#x3D; P(O_1|q_t&#x3D;s_i, lambda) ����Ϊ��O1 ����״̬������ s_i ������Ȩ�ء�</p>
-<p><img src="https://s2.loli.net/2022/06/08/Uf1EphGoldsq7Dg.png" alt="image-20220608145551371"></p>
-<p>�������Decoding����</p>
-<p>����һ�Ǹ���ģ�ͺ������������ڵ�ǰģ�͵������ƥ��������������ĳ̶ȣ������Ǹ���ģ�ͺ����������������������������ƥ�����״̬���С�</p>
-<p><img src="C:%5CUsers%5Cysc%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220608151907284.png" alt="image-20220608151907284"></p>
-<p>��������ά�ر��㷨��</p>
-<p><img src="C:%5CUsers%5Cysc%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220608152130883.png" alt="image-20220608152130883"></p>
-<p><img src="C:%5CUsers%5Cysc%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220608152611205.png" alt="image-20220608152611205"></p>
-<p>ÿ��ʱ�䶼����ѡ p ��״̬�е�һ���������൱����ͼ����ÿ��ʱ���ѡһ��״̬��Ȼ�����һ��·����ѡ���Ӧ״̬�󣬼����Ӧ״̬�ļ�ֵ��</p>
-<p>ÿ��ʱ��Σ�ÿ��������һʱ��ε����нڵ����ߣ�����ֵ���ڵ�ǰ�������ֵ�Լ�������ֵʱǰһ���������һ����������Ի��ݵõ�һ����õ�·�ߣ�Ҳ����һ������ E(Q)��</p>
-<p>ά�ر��㷨���̣�</p>
-<p><img src="C:%5CUsers%5Cysc%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220608152629433.png" alt="image-20220608152629433"></p>
-<p>���ϵõ������� E(Q)�����൱�ڶ��ڸ�ÿ������� O ����һ����ǩ��</p>
-<p>�������������Ϊһ������ HMM ģ�ʹ��ǩ�Ĳ������������ѧϰ���������ô�����ı�ǩ������ȵ����磬�Զ�ͨ�� O ѧϰ�����ǩ���Ӷ��滻���й۲�� b �</p>
-<p>����������ѵ�����⣨Learning����</p>
-<p><img src="https://s2.loli.net/2022/06/08/sUVBmfRTdir8xvM.png" alt="image-20220608154357784"></p>
-<p>��͹���������Ż����������������˼��㣺</p>
-<p><img src="https://s2.loli.net/2022/06/08/RoAqE136Fvy5pNK.png" alt="image-20220608154429833"></p>
-<p><img src="https://s2.loli.net/2022/06/08/7BkSH3PstWvzgqY.png" alt="image-20220608154711950"></p>
-<p><img src="https://s2.loli.net/2022/06/08/2R4P7ajJx8KeTfI.png" alt="image-20220608154733259"></p>
-<p>b ���󷨣�</p>
-<p><img src="https://s2.loli.net/2022/06/08/uP9rFgNSbKDqoJL.png" alt="image-20220608154757287"></p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 2051 words, 6 min 50 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/machine-learning/lec4_EM%E7%AE%97%E6%B3%95/"></a></h3></div><div class="post-content"><div class="card"><p><h2 id="EM��Expectation-Maximization���㷨"><a href="#EM��Expectation-Maximization���㷨" class="headerlink" title="EM��Expectation-Maximization���㷨"></a><center>EM��Expectation-Maximization���㷨</center></h2><h3 id="1-���"><a href="#1-���" class="headerlink" title="1. ���"></a>1. ���</h3><p>��ֲ���ֵ���㷨��ֻ��ĳһ��ֲ���ֵ����ɽ⡣</p>
-<p>�ŵ㣺�� ����Ҫ���κβ��� �� ��̼�</p>
-<p>���⣺�������֪��ÿһ����������ĸ���˹�ֲ�����ô�����ܹ����׵ع���ÿ����˹�ֲ��ľ�ֵ�ͷ�������������ǲ�֪��ÿһ����������ĸ���˹�ֲ�����������ƣ�EM�㷨��</p>
-<h3 id="2-GMM-�е�-EM"><a href="#2-GMM-�е�-EM" class="headerlink" title="2. GMM �е� EM"></a>2. GMM �е� EM</h3><p>�� ������������裺Ҫô a. �����ÿһ����ķֲ�������Ҫô b. �������˹�ֲ��Ĳ���</p>
-<p>�� b. Ϊ����Ȼ�������Ĺ�����Ȼ�������˹�ֲ��Ĳ�����</p>
-<p>�� E-step��</p>
-<p><img src="https://s2.loli.net/2022/06/06/Gysjb84E7Apgclx.png" alt="image-20220606100216870"></p>
-<p>�� M-step��</p>
-<p><img src="https://s2.loli.net/2022/06/06/2ascSdWmEr67wA9.png" alt="image-20220606100550644"></p>
-<p>�� �ص� �ڣ�����ѭ����ֱ��������</p>
-<h3 id="3-K-Means-�е�-EM"><a href="#3-K-Means-�е�-EM" class="headerlink" title="3. K-Means �е� EM"></a>3. K-Means �е� EM</h3><p>�ٿ���һ�� EM �㷨������ ���� K-means��</p>
-<p>�޼ලѧϰ��һ�֡�</p>
-<p>���⣺���� N ������ {X_i}_{i&#x3D;1-N}����� N ����������� {Z_i}_{i&#x3D;1-N}��</p>
-<p><img src="https://s2.loli.net/2022/06/06/mb9ogI1siFK4Lln.png" alt="image-20220606101157744"></p>
-<p>֤�� k-means �㷨��</p>
-<p>���ȶ�������һ��Ŀ�꺯����</p>
-<p><img src="https://s2.loli.net/2022/06/06/hJnb35HdoOpcmfj.png" alt="image-20220606101527303"></p>
-<p>Ȼ�󿴵� �� ���������� �� ������ʹ�� E ��С��</p>
-<p>�ٿ��ǵ� �� ���� ���ڴ������������</p>
-<p><img src="https://s2.loli.net/2022/06/06/j7TQNYWmxbE4hAO.png" alt="image-20220606101830189"></p>
-<p>��ˣ��� �� ���ľ�ֵ��������Ҳ���� E ��С�����ϣ��� E �½� 0���������һ�� ���� ʹ�� E �����½����� E һ��������</p>
-<h3 id="4-EM-�㷨һ����ʽ"><a href="#4-EM-�㷨һ����ʽ" class="headerlink" title="4. EM �㷨һ����ʽ"></a>4. EM �㷨һ����ʽ</h3><p>�����������ӣ��ó� EM �㷨��һ����ʽ��������֪�����Ϸֲ���<br>$$<br>p(x,z;\theta)<br>$$<br>���У�x �ǹ۲쵽�ı�����z ��Ǳ�ڱ���������Ҫ������������µĶ��������Ȼ���ƣ�<br>$$<br>\theta &#x3D; argmax_{\theta}logp(x;\theta)\<br>p(x;\theta) &#x3D; \sum_{z}p(x,z;\theta)<br>$$<br>��˹���ģ���е�����������ÿ��������ĳ����˹�ֲ��ĸ���</p>
-<p>K-Means �е�����������ÿ�����Ƿ�����ĳ������</p>
-<p><img src="https://s2.loli.net/2022/06/07/UgaT2WLBPjD8cGk.png" alt="image-20220607200553293"></p>
-<p>ͬ��ͬ���ȼ�</p>
-<p>���� Jensen ����ʽ�Ƶ��������f(x) &#x3D; logx��E(x) &#x3D; log[] �������ڵĶ�������ô X �����Ǹ���ʽ��</p>
-<p><img src="https://s2.loli.net/2022/06/07/s1lUNEP4jqkG5ST.png" alt="image-20220607201340238"></p>
-<p>���һ������Ϊ�����½�ȼ��� E(theta)������������˵�ʽ���Ƶ���Ҳ����˵���ڵȼ۵�����£��������½������󻯶�����Ȼ�����ˡ�</p>
-<p>���һ�е��Ƶ����£�</p>
-<p><img src="https://s2.loli.net/2022/06/07/qpMyfvmV84D52jC.png" alt="image-20220607203857799"></p>
-<p>ͨ�� E �����ҵ���ʹ�õȺų����� $Q_i(z^{(i)})$�������Ժ����ǾͿ������ E(f(x)) �ˣ�Ҳ���ǵȼ������ f(E(x))��</p>
-<p>���������Ƶ����õ� EM �㷨��һ����ʽ��</p>
-<p><img src="https://s2.loli.net/2022/06/07/dkWnjMyzvGBDwbI.png" alt="image-20220607203956530"></p>
-<p>֮����֤��</p>
-<p><img src="https://s2.loli.net/2022/06/07/XKRqbY4rVck8wJQ.png" alt="image-20220607205107298"></p>
-<p>����������һ��� EM �㷨�� kmeans �㷨�Ĺ�����</p>
-<p>z_i �Ķ��壺�� i �����ĸ����ࡣ</p>
-<p>Ϊʲô p ��ô���壿</p>
-<p><img src="https://s2.loli.net/2022/06/07/UigG9DXkeLtv5Zh.png" alt="image-20220607205447457"></p>
-<p>���һ�е�ʽ����</p>
-<p><img src="https://s2.loli.net/2022/06/07/y2CeMFlgcnTLkA6.png" alt="image-20220607210820263"></p>
-<p>֮�������΢�֣�</p>
-<p><img src="https://s2.loli.net/2022/06/07/blL2e59Ak3fDtRx.png" alt="image-20220607212116393"></p>
-<p>�ܽ��ص㣺��ֵѡ�񲻺ûᵼ�²��õĽ�������������ֲ���ֵ��</p>
-<p>�ο����ϣ�</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Matrix_cc/article/details/105266141">https://blog.csdn.net/Matrix_cc/article/details/105266141</a></p>
-</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><span class="leancloud_visitors"></span><span>About 1227 words, 4 min 5 sec  read</span></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/2/">Next</a></li></ul></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"Posts",PAGES:"Pages",CATEGORIES:"Categories",TAGS:"Tags",UNTITLED:"(Untitled)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Search..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/others/" title="others">others </a><span class="leancloud_visitors"></span><span>About 495 words, 1 min 39 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/rl-notes/">rl-notes</a></h3></div><div class="post-content"><div class="card"><p><p>Q-learning 为什么不用重要性采样？Q-learning 是单步更新的，target是直接获得的，而不是根据策略接下来得到的。反之，TD(2)及以上就需要重要性采样。</p>
+<p>softmax 溢出问题：e的10000次方，pytorch的源码怎么处理的？数列所有数减去数列的最大值，这样和减之前一模一样的。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/rl/" title="rl">rl </a><span class="leancloud_visitors"></span><span>About 107 words, 21 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/mavros-tutorials/MAVROS%20topics/">mavros-topics</a></h3></div><div class="post-content"><div class="card"><p><h2 id="Mavros"><a href="#Mavros" class="headerlink" title="Mavros"></a>Mavros</h2><hr>
+<h3 id="1-mavros-脚本语法"><a href="#1-mavros-脚本语法" class="headerlink" title="1. mavros 脚本语法"></a>1. mavros 脚本语法</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;功能包的名字&quot;</span> <span class="attr">type</span>=<span class="string">&quot;功能包下你想启动节点的名字&quot;</span> <span class="attr">name</span>=<span class="string">&quot;对这个节点再命个名&quot;</span> <span class="attr">output</span>=<span class="string">&quot;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    output 结果输出在屏幕上，没有这个参数默认记录在log里</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;&quot;</span>&gt;</span> 传参:https://blog.csdn.net/taste_cyn/article/details/82737225</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-mavros-数据传输"><a href="#2-mavros-数据传输" class="headerlink" title="2. mavros 数据传输"></a>2. mavros 数据传输</h3><p>关注 px4_pos_estimator.cpp，可能是向飞控传飞机的姿态数据。他们传数据，都是用ros订阅的方式，飞控又是只看得懂mavlink协议里面的东西。所以飞控怎么拿数据呢？</p>
+<p>main：先在从t265订阅（subscribe）的消息中，拿到飞机的姿态数据。</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151053255.png" alt="image-20211022151053255"></p>
+<p>main：开辟一个话题（advertise），用以表示无人机的位置和姿态。</p>
+<p><img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151133647.png" alt="image-20211022151133647"></p>
+<p>send_to_fcu：利用 publish 将消息发布。</p>
+ <img src="C:\Users\ysc\AppData\Roaming\Typora\typora-user-images\image-20211022151351191.png" alt="image-20211022151351191" style="zoom:67%;" />
+
+<p>问：mavros 通过订阅和发布实现消息的传输，飞控又遵循的是mavlink协议，所以飞控怎么拿数据呢？</p>
+<p>思路：应存在有一部分会发送 mavlink 消息，那收到 mavlink 消息前，有需要先收到 send_to_fcu 发送的 mavros 消息。既然有 publish，那就应该有 subscribe，那怎么找到哪里有 subscribe？</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -r <span class="string">&quot;/mavros/vision_pose/pose&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>关注 vision_pose_esimate.cpp，该文件订阅了该消息，并将该消息封装成 mavlink 消息发给飞控。</p>
+<h3 id="3-PX4-amp-Ardupilot"><a href="#3-PX4-amp-Ardupilot" class="headerlink" title="3. PX4 &amp; Ardupilot"></a>3. PX4 &amp; Ardupilot</h3><p>px4和ardupilot原本是两套独立的开源飞控，各自有软件和硬件。后来ardupilot看中了px4的硬件，就把代码移植到px4上了。所以目前px4和apm主流是运行在一种硬件上的两种软件。各自都是完备的系统。</p>
+<p>px4是基于实时操作系统的，传感器采集、导航、控制、存储等等都是单独的应用程序，因此apm的代码也被封装成了一个应用程序，跟px4的代码栈在一起。而且apm还用到了一部分px4的底层应用。</p>
+<p>飞控控制的想法：rospy + pymavlink。</p>
+<p>虽然pymavlink好像是ardu家的实现，但底层其实有直接做px4兼容映射的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/23298764-7d83b5f35397ea0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="f7a2606d23b7c5a61e8fd4e0c930690.png"></p>
+<p>这些标题下的例程，优先试试。试代码的时候记得不要无脑试，要验证 mavlink 能不能通。看设计痕迹，pymavlink还是有点针对ardupilot的。</p>
+<p><a target="_blank" rel="noopener" href="https://www.ardusub.com/developers/pymavlink.html">https://www.ardusub.com/developers/pymavlink.html</a></p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/lab/" title="lab">lab </a><span class="leancloud_visitors"></span><span>About 643 words, 2 min 8 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/lab-experience/mavros-tutorials/MAVROS%20notes/">mavros-notes</a></h3></div><div class="post-content"><div class="card"><p><h2 id="MAVROS-教程-——-Offboard-模式下自主飞行"><a href="#MAVROS-教程-——-Offboard-模式下自主飞行" class="headerlink" title="MAVROS 教程 —— Offboard 模式下自主飞行"></a>MAVROS 教程 —— Offboard 模式下自主飞行</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://bbs.amovlab.com/plugin.php?id=zhanmishu_video:video&mod=video&cid=11">AMOV 视频教程</a></p>
+</blockquote>
+<h3 id="1-1-工具链安装"><a href="#1-1-工具链安装" class="headerlink" title="1.1 工具链安装"></a>1.1 工具链安装</h3><p>MAVROS 操作无人机的软硬件架构</p>
+<p><img src="https://s2.loli.net/2023/04/09/vHqWNySPl8sdIrC.png" alt="image-20211112101000509"></p>
+<p>Mavros 工具包可以把接收到的 Mavlink 消息（状态数据）转换成 ROS 消息发送给 ROS 系统，亦可以把 ROS 系统发送的 ROS 消息（控制消息）转换成 Mavlink 消息发送给飞控。</p>
+<p>工具链：VMware 虚拟机 + 18.04 Ubuntu + ROS Melodic + mavros 包 + gazebo 仿真工具</p>
+<p>ROS 安装</p>
+<ul>
+<li>换源，如中科大、阿里、清华。vim(gedit) &#x2F;etc&#x2F;apt&#x2F;source.list。</li>
+<li>sudo apt-get update。sudo apt-get update</li>
+<li><a href="wiki.ros.org/melodic/installation/ubuntu">安装</a>。最后两行代码容易失败，建议科学上网或者多试几次。</li>
+<li>检验安装：roscore</li>
+</ul>
+<p>Mavros 安装</p>
+<ul>
+<li><p>二进制安装：已经编译好的工具</p>
+</li>
+<li><p>源码安装[推荐]：<a href="docs.px4.io/master/en/ros/mavros_installation.html">安装</a>。都是原始代码，必须编译成可以执行的二进制文件才可以执行，可以修改代码，进行开发等等。注：教程处用的是 kinetic 版本，实际中记得换成 melodic。</p>
+</li>
+<li><p>检验安装：roslaunch mavros px4.launch</p>
+</li>
+</ul>
+<h3 id="1-2-ROS-创建节点与编译"><a href="#1-2-ROS-创建节点与编译" class="headerlink" title="1.2 ROS 创建节点与编译"></a>1.2 ROS 创建节点与编译</h3><p>ROS 的通信方式：</p>
+<ul>
+<li>server 点对点，响应快</li>
+<li>topic 多对多</li>
+</ul>
+<p>ROS 文件系统组织</p>
+<p>编译基于 catkin，CMakeList.txt 用于后续的编译。</p>
+<p><img src="https://s2.loli.net/2023/04/09/GVbqA1piQY4Kn38.png" alt="image-20211112102122959"></p>
+<p><a target="_blank" rel="noopener" href="http://wiki.ros.org/ROS/Tutorials/NavigatingTheFilesystem">常用命令</a></p>
+<ul>
+<li>rospack<ul>
+<li>获取有关包的信息，本教程仅以 find 为例，返回包的路径。</li>
+<li>rospack find [pacakge name]</li>
+</ul>
+</li>
+<li>roscd<ul>
+<li>将目录改为包或堆栈，或者其子目录</li>
+<li>roscd &lt;package-or-stack&gt;[&#x2F;subdir]</li>
+</ul>
+</li>
+<li>rosls<ul>
+<li>直接查看包中文件，或者其子目录</li>
+<li>rosls &lt;package-or-stack&gt;[&#x2F;subdir]</li>
+</ul>
+</li>
+</ul>
+<p>节点创建与编译</p>
+<ul>
+<li>创建工作空间并进入 src。mkdir -p catkin_ws&#x2F;src，cd catkin_ws&#x2F;src</li>
+<li>创建功能包。crakin_create_pkg [package-name] roscpp std_msgs<ul>
+<li>roscpp：用 cpp 编译</li>
+<li>std_msgs：用已有的数据结构</li>
+</ul>
+</li>
+<li>进入功能包的 src 并创建源文件。cd package-name&#x2F;src。</li>
+</ul>
+ <img src="https://s2.loli.net/2023/04/09/dD7HUKwtpNzcaT2.png" alt="image-20211112103129639" style="zoom: 67%;" />
+
+<ul>
+<li>回到上级目录，修改 CMakeLists.txt。<ul>
+<li><img src="https://s2.loli.net/2023/04/09/QhvPnINGteWfYcw.png" alt="image-20211112103252704"></li>
+<li>第一个参数是为生成的可以执行文件定义一个名字，第二个是默认的源代码目录，需要修改。</li>
+<li><img src="https://s2.loli.net/2023/04/09/n6r5oDSjbyC9aAm.png" alt="image-20211112103454634"></li>
+<li>第一个参数需要和前者对应。</li>
+</ul>
+</li>
+<li>回到工作空间目录，编译。catkin build。会产生 build、devel 文件夹。</li>
+<li>编译成功后，roscore，source ~&#x2F;catkin_ws&#x2F;devel&#x2F;setup.sh。之后便可 rosrun [结点名]。</li>
+</ul>
+<h3 id="1-3-ROS-编程基础"><a href="#1-3-ROS-编程基础" class="headerlink" title="1.3 ROS 编程基础"></a>1.3 ROS 编程基础</h3><p>例程：简单的发布和订阅</p>
+<p><img src="https://s2.loli.net/2023/04/09/V73qPf2LX8tyKlM.png" alt="image-20211112103916004"></p>
+<p>[代码讲解]</p>
+<p>运行方式（注意各个命令用独立的终端）</p>
+<ul>
+<li>roscore</li>
+<li>rosrun minimal_nodes[包名] minimal_publisher[节点名]</li>
+<li>rosrun minimal_nodes[包名] minimal_subscriber[节点名]</li>
+<li>rostopic list，rostopic info topic1[话题名]，rostopic hz topic1[话题名]。</li>
+</ul>
+<p>例程：简单的控制器和仿真器</p>
+<p><img src="https://s2.loli.net/2023/04/09/IhVaYLcKESR486n.png" alt="image-20211112104339826"></p>
+<p><img src="https://s2.loli.net/2023/04/09/aDcE6FCfedToK3b.png" alt="image-20211112104410098"></p>
+<p>[代码讲解]</p>
+<p>运行方式</p>
+<ul>
+<li>roscore</li>
+<li>rosrun minimal_nodes[包名] minimal_simulator[节点名]</li>
+<li>rosrun minimal_nodes[包名] minimal_controller[节点名]</li>
+<li>发送预定速度：rostopic pub -r 10[hz] vel_cmd[话题名] std_msgs&#x2F;Float64[数据类型] 1.0</li>
+</ul>
+<p>C++ 类的使用</p>
+<p>ROS代码如果订阅很多个消息，发布多个消息的话，很快会变得过于冗长，若要提高代码效率和代码复用，最好使用类。</p>
+<p>在头文件中定义类:</p>
+<ul>
+<li><p>定义所有成员函数的原型</p>
+</li>
+<li><p>定义私有和公共数据成员</p>
+</li>
+<li><p>定义构造函数的原型</p>
+</li>
+</ul>
+<p>编写一个单独的实现文件</p>
+<ul>
+<li>包含上面的头文件</li>
+<li>包含已经声明成员函数的工作代码</li>
+<li>包含在构造函数中封装的必要的初始化的代码</li>
+</ul>
+<p>构建文件系统</p>
+<ul>
+<li><p>在功能包目录下创建一个inlcude&#x2F;minimal_controller_class [结点名]的文件夹</p>
+</li>
+<li><p>并在该文件夹下创建一个minimal_controller_class.h的文件</p>
+</li>
+<li><p>在src目录下创建minimal_controller_class.cpp文件</p>
+</li>
+</ul>
+<p>修改CMakeLists.txt，使得ros结点包含进include文件夹所包含的头文件</p>
+<img src="https://s2.loli.net/2023/04/09/Xuhczy6dW3k5Ppn.png" alt="image-20211112105212272" style="zoom:50%;" />
+
+<p>没看完，先跳过。</p>
+<h3 id="1-4-Mavros-消息的订阅与发布"><a href="#1-4-Mavros-消息的订阅与发布" class="headerlink" title="1.4 Mavros 消息的订阅与发布"></a>1.4 Mavros 消息的订阅与发布</h3><p>1.4.1 应用mavros控制无人机的消息流</p>
+<ul>
+<li>如何去查阅mavros的消息与mavlink协议之间的关系</li>
+<li>如何去找到mavlink协议与uorb消息之间的对应关系</li>
+</ul>
+<p><img src="https://s2.loli.net/2023/04/09/PhuAY6kmNjLEgCd.png" alt="image-20211112105445856"></p>
+<p><img src="https://s2.loli.net/2023/04/09/4Kua2COSP7sfevz.png" alt="image-20211112105635483"></p>
+<p>1.4.2 example offboard例程的仿真与解析</p>
+<ul>
+<li>使用gazebo进行软件在环仿真</li>
+<li>搭载机载计算机的无人机的实际飞行测试</li>
+</ul>
+<p><img src="https://s2.loli.net/2023/04/09/12TRVOjSJB4LktD.png" alt="image-20211112112529657"></p>
+<p><img src="https://s2.loli.net/2023/04/09/YXGyicm4BO5tQHM.png" alt="image-20211112120815187"></p>
+<p><img src="https://s2.loli.net/2023/04/09/xfQacZ7LoFpKO8X.png" alt="image-20211112121128801"></p>
+<p><img src="https://s2.loli.net/2023/04/09/xzWkeyB8RqitmF6.png" alt="image-20211112121212743"></p>
+<p><img src="https://s2.loli.net/2023/04/09/TYXltkK2gwoZD8d.png" alt="image-20211112121253406"></p>
+<p>ENU 坐标系，z&#x3D;2，升高两米。</p>
+<p><img src="https://s2.loli.net/2023/04/09/GD7Q3KIwr8eniyf.png" alt="image-20211112122001643"></p>
+<p><img src="https://s2.loli.net/2023/04/09/Hy5fzIQheclvstT.png" alt="image-20211112122159260"></p>
+<p><img src="https://s2.loli.net/2023/04/09/9Nirf2MkCSzOshu.png" alt="image-20211112122300241"></p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/lab/" title="lab">lab </a><span class="leancloud_visitors"></span><span>About 1125 words, 3 min 45 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/09/hello/hello-world/">hello-world</a></h3></div><div class="post-content"><div class="card"><p><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<p>New post template:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: hello-world</span><br><span class="line">date: 2023-04-09 11:09:40</span><br><span class="line">tags: others</span><br></pre></td></tr></table></figure>
+
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/others/" title="others">others </a><span class="leancloud_visitors"></span><span>About 83 words, 16 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-machine-learning-courses/">sysu-ml-courses</a></h3></div><div class="post-content"><div class="card"><p><h4 id="1-线性回归-逻辑回归"><a href="#1-线性回归-逻辑回归" class="headerlink" title="1. 线性回归 + 逻辑回归"></a>1. 线性回归 + 逻辑回归</h4><blockquote>
+<p>TIPS：什么是线性回归逻辑回归，损失函数有可能带正则项，为什么要加正则项因为要防止过拟合，损失函数要怎么定义，梯度下降好处有什么坏处有什么，最优参数表达式怎么写的</p>
+</blockquote>
+<p><strong>损失函数</strong></p>
+<p><strong>最优参数表达式</strong></p>
+<p>损失函数带正则项的原因（补）：防止过拟合。[防止过拟合的另一种方法：k-fold交叉验证]</p>
+<p><strong>定义（补）：</strong></p>
+<p>回归模型</p>
+<img src="https://s2.loli.net/2022/06/16/7ptIHgE9TxmLqDY.png" alt="image-20220616211439417" style="zoom: 33%;" />
+
+<p>线性模型：</p>
+<img src="https://s2.loli.net/2022/06/16/iSARVj61pXs7uot.png" alt="image-20220616211840331" style="zoom:33%;" />
+
+<p>对于上式，假设b&#x3D;0，则易得：</p>
+<img src="https://s2.loli.net/2022/06/16/38sicRAGgWkaBQ9.png" alt="image-20220616211950067" style="zoom: 33%;" />
+
+<p>矩阵形式可以写作为：</p>
+<img src="https://s2.loli.net/2022/06/16/CmTt9DBIVc564PX.png" alt="image-20220616212339948" style="zoom:33%;" />
+
+<p>显然，我们的目的就是求位置参数 theta，如何求解？构造最大似然估计（maximum likelihood estimator，MLE），找到 theta 使得似然概率最大。</p>
+<p>最大似然估计的合理性在于这样一个假设：既然能出现这样一个数据分布，那么可以假设在当前的 theta 情况下，出现该数据分布的概率是很大的。因此可以进行最大似然估计。</p>
+<p>最大似然的求解可以有两种：分析法，即令微分&#x3D;0；迭代法，即（随机）梯度下降。</p>
+<p>基于独立同分布的假设，n 个数据点的概率可以表示为：</p>
+<img src="https://s2.loli.net/2022/06/16/YGK2RtiLNy7ZVqW.png" alt="image-20220616212845691" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/25/SHtiPL5NZFBVDQJ.png" alt="image-20220616213531856" style="zoom:50%;" />
+
+<p>问：为什么这里的 p(x_i) 可以表示成1？</p>
+<p>问题转化为：</p>
+<img src="https://s2.loli.net/2022/06/16/XCvn2zl1wBic5Iq.png" alt="image-20220616213559809" style="zoom:33%;" />
+
+<p>为简便计算，一般求对数 MLE：</p>
+<img src="https://s2.loli.net/2022/06/16/mEqR7yvndSDTxCU.png" alt="image-20220616213842804" style="zoom:33%;" />
+
+<p>第一项对于 theta 而言是常数项，省去，故最终优化目标为：</p>
+<img src="https://s2.loli.net/2022/06/16/ml7RKP58VQDMBTU.png" alt="image-20220616213936228" style="zoom:33%;" />
+
+<p>等价于：</p>
+<img src="https://s2.loli.net/2022/06/16/3ckBP5XQ2s8oZvI.png" alt="image-20220616223835964" style="zoom:33%;" />
+
+<p><strong>如何通过梯度下降求解参数：</strong></p>
+<img src="https://s2.loli.net/2022/06/16/kU1puR4iNY7TjKa.png" alt="image-20220616224131196" style="zoom:33%;" />
+
+<img src="https://s2.loli.net/2022/06/16/k6xDJTvgwRCQU57.png" alt="image-20220616224144007" style="zoom:33%;" />
+
+<p>为保证对数似然是凸的，求二阶导（Hessian）矩阵：</p>
+<img src="https://s2.loli.net/2022/06/16/XkuaKYjnhz95xpR.png" alt="image-20220616224258646" style="zoom:33%;" />
+
+<p>如果 X 是满秩的，那么 XX 就是正定的，因此 theta_{MLE} &#x3D; minimum。用正则化处理退化情况</p>
+<p>令梯度为 0，解得：</p>
+<img src="https://s2.loli.net/2022/06/16/N6bi98ATIqmByjK.png" alt="image-20220616224419634" style="zoom:33%;" />
+
+<p>据此可以利用一些矩阵方式求解，方法有 Cholesky Factorization 等。</p>
+<p>抑或是梯度下降求解 theta_{MLE}（rho 是学习率）：</p>
+<img src="https://s2.loli.net/2022/06/16/KgdqV8P1OoG6j4X.png" alt="image-20220616225107915" style="zoom:33%;" />
+
+<p>其中，对数似然求微分得到的系数 2 被并入 rho。</p>
+<p>更好的办法——随机梯度下降：</p>
+<img src="https://s2.loli.net/2022/06/16/QxsKiuEzZS548WM.png" alt="image-20220616225520614" style="zoom:33%;" />
+
+<p>在非线性的情况，可以采用非线性变换，如 splines, radial basis functions 等。</p>
+<h5 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h5><img src="https://s2.loli.net/2022/06/19/pZSXLig1uB8HQTe.png" alt="image-20220619150432337" style="zoom:33%;" />
+
+
+
+<img src="https://s2.loli.net/2022/06/19/fUJOoXMxzVbYiGQ.png" alt="image-20220619150625491" style="zoom:33%;" />
+
+<p>要知道的就是 w，对于 w 的取值，我们可以令：</p>
+<p>$$<br>\omega &#x3D; argmax_{\omega} \prod_{l} P(y^l|x^l,w)<br>$$</p>
+<p>其中，$$y^l$$ 和 $$x^l$$ 取之于训练集。上式写作 log-likelihood：</p>
+<img src="https://s2.loli.net/2022/06/19/fYuy1vN9mRKJl82.png" alt="image-20220619151102221" style="zoom:33%;" />
+
+<p>根据 y 只能取 0 或 1 的性质，把 argmax 右边的 sum 写作下式：</p>
+<img src="https://s2.loli.net/2022/06/19/yBqYNAuV8wDoXUc.png" alt="image-20220619151331602" style="zoom: 33%;" />
+
+<p>写出 loss 方程，直接开导！</p>
+<img src="https://s2.loli.net/2022/06/19/5XeWJgpL3DmnFUS.png" alt="image-20220619151806127" style="zoom:33%;" />
+
+<p>梯度下降：</p>
+<img src="https://s2.loli.net/2022/06/19/PXnCHxJT5Li9kFV.png" alt="image-20220619152345177" style="zoom:33%;" />
+
+<p>加入正则化，防止过拟合的版本：</p>
+<img src="https://s2.loli.net/2022/06/19/gMUjNX45zOZL2Af.png" alt="image-20220619152530114" style="zoom:33%;" />
+
+
+
+<h4 id="2-过拟合"><a href="#2-过拟合" class="headerlink" title="2. 过拟合"></a>2. 过拟合</h4><p><strong>什么是过拟合</strong></p>
+<p>Low training error does not imply good expected performance</p>
+<p><strong>降低过拟合的方法</strong></p>
+<p>Reduce number of features + Keep all the features, but reduce values of parameters</p>
+<p>① 损失函数加入正则项</p>
+<p>② k-fold交叉验证</p>
+<h4 id="3-训练方法"><a href="#3-训练方法" class="headerlink" title="3. 训练方法"></a>3. 训练方法</h4><blockquote>
+<p>什么是过拟合、欠拟合，过拟合：训练集损失函数误差小，测试集大。怎么避免过拟合？加入正则项，使他训练集没那么好，增加模型的延展性；k-折交叉验证的k什么意思，分数据集怎么分，可以随机也可以不随机</p>
+</blockquote>
+<p>一个衡量模型好坏的指标：</p>
+<img src="https://s2.loli.net/2022/06/19/FlpzMatZY5qsQbC.png" alt="image-20220619203215062" style="zoom: 50%;" />
+
+
+
+<p><strong>训练集-矫正集-测试集</strong></p>
+<img src="https://s2.loli.net/2022/06/19/2uViFwWhag4DAm7.png" alt="image-20220619204433308" style="zoom:33%;" />
+
+<p>使用验证集是为了快速调参，(网络层数，网络节点数，迭代次数，学习率）。另外用验证集还可以监控模型是否异常（过拟合），然后决定是不是要提前停止训练。</p>
+<p><strong>留出法（Hold-out method）</strong></p>
+<p>把数据集分此训练集(2&#x2F;3)和测试集(1&#x2F;3)，经常使用的情况：有几千个示例，每个类有几百个实例。</p>
+<img src="https://s2.loli.net/2022/06/19/e5OIa72Dv4HUfkE.png" alt="image-20220619203443206" style="zoom: 50%;" />
+
+
+
+<p>更大的测试集可以得到更精确的错误率估计。</p>
+<p>有时有些类的实例很少，此时就要用 Stratified (分层) sample，确保每个类在训练测试集中的比例大致相等，这可以减少模型方差。</p>
+<p><strong>Repeated hold-out method</strong> </p>
+<p>在每次迭代中，随机选择一定比例数据进行训练（可能分层）。对不同迭代的错误率进行平均，以得出总体错误率。</p>
+<p>仍不是最佳：不同的测试集重叠，但我们希望每个数据都被至少测试一次。</p>
+<p><strong>k-fold cross validation</strong></p>
+<p>① 数据分成 k 等分个子集。② 每次选 k 份中未选择过的一份当测试集，其他训练集。</p>
+<p>每个子集在交叉验证就分层过了。总 estimate 就是各次 estimate 的平均。</p>
+<p><strong>k-fold cross validation with validation and test sets</strong></p>
+<p>这是个稍微不那么精细的方法</p>
+<p>① 数据分成 k 等分个子集。② 每次选 k 份中未选择过的一份当测试集，剩余的选个当验证集，其他就是训练集。</p>
+<p>最优的 k：10，实验证明可以得到最精确的 estimate。</p>
+<p><strong>Bootstrap method</strong></p>
+<img src="https://s2.loli.net/2022/06/25/oTNsXG7bHMu6UY3.png" alt="image-20220620102258752" style="zoom: 50%;" />
+
+<p>我们随机地从数据集中抽取出 n 个数据组成一个新的数据集（允许重复）。</p>
+<img src="https://s2.loli.net/2022/06/20/v9ZPYdwJLx37Bib.png" alt="image-20220620102505143" style="zoom: 50%;" />
+
+<p>由于只在 63% 的数据集上训练，因此测试集上的 error estimate 不太好，故联合训练集上的 error：</p>
+<img src="https://s2.loli.net/2022/06/25/VroIE9T8L3dwCPu.png" alt="image-20220620103213161" style="zoom: 50%;" />
+
+<p>重复以上过程多次，平均结果。</p>
+<p>总结：</p>
+<p>hold-out method：large data</p>
+<p>cross-validation method： middle-sized data</p>
+<p>leave-one-out and bootstrap method：small data</p>
+<h4 id="4-决策树"><a href="#4-决策树" class="headerlink" title="4. 决策树"></a>4. 决策树</h4><p><img src="https://s2.loli.net/2022/06/25/8XbqAC2ezLvjJYV.png" alt="image-20220620103458461"></p>
+<blockquote>
+<p>决策树做分类的监督学习算法，熵的定义</p>
+</blockquote>
+<p><strong>熵的求解</strong></p>
+<img src="https://s2.loli.net/2022/06/20/9C2TJaINsQSevrw.png" alt="image-20220620104114188" style="zoom: 50%;" />
+
+<p>$$log(p_i)$$ 定义为信息量。</p>
+<h5 id="条件熵的求解"><a href="#条件熵的求解" class="headerlink" title="条件熵的求解"></a>条件熵的求解</h5><p><img src="https://pic1.zhimg.com/80/v2-f925bd0dba2f4584ebd78efea6c9864c_720w.png" alt="img"></p>
+<img src="https://s2.loli.net/2022/06/20/NkF7ymxfM2tQYpI.png" alt="image-20220620111606275" style="zoom:50%;" />
+
+<p><strong>求解对应属性的信息增益</strong></p>
+<img src="https://s2.loli.net/2022/06/20/LeoA34iYJxOC9Rr.png" alt="image-20220620111639812" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/20/KrRZDhVyWu39jfz.png" alt="image-20220620111705567" style="zoom:50%;" />
+
+
+
+<p><strong>决策树的构建</strong></p>
+<p>预剪枝，后剪枝</p>
+<img src="https://s2.loli.net/2022/06/20/pLagxXGmhu2FeqU.png" alt="image-20220620111819108" style="zoom: 67%;" />
+
+
+
+<h4 id="5-SVM"><a href="#5-SVM" class="headerlink" title="5. SVM"></a>5. SVM</h4><p><img src="https://s2.loli.net/2022/06/20/92VxBYKZTsEnmQo.png" alt="image-20220620111901955"></p>
+<blockquote>
+<p>标准的SVM是个线性的分类器，基本思想：找出一个分界面，让分界面离正负样本的距离最大，不需要背答对了大概意思就行，损失函数怎么定义，不需要会求解，为什么引入核函数，有什么功能</p>
+</blockquote>
+<p><strong>SVM 的基本思想</strong></p>
+<p>找出一个分界面，让分界面（margin）离正负样本（support vector）的距离最大</p>
+<p>点到直线的距离：</p>
+<img src="https://s2.loli.net/2022/06/20/wSNbjhR3mc1EprZ.png" alt="image-20220620112504919" style="zoom:50%;" />
+
+
+
+<p><strong>SVM 的损失函数</strong></p>
+<p>Hinge 损失函数</p>
+<p>$$<br>L(y, f(x)) &#x3D; [1-yf(x)]<em>+ \<br>z</em>+&#x3D;<br>\begin{cases}<br>z,z \ge 0 \<br>0,z \le 0<br>\end{cases}<br>$$</p>
+<img src="https://www.freesion.com/images/712/08b2261140aa01b193bf2546c55926a0.png" alt="在这里插入图片描述" style="zoom: 67%;" />
+
+<p>SVM 的优化目标</p>
+<p>$$<br>最小化：\frac{1}{2}||w||^2 + C\sum^{N}_{i&#x3D;1}\delta_i\ \<br>限制条件： (1)\ \delta_i&gt;&#x3D;0,(i&#x3D;1-N)\<br>(2)\ y_i(w^TX_i+b) &gt;&#x3D; 1-\delta_i,(i&#x3D;1-N)<br>$$</p>
+<p>SVM 的损失函数</p>
+<p>$$<br>\frac{1}{2}||w||^2+C\sum^{N}_{i&#x3D;1}max(0, 1-y_i(wx_i+b))<br>$$</p>
+<p>提出公因子 C，等价于</p>
+<p>$$<br>\frac{1}{2C}||w||^2+\sum^{N}_{i&#x3D;1}max(0, 1-y_i(wx_i+b))<br>$$</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/guofei_fly/article/details/102750900">https://blog.csdn.net/guofei_fly/article/details/102750900</a></p>
+<p><strong>SVM 中的核函数</strong></p>
+<img src="https://s2.loli.net/2022/06/25/6LHme9akUO2ixu1.png" alt="image-20220620113232679" style="zoom:50%;" />
+
+<p>高维非线性计算资源消耗大，故映射到线性低维。</p>
+<p>根据对 SVM 优化问题的观察，可以得知数据点只以点积的形式出现：</p>
+<img src="https://s2.loli.net/2022/06/20/BCe9FviQfEswd61.png" alt="image-20220620113548007" style="zoom:50%;" />
+
+<p>因此，无需考虑具体的映射 phi 函数的形式，只需要考虑核函数：</p>
+<img src="https://s2.loli.net/2022/06/20/ztsNlJa7D8wkEyi.png" alt="image-20220620113646068" style="zoom:50%;" />
+
+<p>举例而言：</p>
+<img src="https://s2.loli.net/2022/06/25/lsecmURo8HkL6Vi.png" alt="image-20220620113739303" style="zoom:50%;" />
+
+<p>要求核函数满足 Mercer function，即要求正定（对于nxn的矩阵，entry[i,j]&#x3D;K(xi,xj)）。</p>
+<p>基本的核函数：</p>
+<img src="https://s2.loli.net/2022/06/20/CyiWNYSKzEPBArJ.png" alt="image-20220620114131555" style="zoom:50%;" />
+
+
+
+<h4 id="6-PCA"><a href="#6-PCA" class="headerlink" title="6. PCA"></a>6. PCA</h4><p><img src="https://s2.loli.net/2022/06/20/bIlwEBOWS9N2Hzu.png" alt="image-20220620114523211"></p>
+<blockquote>
+<p>PCA基本思想：降维，把最关键的维度找出来。PCA无监督的。</p>
+<p>PCA三种理解的角度：通过重构误差最小推出PCA的定义公式；通过方差最大的思想推出PCA；通过奇异值分解的方法推出PCA。</p>
+<p>PCA有进行一些假设约束，如两两方向之间正交。推导过程要知道，比如PCA重构误差的推导。PCA有什么缺点：要求方向正交，而这不一定是合理的。</p>
+</blockquote>
+<p><strong>PCA 的基本思想</strong></p>
+<p>降维，把最关键的维度找出来，以代表大部分的信息。</p>
+<p><strong>PCA 的三种理解角度</strong>：最小重构误差</p>
+<p>正交的概念：</p>
+<img src="https://s2.loli.net/2022/06/25/q67d8aQrOHNEWu4.png" alt="image-20220620164104895" style="zoom:50%;" />
+
+<p>正交定理（举个例子就能理解，$$\alpha_{i}$$ 类似投影长度）：</p>
+<img src="https://s2.loli.net/2022/06/20/JY8tlMweoGU1CAW.png" alt="image-20220620164120492" style="zoom: 50%;" />
+
+<img src="https://s2.loli.net/2022/06/20/f3mq5YuFBtTV6SA.png" alt="image-20220620164410215" style="zoom:50%;" />
+
+<p>当前的目标，就是找到这几个正交向量，以最好  地表示原数据。</p>
+<p>PCA(主成分分析)所对应的数学理论是 SVD。而奇异值分解本身是完全不需要对矩阵中的元素做标准化或者去中心化的。但是对于机器学习，我们通常会对矩阵（也就是数据）的每一列先进行标准化。</p>
+<img src="https://s2.loli.net/2022/06/20/Dq8LxuJfKAXYrNb.png" alt="image-20220620200743365" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/20/WZyETCcNzKkUD54.png" alt="image-20220620200758681" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/20/q83lrapPHICT5Vx.png" alt="image-20220620200813328" style="zoom:50%;" />
+
+<p>Frobenius norm</p>
+<p>$$<br>||X||<em>{F} &#x3D; \sqrt{\sum</em>{i} \sum_j X_{i,j}^2}<br>$$</p>
+<img src="https://s2.loli.net/2022/06/20/SBcbvxlTGajD281.png" alt="image-20220620200824009" style="zoom:50%;" />
+
+
+
+<img src="https://s2.loli.net/2022/06/20/IwqFd2GLfZNYUEo.png" alt="image-20220620200848625" style="zoom:50%;" />
+
+
+
+<img src="https://s2.loli.net/2022/06/20/EAeJ5HyxTLpagX8.png" alt="image-20220620201027218" style="zoom:50%;" />
+
+
+
+<p><strong>PCA 的三种理解角度</strong>：最大化方差</p>
+<p><img src="https://pic3.zhimg.com/80/v2-0c361ad3dbb56d96e0ed85fbb6701a06_720w.jpg" alt="img"></p>
+<p>最大化方差等价于尽可能多地保留原始数据的信息。</p>
+<p>以其中一个投影坐标方向 $$u_1$$ 为例，求其方差表达式：</p>
+<img src="https://s2.loli.net/2022/06/20/EiQzg76lsfRMBah.png" alt="image-20220620201121960" style="zoom: 50%;" />
+
+<p>类似前文所述，要使的 var 最大，等价于让 $$u_1$$ 是 S 的那个最大特征值的特征向量。</p>
+<p><strong>PCA 的三种理解角度</strong>：SVD 分解</p>
+<img src="https://s2.loli.net/2022/06/20/q9BjcKtP6ICi5rp.png" alt="image-20220620201616504" style="zoom: 50%;" />
+
+<img src="https://s2.loli.net/2022/06/25/my1vuTYa5Wz8JGp.png" alt="image-20220620201650161" style="zoom:50%;" />
+
+
+
+<h4 id="7-聚类"><a href="#7-聚类" class="headerlink" title="7.  聚类"></a>7.  聚类</h4><p><img src="https://s2.loli.net/2022/06/25/UYWsd43SkaAEblO.png" alt="image-20220620201752216"></p>
+<blockquote>
+<p>k是什么？k个聚类。初始选取的k个点可以是随机的也可以是自己定义的。kmeans为什么可以收敛？可以通过实验的方法来了解k的选取。不同的初始状态会导致不同的结果。</p>
+</blockquote>
+<p><strong>K-Means 聚类的思想</strong></p>
+<p>在数据集中根据一定策略选择K个点作为每个簇的初始中心，然后将数据划分到距离这K个点最近的簇中，但形成的新簇并不一定是最好的划分，因此生成的新簇中，重新计算每个簇的中心点，然后在重新进行划分，直到每次划分的结果保持不变。</p>
+<p><strong>K-Means 聚类的步骤</strong></p>
+<p>① Ask user how many clusters they’d like.</p>
+<p>② Randomly guess k cluster Center locations</p>
+<p>③ Each datapoint finds out which Center it’s closest to.</p>
+<p>④ Each Center finds the centroid of the points it owns</p>
+<p>⑤ Jumps to ③，Repeat until terminated!</p>
+<p><strong>K-Means 聚类的目标函数</strong></p>
+<img src="https://s2.loli.net/2022/06/21/1jMsx9iXITu3gLA.png" alt="image-20220621195837743" style="zoom:50%;" />
+
+<p>$$Encode(x_i)$$ 可以理解为把数据点 $$x_i$$ 归到第几个聚类，$$Decode[j]$$ 可以理解为把第 j 个聚类的中心 $$c_j$$。</p>
+<p>要最小化 Distortion。① 这就要求 $$x_i$$ 必须被归到离他最近的聚类。② 同时，还要求对 $$c_j$$ 对 Distortion 的偏微分都为 0：</p>
+<img src="https://s2.loli.net/2022/06/21/SM9Nbs16FlmLtHB.png" alt="image-20220621200517118" style="zoom:50%;" />
+
+<p>满足 minimum 的情况，也就是满足 $$c_j$$ 是该聚类中的点的均值的情况。</p>
+<p>① 和 ② 连续操作没意义，但是交替操作就很有意义，这即是 K-means。为什么可以收敛呢？</p>
+<p>有限个点分到有限个聚类里，这样配置&#x2F;聚类的可能情况是有限的。同时，当配置改变，意味着得到了更好的 Distortion。每次改变都是更好的配置，如果一直改变，迟早会用光所有的配置。</p>
+<p>不一定能全局最优。因此，谨记：选好初始值，或者跑多次不一样的k-means。</p>
+<p>对选好初始值的一种可行方案：首先随便选个数据点做聚类中心，之后选的聚类中心尽可能选离所有已选聚类中心远的数据点。</p>
+<p><strong>K-Means 聚类的 K 的选取</strong></p>
+<p>常规方法：最小化 Schwarz Criterion (also related to the BIC, schwarz’s bayesian criterion (bic))</p>
+<img src="https://s2.loli.net/2022/06/21/Nr6iYRcZe8BKOnh.png" alt="image-20220621201736841" style="zoom: 50%;" />
+
+
+
+
+
+<h4 id="8-EM-算法"><a href="#8-EM-算法" class="headerlink" title="8. EM 算法"></a>8. EM 算法</h4><p>背景——欲解决的问题</p>
+<img src="https://s2.loli.net/2022/06/21/8smHPfpizQuCMGd.png" alt="image-20220621202550971" style="zoom:50%;" />
+
+<p><strong>E 步</strong> + <strong>M 步</strong></p>
+<img src="https://s2.loli.net/2022/06/21/fItr2GPplesRZyV.png" alt="image-20220621211812481" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/21/E6PnbiGUND3I8aS.png" alt="image-20220621211829792" style="zoom:50%;" />
+
+<p>理论推导：</p>
+<p>先重新表达所要优化的对数似然函数：</p>
+<img src="https://s2.loli.net/2022/06/25/J47MrBzUauFkNV8.png" alt="image-20220621203424720" style="zoom:50%;" />
+
+
+
+<img src="https://s2.loli.net/2022/06/21/pFKkdUzD7rxcEGS.png" alt="image-20220621212332088" style="zoom:50%;" />
+
+
+
+<img src="https://s2.loli.net/2022/06/21/XLMBO2mAv9Z6jtY.png" alt="image-20220621212346646" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/25/RHqwNm8ICAYnyc1.png" alt="image-20220621212358971" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/21/KSPc1XvpboqmU9e.png" alt="image-20220621212426612" style="zoom:50%;" />
+
+<p>强烈建议结合浙大的课程一起复习！</p>
+<p><strong>EM 算法一般形式</strong></p>
+<p>① 随机选取 $$\theta_0$$</p>
+<p>② E-step</p>
+<p>$$<br>Q_i(z_i) &#x3D; P(z_i|x_i, \theta_k) &#x3D; \frac{P(z_i,x_i|\theta_k)}{P(x_i|\theta_k)}&#x3D;\frac{P(z_i,x_i|\theta_k)}{\sum_{z_i} P(z_i, x_i|\theta_k)}<br>$$</p>
+<p>③ M-step</p>
+<p>$$<br>\theta_{k+1}&#x3D;argmax_{\theta} \sum_{i&#x3D;1}^{N} \sum_{z_i}Q_i(z_i) log\frac{P(z_i,x_i|\theta_k)}{Q_i(z_i)}<br>$$</p>
+<p>④ 回到 ②，直至收敛。</p>
+<p><strong>高斯混合聚类算法的思想和步骤</strong></p>
+<p>一种 soft(fuzzy) 的聚类</p>
+<p>实现思想：根据 EM 算法，针对每个数据点，为之分配属于每个聚类的概率</p>
+<p>高斯分布</p>
+<img src="https://s2.loli.net/2022/06/22/CqPZydVhtUkpaj6.png" alt="image-20220622150629542" style="zoom:50%;" />
+
+<p>高斯分布的均值与方差：</p>
+<img src="https://s2.loli.net/2022/06/22/q1pVILjWGrEba4h.png" alt="image-20220622150851026" style="zoom:50%;" />
+
+<p>开始极大似然估计：</p>
+<img src="https://s2.loli.net/2022/06/22/1RAtDoiS8hKf3F6.png" alt="image-20220622150709006" style="zoom:50%;" />
+
+<p>转为对数似然估计：</p>
+<img src="https://s2.loli.net/2022/06/22/Ox84ADUYJquFtQs.png" alt="image-20220622150728816" style="zoom:50%;" />
+
+<p>E 步 —— 求出数据点属于每个聚类的比重：</p>
+<img src="https://s2.loli.net/2022/06/22/hIHJOAWxZKsqv6C.png" alt="image-20220622151427673" style="zoom:50%;" />
+
+<p>M 步 —— 更新高斯分布的参数：</p>
+<img src="https://s2.loli.net/2022/06/25/YGpvCBXmrwZWxAJ.png" alt="image-20220622151501063" style="zoom:50%;" />
+
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85338773">https://zhuanlan.zhihu.com/p/85338773</a></p>
+<h4 id="9-推荐系统"><a href="#9-推荐系统" class="headerlink" title="9. 推荐系统"></a>9. 推荐系统</h4><p><img src="https://s2.loli.net/2022/06/22/a2qrV1MUFRLeo5v.png" alt="image-20220622160643079"></p>
+<blockquote>
+<p>打分矩阵L分解成用户矩阵U和item矩阵I，然后可以用梯度下降求，目标函数怎么定义？U*I的结果尽可能接近L。<br>基于用户：得到打分矩阵，计算相似度量公式，计算两两相似度，找出k个最像的用户，计算打分。<br>基于商品：有时候用户很多，但商品数量有限。得到打分矩阵，确定一个商品之间相似度的度量公式。<br>基于内容：考察商品之间的相似度，不仅考虑打分，还考虑商品的描述内容。<br>冷启动：概念，新用户进来很难对其进行推荐，新商品进来不知道跟哪些商品相似，难以推荐新商品。<br>数据稀疏的问题：打分矩阵的数据是很稀疏的。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28577447">https://zhuanlan.zhihu.com/p/28577447</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_58535145/article/details/122651843">SVD 分解</a></p>
+<p><strong>基于矩阵分解的推荐系统</strong> </p>
+<p>打分矩阵 L 分解成用户矩阵 U 和商品矩阵 I，然后可以用梯度下降求，目标函数怎么定义？U * I 的结果尽可能接近 L。</p>
+<img src="https://s2.loli.net/2022/06/29/1eIBCKohqjzwUGQ.png" alt="image-20220629102319437" style="zoom:50%;" />
+
+
+
+<p><strong>基于用户的协同推荐</strong></p>
+<p><img src="https://s2.loli.net/2022/06/29/15cNKrYSz67Tte8.png" alt="image-20220629094502874"></p>
+<p>根据打分矩阵，计算相似度量公式</p>
+<img src="https://s2.loli.net/2022/06/22/UImglxuAvd8YGoq.png" alt="image-20220622182448962" style="zoom:50%;" />
+
+<p>观察 sim(a, b)，其实就是相关系数（Pearson correlation）的计算。</p>
+<img src="https://s2.loli.net/2022/06/25/m9vDk6iMAcpF8OQ.png" alt="image-20220622185202056" style="zoom:50%;" />
+
+<p>问题：可能会导致只给出一些特定的 items。</p>
+<p>解决：对差异较大的项目给予更多权重；significance weighting；Case amplification。</p>
+<p>总结：memory-based，不适用现实场景，现实中这个矩阵太大。</p>
+<p><strong>基于商品的协同推荐</strong></p>
+<p><img src="https://s2.loli.net/2022/06/29/G6u4xBhybcMfo9r.png" alt="image-20220629094512656"></p>
+<img src="https://s2.loli.net/2022/06/25/IA8ZXt6OnjYUkhq.png" alt="image-20220622185916132" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/25/Ayaqb8OCjeBhSxn.png" alt="image-20220622191033984" style="zoom:50%;" />
+
+
+
+<p><strong>基于内容的协同推荐</strong></p>
+<p>基本思想：根据推荐物品或内容的元数据，发现物品或者内容的相关性，然后基于用户以往的喜好记录，推荐给用户相似的物品。即考察商品之间的相似度，不仅考虑打分，还考虑商品的描述内容。</p>
+<p>应用：电影 A 和 C 的类型都是爱情和浪漫，那么就会给看过电影 A 的人推荐电影 C。</p>
+<p><strong>冷启动问题</strong></p>
+<img src="https://s2.loli.net/2022/06/25/3r2tRfuQJYW1967.png" alt="image-20220622190514423" style="zoom:50%;" />
+
+
+
+<p><strong>数据稀疏的问题</strong></p>
+<img src="https://s2.loli.net/2022/06/25/unjKe5YSromxyRG.png" alt="image-20220622190602455" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/06/25/8TADf4nGsN1Vemo.png" alt="image-20220622190618711" style="zoom:50%;" /></p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/ml/" title="ml">ml </a><span class="leancloud_visitors"></span><span>About 3836 words, 12 min 47 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-pattern-recognition-courses/">sysu-pr-courses</a></h3></div><div class="post-content"><div class="card"><p><h3 id="1-总览"><a href="#1-总览" class="headerlink" title="1. 总览"></a>1. 总览</h3><img src="https://s2.loli.net/2022/06/25/NcpDeYXjQLCB7wb.png" alt="image-20220625120156682" style="zoom: 67%;" />
+
+<p><strong>考核形式</strong></p>
+<p>主要考对概念的一些理解，例如说偏置方差分解和过拟合欠拟合之间的关系</p>
+<p>计算有但不是太多</p>
+<p>在理解的基础上对算法进行记忆，比如 PCA &amp; LDA，他们的目标函数优化这些都是要知道的</p>
+<h3 id="2-提取特征"><a href="#2-提取特征" class="headerlink" title="2. 提取特征"></a>2. 提取特征</h3><blockquote>
+<p>提取特征：Normalization(Chap. 9), PCA(Chap. 5), FLD(Chap. 6), Sparse(Chap. 11), …<br>PCA 无监督，FLD 有监督地利用标签去提取特征的方法<br>Sparse 没有详细地去讲</p>
+</blockquote>
+<h4 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h4><img src="https://s2.loli.net/2022/06/25/Vu6rQ4LS8Rylxvb.png" alt="image-20220625122340062" style="zoom: 67%;" />
+
+<img src="https://s2.loli.net/2022/06/25/OfLYdTHaN3JwQX8.png" alt="image-20220625122352658" style="zoom:67%;" />
+
+<p>可以把范围从 [0, 1] 拉伸至任意范围。</p>
+<p>如果某一维度的最大值等于最小值，这个维度的数据可以丢掉。</p>
+<p>如果 0 值在原始数据中代表 “空”，那么应该把它规范成0。</p>
+<p>如果测试样例的数据范围大于 0 或 大于 1，有时候算法必须要求 [0, 1]，那么可以把小于 0 的值设为 0，大于 1 同理，如果算法不要求其实也可以这么做。</p>
+<p>如果能看出某维数据符合高斯分布，那么也可以化为标准高斯分布：</p>
+<img src="https://s2.loli.net/2022/06/25/5P1Z49mjxLMqrBH.png" alt="image-20220625122726742" style="zoom: 67%;" />
+
+<p>L-1 规范化：如果值非负，规范化后样例各维之和为 1</p>
+<img src="https://s2.loli.net/2022/06/25/cNhxoSBs9TGaEyZ.png" alt="image-20220625122931565" style="zoom:67%;" />
+
+<p>L-2 规范化：把数据规范化为单位向量</p>
+<img src="https://s2.loli.net/2022/06/25/G9Fc2trETn1ZvoU.png" alt="image-20220625122925127" style="zoom:67%;" />
+
+<h4 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h4><p>首先要会做 SVD 分解。</p>
+<img src="https://s2.loli.net/2022/06/25/Hn4AO2M1Ze8hL9v.png" alt="image-20220625155915036" style="zoom: 67%;" />
+
+<p><img src="https://s2.loli.net/2022/06/25/3rj7boJ9OiTKktw.png" alt="image-20220625155923920"></p>
+<h4 id="FLD"><a href="#FLD" class="headerlink" title="FLD"></a>FLD</h4><p>思想：把数据点进行投影，使得不同类别之间的数据距离尽可能大。</p>
+<p> <img src="https://s2.loli.net/2022/06/25/oudrltBzY3psvSE.png" alt="image-20220625160821944" style="zoom: 50%;" />     <img src="https://s2.loli.net/2022/06/25/v5VHwi7oY9ELePM.png" alt="image-20220625162319955" style="zoom: 50%;" /></p>
+<p>可分性的绝对要素：两个均值之间的距离 + 两个标准差。要实现分类，就需要最大化这二者的比例。</p>
+<p>注：PCA 和 FLD 中的 X 的尺寸都是 (dim x 1) 。因而，$$a^Ta$$ 的结果是一个值，$$aa^T$$ 的结果是一个矩阵。</p>
+<p>二分类的 FLD：</p>
+<img src="https://s2.loli.net/2022/06/25/1UghbLr4SEZizaY.png" alt="image-20220625165356810" style="zoom: 50%;" />
+
+<p>$$w$$：投影方向</p>
+<p>$$m_i$$ ：集合 i 的均值</p>
+<p>$$C_i$$ ：集合 i 的协方差矩阵</p>
+<p>$$<br>C_i &#x3D; \frac{1}{N_i} \sum_{x \in X_i} (x-m_i)(x-m_i)^T<br>$$</p>
+<p>传统 FLD 用散度矩阵而不是用协方差矩阵，散度矩阵 $$S_i &#x3D; N_iC_i$$</p>
+<p>类间散度矩阵 &amp; 类内散度矩阵：</p>
+<p>$$<br>S_B&#x3D;(m_1-m_2)(m_1-m_2)^T \<br>S_W &#x3D; S_1+S_2<br>$$</p>
+<p>目标函数（第一行的 m 是投影后的均值，第二行的 m 是向量）：</p>
+<p>$$<br>J &#x3D; \frac{(m_1-m_2)^2}{\sigma_1^2+\sigma_2^2} \<br>&#x3D; \frac{(m_1^T w-m_2^Tw) ^ 2}{\sigma_1^2+\sigma_2^2} \<br>&#x3D; \frac{w^T(m_1-m_2)(m_1-m_2)^Tw}{w^T(C_1+C_2)w} \<br>&#x3D; \frac{w^TS_Bw}{w^TS_Ww} \<br>$$</p>
+<p>如果一个均值向量扮演了所属类别的所有样本的代理，那么就可以用均值向量集合的散度矩阵代替 $$S_B$$</p>
+<p>$$<br>\sum^{2}_{i&#x3D;1}(m_i - \overline{m})(m_i - \overline{m}) ^T \<br>\overline{m} &#x3D; \frac{m_1+m_2}{2}<br>$$</p>
+<p>之后就可以计算以及规范化了。</p>
+<p>考虑至多类别呢？</p>
+<p>类内散度矩阵 </p>
+<p>$$<br>S_W &#x3D; \sum ^{K}<em>{k&#x3D;1} S_k &#x3D; \sum ^{K}</em>{k&#x3D;1}N_kC_k &#x3D; \sum ^{K}<em>{k&#x3D;1} \sum</em>{x \ in X_k}(x-m_i)(x-m_i)^T<br>$$</p>
+<p>总散度矩阵</p>
+<p>$$<br>S_T &#x3D; \sum ^{N}<em>{i&#x3D;1}(x_i-m)(x_i-m)^T \<br>m &#x3D; \frac{1}{N} \sum^{N}</em>{i&#x3D;1}x_i<br>$$</p>
+<p>类间散度矩阵</p>
+<p>$$<br>S_B &#x3D;\sum ^{K}_{k&#x3D;1}N_k(m_k-m)(m_k-m)^T<br>$$</p>
+<p>规律：总散度矩阵 &#x3D;  类内散度矩阵 + 类间散度矩阵。</p>
+<p>多分类问题中，类间散度矩阵不再是秩为 1 的矩阵，算法 6.1 不可用，故求解如下广义特征值问题来找最佳投影方向：</p>
+<p>$$<br>S_B w &#x3D; \lambda S_W w<br>$$</p>
+<p>当 $S_W$ 可逆，广义特征值问题等价于：</p>
+<p>$$<br>S_W ^ {-1} S_B w &#x3D; \lambda  w<br>$$</p>
+<p>那么如何找更多投影方向（降低更多维度）呢？类似 PCA，只要使用与前 K-1 个最大广义特征值对应的广义特征向量即可</p>
+<h4 id="Sparse"><a href="#Sparse" class="headerlink" title="Sparse"></a>Sparse</h4><p>含义：最小化 $$l_0$$$ norm（向量 x 的非零元素个数）</p>
+<p>$$<br>minimize\  ||x||_0 \<br>subject\ to\ Ax&#x3D;y<br>$$</p>
+<h3 id="3-分类器"><a href="#3-分类器" class="headerlink" title="3. 分类器"></a>3. 分类器</h3><blockquote>
+<p>分类器：kNN, SVM, Decision Tree, Ensemble, Regression, NN, CNN<br>kNN, SVM 前两个重要，后面都是简单提一下<br>CNN 也可以看作是个特征提取的方法</p>
+</blockquote>
+<h4 id="kNN（机器学习）"><a href="#kNN（机器学习）" class="headerlink" title="kNN（机器学习）"></a>kNN（机器学习）</h4><p>理解且会用</p>
+<p>缺陷以及解决办法</p>
+<ol>
+<li><p>出现平局：可以给不同的样本施加不同的权重，加强依赖样本的权重，降低不可信赖样本的影响。</p>
+</li>
+<li><p>离群点</p>
+</li>
+</ol>
+<p>复杂度 O(nd) [d是计算距离的代价]</p>
+<h4 id="SVM（机器学习）"><a href="#SVM（机器学习）" class="headerlink" title="SVM（机器学习）"></a>SVM（机器学习）</h4><h4 id="Decision-Tree-Regression（机器学习）"><a href="#Decision-Tree-Regression（机器学习）" class="headerlink" title="Decision Tree + Regression（机器学习）"></a>Decision Tree + Regression（机器学习）</h4><h4 id="Ensemble"><a href="#Ensemble" class="headerlink" title="Ensemble"></a>Ensemble</h4><h4 id="NN"><a href="#NN" class="headerlink" title="NN"></a>NN</h4><h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><h3 id="4-概率模型"><a href="#4-概率模型" class="headerlink" title="4. 概率模型"></a>4. 概率模型</h3><blockquote>
+<p>概率模型 (Chap. 8)：参数估计，非参，HMM，GMM<br>参数估计：点估计，贝叶斯估计，HMM<br>非参数估计：KDE<br>要知道 HMM 的隐马尔可夫性质 + 要知道 GMM 的概念</p>
+</blockquote>
+<p>概率模型：计算变量的概率或者概率分布的模型。</p>
+<p>参数估计：假设 PDF 服从某种函数形式，当指定其所有参数值之后，PDF 就完全确定，估计 PDF 就是估计参数。</p>
+<p>非参数估计：非参数不代表无参数（允许无限），用训练数据直接估计空间中任意点的密度 p(x|D)。</p>
+<p>生成模型：估计 p(x|y&#x3D;i) 和 p(y&#x3D;i)，根据贝叶斯定理求 p(y&#x3D;i|x)</p>
+<p>判别模型：直接估计 p(y&#x3D;i|x)</p>
+<p>这些模型都有两个步骤：推理和决策，分别是估计各种密度函数，根据估计得到的PDF对任意的？给出输出。</p>
+<h4 id="点估计（参）"><a href="#点估计（参）" class="headerlink" title="点估计（参）"></a>点估计（参）</h4><p>点估计（point estimation）是用样本统计量来估计总体参数，典型的如 MLE 和 MAP，把 $$\theta$$ 视作固定参数，目的是找这个最佳参数。</p>
+<p>p(D|theta) 不是 PDF，但 p(x|theta) 是。</p>
+<p>likelihood function of MLE：</p>
+<p>$$<br>l(\theta) &#x3D; p(D|\theta) &#x3D; \prod_{i}p(x_i|\theta)<br>$$</p>
+<p>高斯分布的最大似然估计，可以通过对 $ll(\theta)$ 求偏微分得到结果：</p>
+<p>$$<br>\mu &#x3D; \frac{1}{n} \sum^{n}<em>{i&#x3D;1}x_i \<br>\sigma^2 &#x3D; \frac{1}{n} \sum^{n}</em>{i&#x3D;1}(x_i-\mu)(x_i-\mu)^T<br>$$</p>
+<p>最大后验估计（MAP）：把参数 theta 自身的取值可能性考虑进来。如果一无所知就等价于 MLE。</p>
+<p>$$<br>\theta &#x3D; argmax_{\theta} l(\theta)p(\theta)<br>$$</p>
+<p>渐进性质（asymptotic property），如一致性（consistency）：随样本容量增大收敛到参数真值的估计量</p>
+<p>其他性质，无偏估计（unbiased estimate）：指估计量的期望和被估计量的真值相等</p>
+<p>完成 inference 后，如何决策？根据参数得到后验概率 p(y|x;theta) 得出结果，在 0-1 风险时，选择概率大的就行。</p>
+<img src="https://s2.loli.net/2022/06/29/rTozyVmcjG6n1RC.png" alt="image-20220625193547900" style="zoom: 33%;" />
+
+<h4 id="贝叶斯估计（参）"><a href="#贝叶斯估计（参）" class="headerlink" title="贝叶斯估计（参）"></a>贝叶斯估计（参）</h4><p>点估计是把 $\theta$ 看成固定参数，而贝叶斯估计 p(theta|D) 是估计一个 $$\theta$$ 的分布，而不是一个值（点）！</p>
+<p>高斯分布参数的贝叶斯估计：设参数 theta 的先验分布 p(theta)，数据 X &#x3D; {x1, … , xn}，估计 p(theta|D)。这里假设单变量，只估计 p(theta|D) 的高斯分布的均值 mu，方差 sigma^2 已知：</p>
+<ol>
+<li><p>根据已知的先验高斯分布 P(theta) &#x3D; N(mu0, sigma0^2)</p>
+</li>
+<li><p>根据贝叶斯定理和独立性，可以得 p(theta|D) &#x3D;</p>
+</li>
+</ol>
+<img src="https://s2.loli.net/2022/06/25/9nU37YI5kqDdj8A.png" alt="image-20220625191741658" style="zoom:50%;" />
+
+<p>估计均值 &amp; 方差为：</p>
+<img src="https://s2.loli.net/2022/06/29/mwhWvl2gLouRy8a.png" alt="image-20220625192656515" style="zoom:50%;" />
+
+<p>共轭先验conjugate prior：若 p(x|theta) ，存在先验 p(theta)，使得 p(x|theta) 和 p(theta) 有相同的函数形式，从而简化推导和计算。如高斯分布的共轭先验分布仍然是高斯分布。</p>
+<p>完成 inference 后，如何决策？输出一个分布，结果通常根据期望决定。</p>
+<h4 id="KDE（非参）"><a href="#KDE（非参）" class="headerlink" title="KDE（非参）"></a>KDE（非参）</h4><p>常用的参数形式基本都是单模的，不足以描述复杂的数据分布。因此应该直接以训练数据自身来估计分布。</p>
+<p>例：直方图。每维 n 个bin，那么 n 维应该保存多少个bin的参数？$$n^d$$。太大了，且不光滑！</p>
+<p>给定一组提取于未知分布 p(x) 的数据 $x_1,x_2,…,x_n$ ，任一点 x 处的核密度估计定义为：</p>
+<p>$$<br>\hat{p}(x) &#x3D; \frac{1}{nh} \sum^{n}_{i&#x3D;1}K(\frac{x-x_i}{h})<br>$$</p>
+<p>$$<br>K(x) \ge0, \int K(x)dx&#x3D;1<br>$$</p>
+<p>KDE 核函数与 SVM 的不同：在概率估计中被用于估计目标点周围的概率密度。而在SVM中，被用于计算两点间的核空间距离。</p>
+<img src="https://s2.loli.net/2022/06/25/OzKfk6DU5dah1Ng.png" alt="image-20220625193832796" style="zoom: 33%;" />
+
+<p>连续的。</p>
+<p>窗宽确定：使得估计的积分均方误差 (mean integral square error,MISE) 达到最小，如下式</p>
+<p>$$<br>MISE{\hat{p}<em>h(x)}&#x3D;E[\int^{\inf}</em>{-\inf}{\hat{p}_h(x)-p(x)}dx]<br>$$</p>
+<h4 id="HMM（机器学习）"><a href="#HMM（机器学习）" class="headerlink" title="HMM（机器学习）"></a>HMM（机器学习）</h4><p><strong>隐马尔可夫性质</strong></p>
+<p>$$P(X_t|X_{1:t-1})&#x3D;P(X_t|X_{t-1})$$ ，无记忆性，当前状态的只跟上一个状态有关系。</p>
+<p><strong>随机过程（stochastic process）</strong></p>
+<p>$${X(t), t\in T}$$ 是一系列随机变量的集合，用于描述一些过程的时间进化，目的是希望过去对现在有帮助。也就是说，对于每个 $$t \in T$$, $$X(t)$$ 是一个随机变量。索引 t 通常被解释为时间，因此把 $$X(t)$$ 作为 t 时流程的状态。</p>
+<p>B：emission probability 发出观察值的概率。$$b_j(k)&#x3D;Pr(O_t&#x3D;V_k|Q_t&#x3D;S_j)$$。当未知状态为 $$S_j$$ 时观察到为 $$V_k$$ 的概率。</p>
+<p><strong>Problem 1. Evaluation</strong></p>
+<p>概念：给定已知 $$\lambda &#x3D; (A,B,\pi)$$ 的 HMM 模型，以及一个完整的输出序列 $$o&#x3D;o_{1:T}$$，求该模型观察到该输出序列的概率 $$P(O|\lambda)$$。</p>
+<p>作用：看出此模型对该观察序列的成绩，从而在多个模型中选择最适合的模型。</p>
+<p>算法</p>
+<ol>
+<li>Naive</li>
+</ol>
+<p>假设隐状态序列 $q_{1:T}$ 已知：</p>
+<p>$$<br>Pr(o_{1:T}|\lambda, q_{ 1:T}) &#x3D; \prod^{T}<em>{t&#x3D;1}Pr(o_t|q_t, \lambda) &#x3D; \prod^{T}</em>{t&#x3D;1}b_{q_i}(o_i)<br>$$</p>
+<p>则必有</p>
+<p>$$<br>Pr(o_{1:T}|\lambda) &#x3D; Pr(o_{1:T}, q_{1:T}|\lambda) &#x3D;\sum_{all\ Q}Pr(o_{1:T}|\lambda, q_{ 1:T})Pr(q_{1:T}|\lambda)<br>$$</p>
+<p>时间复杂度 $$O(TN^T)$$</p>
+<ol start="2">
+<li>对 Naive 的观察与优化——提取 $$b_i(o_i)$$</li>
+</ol>
+<p>$$<br>Pr(o_{1:T}|\lambda)&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T},Q_T&#x3D;S_i|\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)Pr(O_T&#x3D;V_k|Q_T&#x3D;S_i,\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)b_i(o_T)<br>$$</p>
+<ol start="3">
+<li>对 Naive 的观察与优化——提取 $$A_{ji}$$</li>
+</ol>
+<p>$$<br>Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda) &#x3D; \sum_{j&#x3D;1}^{N}Pr(o_{1:T-1},Q_{T-1}&#x3D;S_j|\lambda)A_{ji}<br>$$</p>
+<p>根据 2. 和 3. 的提取优化，可得</p>
+<p>$$<br>Pr(o_{1:T}|\lambda)&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T},Q_T&#x3D;S_i|\lambda)\<br>&#x3D;\sum_{i&#x3D;1}^{N}Pr(o_{1:T-1},Q_T&#x3D;S_i|\lambda)b_i(o_T)\<br>&#x3D;\sum_{i&#x3D;1}^{N}(b_i(o_T)\sum_{j&#x3D;1}^{N}Pr(o_{1:T-1},Q_{T-1}&#x3D;S_j|\lambda)A_{ji}) \<br>$$</p>
+<ol start="4">
+<li>前向算法 forward</li>
+</ol>
+<p>定义 $$\alpha_{t}(i)&#x3D;Pr(o_{1:t},Q_t&#x3D;S_i|\lambda)$$。含义：对于已知参数 $$\lambda$$ 的模型，获得观测序列 $$o_{1:T}$$ 且 t 时刻隐状态为 $$S_i$$ 的概率。</p>
+<p>初始化：$$\alpha_1(i)&#x3D;Pr(o_{1},Q_1&#x3D;S_i|\lambda) &#x3D; Pr(Q_1&#x3D;S_i|\lambda)Pr(o_{1}|Q_1&#x3D;S_i,\lambda) &#x3D; Pr(Q_1&#x3D;S_i|\lambda)b_i(o_1)$$</p>
+<p>前向递推：</p>
+<p>$$<br>\alpha_{t+1}(i)&#x3D;[\sum^{N}<em>{j&#x3D;1} Pr(o</em>{1:t},Q_t&#x3D;S_j|\lambda)A_{ji}]b_i(o_{t+1})\<br>&#x3D;[\sum^{N}<em>{j&#x3D;1} a</em>{t}(j)A_{ji}]b_i(o_{t+1})<br>$$</p>
+<p>结果：$$Pr(o_{1:T}|\lambda)&#x3D;\sum^{N}<em>{i&#x3D;1}Pr(o</em>{1:T},Q_T&#x3D;S_i|\lambda)&#x3D;\sum^{N}_{i&#x3D;1} \alpha_T(i) $$</p>
+<p>复杂度：$$O(TN^2)$$</p>
+<p>⑤ 后向算法 backward</p>
+<p>定义 $$\beta_t(i) &#x3D; Pr(o_{t+1:T}|Q_t&#x3D;S_i, \lambda)$$。含义：对于已知参数 $$\lambda$$ 的模型，已知 t 时刻状态为 $$S_i$$，未来观测到 $$o_{t+1:T}$$ 的概率。</p>
+<p>初始化：$$\beta_T(i) &#x3D; 1$$。</p>
+<p>反向更新：</p>
+<p>$$<br>\beta_t(i) &#x3D; \sum^{N}<em>{j&#x3D;1}A</em>{ij}b_j(o_{t+1})\beta_{t+1}(j)<br>$$</p>
+<p>输出：$$Pr(o_{1:T}|\lambda)&#x3D;\sum^{N}<em>{i&#x3D;1}\pi</em>{i}b_i(o_{1})\beta_{1}(i)$$</p>
+<p><strong>Problem 2：Decoding</strong></p>
+<p>概念：给定已知 $$\lambda &#x3D; (A,B,\pi)$$ 的 HMM 模型，以及一个完整的输出序列 $$o&#x3D;o_{1:T}$$，求一个完全指定的隐变量序列 $$q_{1:T}$$ 的值。</p>
+<p>作用：语音识别中状态可能有实际意义（各音节），可以用来观察模型结构，优化模型。</p>
+<p>算法：</p>
+<img src="https://s2.loli.net/2022/06/29/LWcKyRP9Zk8xB4Y.png" alt="image-20220629185728038" style="zoom: 50%;" />
+
+<p><strong>Problem 3：Learning</strong></p>
+<p>概念：发现 $$\lambda &#x3D; (A,B,\pi)$$，使得对于固定的 N，T，和观察值 O，似然概率 $$P(O|\lambda)$$ 最大。</p>
+<p>作用：最重要的问题</p>
+<p>目前无法发现全局最优解，常用 Baum-Welch 算法。</p>
+<h3 id="5-优化方法"><a href="#5-优化方法" class="headerlink" title="5. 优化方法"></a>5. 优化方法</h3><blockquote>
+<p>优化方法：极值条件，对偶，KKT，GD，SGD，EM，<br>要知道凸优化和非凸优化，要知道凸优化的话，极值就是最优点，那么找最优点就是导数等于0<br>要直到 SVM 里面的对偶问题，SVM 没有显式最优解，因此可以用 GD，Regression 有显式最优解<br>在神经网络里面一般用 SGD，SGD 要有一个概念，为什么我们要用 SGD 和 GD？要知道二者区别，还得知道 SGD 优点<br>要对概率模型的参数进行估计的话，可以考虑用 EM 进行参数估计，比如 HMM</p>
+</blockquote>
+<p>凸优化定义：</p>
+<p>$$<br>minimize \ f_0(x)  \<br>subject \ to \ f_i(x)&lt;&#x3D;b_i,\ \ i&#x3D;1,…,m<br>$$</p>
+<p>其中，目标函数和约束函数都是凸函数，即</p>
+<p>$$<br>f_i(\alpha x+\beta y) &lt;&#x3D; \alpha f_i(x) + \beta f_i(y) \<br>\alpha + \beta &#x3D; 1,\  \alpha &gt;&#x3D;0, \ \beta&gt;&#x3D;0<br>$$</p>
+<h4 id="SVM-中的对偶-amp-KKT（机器学习）"><a href="#SVM-中的对偶-amp-KKT（机器学习）" class="headerlink" title="[SVM 中的对偶 &amp; KKT（机器学习）"></a>[SVM 中的对偶 &amp; KKT（机器学习）</h4><h4 id="GD-amp-SGD"><a href="#GD-amp-SGD" class="headerlink" title="GD &amp; SGD"></a>GD &amp; SGD</h4><p>随机梯度下降每次只用一个样本，对于最优化凸问题，虽然不是每次迭代得到的损失函数都向着全局最优方向， 但是大的整体的方向是向全局最优解的，最终的结果往往是在全局最优解附近。但是相比于批量梯度，这样的方法更快，更快收敛。</p>
+<p>批量梯度下降每次更新时用所有样本。对于最优化凸问题，可以达到一个全局最优。如果样本不多的情况下，当然是这样收敛的速度会更快。但是很多时候，样本很多，更新一次要很久。</p>
+<h4 id="EM-amp-GMM（机器学习）"><a href="#EM-amp-GMM（机器学习）" class="headerlink" title="EM &amp; GMM（机器学习）"></a>EM &amp; GMM（机器学习）</h4><p>浙大</p>
+<h3 id="6-距离度量"><a href="#6-距离度量" class="headerlink" title="6. 距离度量"></a>6. 距离度量</h3><blockquote>
+<p>（样本之间的）距离度量：l-p 范数, DTW, …<br>要知道如何度量两个不同时间序列的样本之间的距离<br>DTW 动态时间规整</p>
+</blockquote>
+<p>$$l_0$$ 范数：向量 x 的非零元素的个数</p>
+<img src="https://s2.loli.net/2022/06/29/QEPADFUZL5hbsfv.png" alt="image-20220625200150788" style="zoom:50%;" />
+
+<p>DTW（Dynamic Time Warping）：动态时间规整</p>
+<p>性质：1. 匹配是顺序的 2. 每个 $$x_i$$ 或 $$y_i$$ 都要有对应的匹配 3. 一个 $$x_i$$ 可以和多个 $$y_j$$ 匹配，反之亦然</p>
+<img src="https://s2.loli.net/2022/06/29/UdA6mkPbKY1phcR.png" alt="image-20220625202602917" style="zoom:50%;" />
+
+<p>递推公式：</p>
+<img src="https://s2.loli.net/2022/06/29/OeASiJYFf952cZh.png" alt="image-20220625202654161" style="zoom:50%;" />
+
+<h4 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h4><p>单变量</p>
+<p>$$<br>H&#x3D;-\sum^{m}_{i&#x3D;1}p_ilog_2p_i<br>$$</p>
+<p>$$<br>h&#x3D;-\int p(x)ln(p(x))dx<br>$$</p>
+<p>双变量</p>
+<p>$$<br>H(x,y)&#x3D;-\sum_{x}\sum_{y}P(x,y)log_2P(x,y)<br>$$</p>
+<p>$$<br>h&#x3D;-\int p(x,y)ln(p(x,y))dxdy<br>$$</p>
+<p>$$<br>H(X|Y) &#x3D; \sum_{y}P(y)H(X|Y&#x3D;y) &#x3D;<br>-\sum_{y}P(y)\sum_{x}P(X&#x3D;x|Y&#x3D;y)log_2P(X&#x3D;x|Y&#x3D;y) \<br>&#x3D; -\sum_{x,y}P(x,y)log_2 \frac{P(x,y)}{p(y)}<br>$$</p>
+<p>$$<br>h(x,y) &#x3D; -\int p(x,y)ln\frac{p(x,y)}{p(y)}dxdy<br>$$</p>
+<p>熵之间的关系</p>
+<p>H(X,Y)&#x3D;H(X)+H(Y|X)&#x3D;H(Y)+H(X|Y)</p>
+<p>H(X|Y)&lt;H(X)</p>
+<p>H(Y|X)&lt;H(Y)</p>
+<p>互信息</p>
+<p>$$<br>I(X;Y)&#x3D;H(X)-H(X|Y) &#x3D; \sum_{x,y}P(x,y)log_2 \frac{P(x,y)}{P(x)P(y)}<br>$$</p>
+<p>KL 散度</p>
+<p>$$<br>KL(P||Q)&#x3D;\sum_{i} P_ilog_2\frac{P_i}{Q_i}<br>$$</p>
+<p>$$KL(P||Q) \ge 0$$，等号成立条件：$$P_i&#x3D;Q_i$$。不对称。</p>
+<p>交叉熵</p>
+<p>$$<br>CE(P,Q)&#x3D;-\sum_{i}P_ilog_2Q_i \<br>CE(P,Q)&#x3D;H(p)+KL(P||Q)&#x3D;-\sum_{i}P_ilog_2P_i+\sum_{i} P_ilog_2\frac{P_i}{Q_i}<br>$$</p>
+<h3 id="7-损失函数"><a href="#7-损失函数" class="headerlink" title="7. 损失函数"></a>7. 损失函数</h3><blockquote>
+<p>损失函数：square, hinge, exponential, logistic, cross entropy, …<br>线性回归：square<br>SVM：hinge<br>Adaboost：exp<br>逻辑回归：logistic<br>神经网络：cross entropy</p>
+</blockquote>
+<h4 id="Square（机器学习）"><a href="#Square（机器学习）" class="headerlink" title="Square（机器学习）"></a>Square（机器学习）</h4><p>形式：</p>
+<p>$$<br>L(f,y)&#x3D;(f-y)^2<br>$$</p>
+<p>线性回归中的 Square：</p>
+<p>$$<br>L&#x3D;\sum^{N}_{i&#x3D;1}(y_i-\theta^Tx_i)<br>$$</p>
+<h4 id="Hinge"><a href="#Hinge" class="headerlink" title="Hinge"></a>Hinge</h4><p>译为铰链损失。</p>
+<p>形式：</p>
+<p>$$<br>L(y,f(x)) &#x3D; max(0,1-yf(x)),<br>$$</p>
+<p>SVM 中的 Hinge：</p>
+<p>$$<br>L &#x3D; \frac{1}{2C}||w||^2+\sum^{N}_{i&#x3D;1}max(0, 1-y_i(\theta^Tx_i+b))<br>$$</p>
+<h4 id="Exp"><a href="#Exp" class="headerlink" title="Exp"></a>Exp</h4><p>译为指数损失。</p>
+<p>形式：</p>
+<p>$$<br>L(y, f(x)) &#x3D; exp[-yf(x)]<br>$$</p>
+<p>Adaboost 中的 Exp：</p>
+<p>$$<br>L(y, f(x)) &#x3D; \frac{1}{n} \sum^{n}_{i&#x3D;1} exp[-y_if(x_i)]<br>$$</p>
+<h4 id="Logistic（机器学习）"><a href="#Logistic（机器学习）" class="headerlink" title="Logistic（机器学习）"></a>Logistic（机器学习）</h4><p>形式：</p>
+<p>$$<br>L(y,f(x))&#x3D;\sum_{l}y^l ln P(y^l&#x3D;1|x^l,w)+(1-y^l)ln P(y^l&#x3D;0|x^l,w) \<br>&#x3D;\sum_{l}y^l(w_0+\sum^{n}<em>{i&#x3D;1}w_ix_i^l)-ln(1+exp(w_0+\sum^{n}</em>{i&#x3D;1}w_ix_i^l))<br>$$</p>
+<h4 id="Cross-entropy"><a href="#Cross-entropy" class="headerlink" title="Cross entropy"></a>Cross entropy</h4><p>形式：</p>
+<p>$$<br>L(y,f(x)) &#x3D; -\sum^{n}_{i&#x3D;1}y_i logf(x_i)<br>$$</p>
+<h3 id="8-评价准则"><a href="#8-评价准则" class="headerlink" title="8. 评价准则"></a>8. 评价准则</h3><blockquote>
+<p>评价准则：Acc, ROC, AP, Recall (TPR, true position rate), Precision, Bayes error, Bias-variance<br>概念掌握<br>Bayes error：取一个后验概率最大的去作为模型预测的输出<br>Bias-variance：把模型的误差做一个偏执方差分解，需要直到模型的偏置和方差，以及是由什么决定的</p>
+</blockquote>
+<p>PPT 3-4</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/ml/" title="ml">ml </a><span class="leancloud_visitors"></span><span>About 4526 words, 15 min 5 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-reinforcement-learning/">sysu-rl-courses</a></h3></div><div class="post-content"><div class="card"><p><h1 id="Reinforcement-Learning-P1-：Basics"><a href="#Reinforcement-Learning-P1-：Basics" class="headerlink" title="Reinforcement Learning P1 ：Basics"></a>Reinforcement Learning P1 ：Basics</h1><h2 id="Supervised-Learning→RL"><a href="#Supervised-Learning→RL" class="headerlink" title="Supervised Learning→RL"></a>Supervised Learning→RL</h2><p>Supervised Learning：给定 label</p>
+<p>Self Supervised Learning：自动生成 label</p>
+<p>Unsupervised Learning(Auto-encoder)：没用到人类的 label，但事实上仍然还有 label 只不过不需要用人力生成</p>
+<p>RL：机器当我们给它一个输入的时候，我们不知道最佳的输出（label）应该是什么。如下棋。</p>
+<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><img src="https://s2.loli.net/2022/07/02/47o2ubILgfhtE6w.png" alt="image-20220702145935497" style="zoom:50%;" />
+
+<h2 id="Machine-Learning-≈-Looking-for-a-Function"><a href="#Machine-Learning-≈-Looking-for-a-Function" class="headerlink" title="Machine Learning ≈ Looking for a Function"></a>Machine Learning ≈ Looking for a Function</h2><p>机器学习就是找一个 Function，Reinforcement Learning 也是，这个 Function 即 Actor 本身，要做的就是最大化 reward 之总和。</p>
+<p>例：Atari Space Invador。Actor：操作对象。环境：游戏场景。Observation：游戏画面。</p>
+<p>例：围棋。稀疏 Reward，只有游戏结束（输、赢）才能够拿到 Reward。</p>
+<h2 id="Machine-Learning-is-so-simple-……"><a href="#Machine-Learning-is-so-simple-……" class="headerlink" title="Machine Learning is so simple ……"></a>Machine Learning is so simple ……</h2><p>Machine Learning 三个步骤：</p>
+<ol>
+<li>定义含待求未知数的 Function</li>
+<li>定义 Loss Function</li>
+<li>Optimization，minimize loss</li>
+</ol>
+<p>而 RL 其实也是一模一样的三个步骤</p>
+<h3 id="Step-1-Function-with-Unknown"><a href="#Step-1-Function-with-Unknown" class="headerlink" title="Step 1: Function with Unknown"></a>Step 1: Function with Unknown</h3><p>Function (in RL) &#x3D; Actor, RL 中的 Actor 即神经网络，通称 Policy 的 Network。</p>
+<p>神经网络输入：the observation of machine represented as a vector or a matrix。</p>
+<p>神经网络输出：each action corresponds to a neuron in output layer。</p>
+<p><img src="https://s2.loli.net/2022/07/03/nj8qFcTSyQ1RCBM.png" alt="image-20220702151119061"></p>
+<p>为什么输出结果是概率分布？引入随机性。</p>
+<h3 id="Step-2-Define-“Loss”"><a href="#Step-2-Define-“Loss”" class="headerlink" title="Step 2: Define “Loss”"></a>Step 2: Define “Loss”</h3><p>从游戏开始到结束的这整个过程被称之为一个 &#x3D;&#x3D;Episode&#x3D;&#x3D;,</p>
+<p>将整个游戏的过程中 Actor 採取非常多的行为得到的 Reward 通通集合起来便是 &#x3D;&#x3D;Total Reward (Return)&#x3D;&#x3D;。$R &#x3D; \sum^{T}_{t&#x3D;1}r_t$ 。</p>
+<p>Return 是最大化的对象，我们要最小化 loss，可以定义 loss &#x3D; -R。</p>
+<h3 id="Step-3-Optimization"><a href="#Step-3-Optimization" class="headerlink" title="Step 3: Optimization"></a>Step 3: Optimization</h3><p>将整个游戏的过程中 s 跟 a 所形成的这个 Sequence 叫做 Trajectory。符号表示为 $\tau &#x3D; {s_1, a_1,s_2,a_2,…}$。</p>
+<p>通常说，Reward Function 在定义的时候和 Action 与 Observation 都有关联。即 $r_i$ 和 $s_i$  和 $a_i$ 有关系。优化 Return 就行。</p>
+<p>但是 RL 困难之处在于它不是一个一般的 Optimization 的问题。</p>
+<p>第一个问题是，Actor 的输出是有随机性的。 Network 裡面的某一个 Layer 每次产生出来结果是不一样的。第二，Environment 只是一个黑盒，且包含随机性。</p>
+<p>与 GAN 的对比。</p>
+<p>相同：GAN 中 调整 Generator 的参数让 Discriminator 的输出越大越好。RL 中调整 ACtor 的参数让 Environment 的 Reward 越大越好。</p>
+<p>不同：Discriminator 是 Network，但 Environment 只是个黑盒。不能用 GD 调整 Environment。</p>
+<h1 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h1><h3 id="How-to-control-your-actor"><a href="#How-to-control-your-actor" class="headerlink" title="How to control your actor"></a>How to control your actor</h3><img src="https://s2.loli.net/2022/07/02/v7TwXC5UEJWoGdL.png" alt="image-20220702152953732" style="zoom:50%;" />
+
+<p>可以把它想成一个分类的问题。即 s 是 Actor 的输入, $\hat{a}$(Ground Truth) 就是 Label。</p>
+<p>计算 Actor 的输出跟 Ground Truth 之间的 Cross-entropy，那接下来就可以定义一个 Loss。提示：根据交叉熵的定义，预测分布和真实分布有相同的分布时交叉熵最小。Loss 越小，就等价于预测值越接近真实值。</p>
+<img src="https://s2.loli.net/2022/07/02/Zb6yw2HEv38tVJM.png" alt="image-20220702153405916" style="zoom:50%;" />
+
+<p>模型训练</p>
+<img src="https://s2.loli.net/2022/07/02/T3mxPShAgQp6ZKY.png" alt="image-20220702153533859" style="zoom:50%;" />
+
+<p>用数值 A 表示代替 +1&#x2F;-1，就可以实现表示动作的好坏程度。Loss 改写为：<br>$$<br>L&#x3D;\sum A_ne_n<br>$$</p>
+<h2 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h2><h2 id="Version-0"><a href="#Version-0" class="headerlink" title="Version 0"></a>Version 0</h2><p>用随机的  Actor 去跟环境做互动收集训练资料获得 ${s_i, a_i}$。再根据情况好坏为之赋予 $r_i$。</p>
+<p>最简单的但不正确的版本。短视近利。事实上，每一个行为都会影响到接下来发生的事情。例：Space Invador 中，由于只有开火才能得到正 Reward，故他会一直开火。</p>
+<p>Reward Delay：牺牲短期的利益,以换取更长程的目标。</p>
+<h2 id="Version-1"><a href="#Version-1" class="headerlink" title="Version 1"></a>Version 1</h2><p>&#x3D;&#x3D;Cumulated Reward&#x3D;&#x3D;：把当下与未来所有的 Reward 加起来评估一个 Action 的好坏。<br>$$<br>G_t &#x3D; \sum^{N}_{n&#x3D;t} r_n<br>$$<br>用 $G_i$ 表示每个 ${s_i, a_i}$ 对应的 reward。</p>
+<p>问题在于：未来发生的影响中，有些影响大有些影响小。</p>
+<h2 id="Version-2"><a href="#Version-2" class="headerlink" title="Version 2"></a>Version 2</h2><p>加上递减权重 $\gamma$。未来的 reward 中，离当下近的表示影响更大。<br>$$<br>G’<em>t &#x3D; \sum^{N}</em>{n&#x3D;t} \gamma^{n-t}r_n<br>$$</p>
+<h2 id="Version-3"><a href="#Version-3" class="headerlink" title="Version 3"></a>Version 3</h2><p>做标准化，因为好或坏是相对的。</p>
+<p>一个最简单的方法就是：把所有的 G’ 都减掉一个 b，即&#x3D;&#x3D;Baseline&#x3D;&#x3D;。</p>
+<h2 id="Policy-Gradient-1"><a href="#Policy-Gradient-1" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h2><img src="https://s2.loli.net/2022/07/03/GJB31Hvkh4InrgR.png" alt="image-20220702155759971" style="zoom:50%;" />
+
+<p>其中，$L &#x3D; \sum A_n e_n$。$A_n$ 就是 Reward，$e_n$ 就是交叉熵。</p>
+<p>一般的 Training，Data Collection 都是在 For 循环之外。但在 RL 裡面收集资料是在 For 循环裡面。这意味着更新一次参数以后，就要重新收集资料，因此 RL 的训练过程非常花时间。</p>
+<p>为什么不把 Data Collection 放在 For 循环之外？彼之砒霜，吾之蜜糖。因为由 $θ_{i-1}$ 所收集出来的资料不一定适合拿来 Update $θ_{i}$ 的参数。</p>
+<p>故同一个 Action 同一个行为，对于不同的 Actor 而言，它的好是不一样的。更新后的 Actor，可能 Trajectory 就会跟之前出现区别。</p>
+<h3 id="On-policy-v-s-Off-policy"><a href="#On-policy-v-s-Off-policy" class="headerlink" title="On-policy v.s. Off-policy"></a>On-policy v.s. Off-policy</h3><p>被训练的 Actor 与跟环境互动的 Actor 是同一个叫做 &#x3D;&#x3D;On-policy  Learning&#x3D;&#x3D;。</p>
+<p>反之，为 &#x3D;&#x3D;Off-policy Learning&#x3D;&#x3D;。</p>
+<p>Off-policy 的好处：不用一直收集资料。可以收一次资料，就 Update 参数很多次。</p>
+<p>显然上文所述为 On-policy Learning。</p>
+<h3 id="Off-policy-→-Proximal-Policy-Optimization-PPO"><a href="#Off-policy-→-Proximal-Policy-Optimization-PPO" class="headerlink" title="Off-policy → Proximal Policy Optimization(PPO)"></a>Off-policy → Proximal Policy Optimization(PPO)</h3><p>Off-policy 的经典算法： Proximal Policy Optimization。</p>
+<p>Off-policy 的重点：在训练的那个 Network，要知道自己跟别人之间的差距，它要有意识到它跟环境互动的那个 Actor 是不一样的。</p>
+<p>例子：东施效颦，别瞎模仿。</p>
+<h3 id="Collection-Training-Data-Exploration"><a href="#Collection-Training-Data-Exploration" class="headerlink" title="Collection Training Data: Exploration"></a>Collection Training Data: Exploration</h3><p>Exploration：Actor 在採取行为的时候有随机性的。随机性大一点意味着能够收集到比较丰富的资料。实现方法：增大 Actor 的 Output（Distribution）的 Entropy；在 Actor 参数上加 Noise。</p>
+<h2 id="Critic"><a href="#Critic" class="headerlink" title="Critic"></a>Critic</h2><p>Critic 用以评估一个 Actor 的好坏。Given actor 𝜃, how good it is when observing 𝑠 (and taking action 𝑎)。</p>
+<p>本课程中 Critic 叫做 &#x3D;&#x3D;Value Function&#x3D;&#x3D;，用 $V^θ(s)$ 来表示。输出一个 scalar（Discounted Cumulated Reward）。</p>
+<p>故 Value Function 的作用就是：对某一个参数为 $\theta$ 的 Actor 来说，如果它已经看到某一个游戏画面 s，那接下来会得到的 Discounted Cumulated Reward 应该是多少。</p>
+<p>DCR 需要未来的 Reward 来计算。但当下怎么知道未来的 Reward 呢？Value Function 的能力就是要未卜先知。</p>
+<h2 id="How-to-estimate-V-θ-s"><a href="#How-to-estimate-V-θ-s" class="headerlink" title="How to estimate $ V^θ(s) $"></a>How to estimate $ V^θ(s) $</h2><h3 id="Monte-Carlo-MC-based-approach"><a href="#Monte-Carlo-MC-based-approach" class="headerlink" title="Monte-Carlo (MC) based approach"></a>Monte-Carlo (MC) based approach</h3><p>MC：把 Actor 拿去跟环境互动很多轮，可以得到每轮的 DCR。</p>
+<p>那么 Value Function 就得到一笔训练资料，训练目标是：如果看到 $s_a$ 作为输入，那它的输出 $ V^θ(s_a) $ 应该要跟 G’a 越接近越好。</p>
+<img src="https://s2.loli.net/2022/07/02/jz5FaG1xdcvsWI7.png" alt="image-20220702161849346" style="zoom: 50%;" />
+
+
+
+<h3 id="Temporal-difference-TD-approach"><a href="#Temporal-difference-TD-approach" class="headerlink" title="Temporal-difference (TD) approach"></a>Temporal-difference (TD) approach</h3><p>一轮互动可能无法终止或者很长。</p>
+<p>TD：不用玩完整场游戏，才能得到训练 Value 的资料。虽然我们不知道，$ V^θ(s_t)$ 和 $ V^θ(s_{t+1})$ 应该是什么，但是我们可以让 $ V^θ(s_t)$  与 $ \gamma V^θ(s_{t+1})$ 的差值逼近已知的 $r_t$。</p>
+<img src="https://s2.loli.net/2022/07/02/lazNsUr4dnBRx1k.png" alt="image-20220702162248677" style="zoom:50%;" />
+
+<h3 id="MC-v-s-TD"><a href="#MC-v-s-TD" class="headerlink" title="MC v.s. TD"></a>MC v.s. TD</h3><img src="https://s2.loli.net/2022/07/03/SrMDN6TPgmFfh7v.png" alt="image-20220702162905728" style="zoom:50%;" />
+
+
+
+<h2 id="Version-3-5"><a href="#Version-3-5" class="headerlink" title="Version 3.5"></a>Version 3.5</h2><p>把 baseline 设成 $V^θ(S)$。把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; G’_t-V^θ(s_t)<br>$$<br>为什么这样可以？我们知道 $ V^θ(s_t)$是看到某一个画面 $s_t$ 以后，接下来会得到的 (加权) Reward。它其实是一个期望，因为有随机性，即每次的 $a_t$ 可能不同，故每次可能会得到不一样的 Reward。</p>
+<img src="https://s2.loli.net/2022/07/02/krBqTm6nCYiFKMG.png" alt="image-20220702163444448" style="zoom:50%;" />
+
+<p>图中 Gt’ 是 sample 某一个 trajectory 的结果，而$ V^θ(s_t)$ 是很多条路径平均以后的结果。</p>
+<p>问题在于：把一个 sample 去减掉平均，这样会准吗？也许这个sample 特别好或特别坏。为什麽不是拿平均去减掉平均？</p>
+<h2 id="Version-4"><a href="#Version-4" class="headerlink" title="Version 4"></a>Version 4</h2><p>最后一个版本：平均去减掉平均。这就是 &#x3D;&#x3D;Advantage Actor-Critic&#x3D;&#x3D;。</p>
+<p>把 ${s_t,a_t}$ 对应的 Value 定义为：<br>$$<br>A_t &#x3D; r_t+V^θ(s_{t+1})-V^θ(s_t)<br>$$<br><img src="https://s2.loli.net/2022/07/03/M72tBQOvFV5lpsX.png" alt="image-20220702163949638" style="zoom:50%;" /></p>
+<h2 id="Tip-of-Actor-Critic"><a href="#Tip-of-Actor-Critic" class="headerlink" title="Tip of Actor-Critic"></a>Tip of Actor-Critic</h2><p>Actor 和 Critic 都是 Network，他们的输入可以公用 CNN。</p>
+<h2 id="Sparse-Reward"><a href="#Sparse-Reward" class="headerlink" title="Sparse Reward"></a>Sparse Reward</h2><p>Sparse Reward：$r_t$ &#x3D; 0 in most cases。例如拧螺丝。</p>
+<p>解决办法：reward shaping。</p>
+<h2 id="Imitation-Learning"><a href="#Imitation-Learning" class="headerlink" title="Imitation Learning"></a>Imitation Learning</h2><p>Actor 可以与环境互动，但 reward function 不知道怎么定义。</p>
+<p>解决办法：根据专家的演示 ${\hat{\tau_1}, \hat{\tau_2}, …}$ 进行模仿学习。</p>
+<p>例子：自动驾驶，机械臂抓举。</p>
+<p>问题：专家们只对有限的观察进行抽样。</p>
+<h2 id="Inverse-Reinforcement-Learning"><a href="#Inverse-Reinforcement-Learning" class="headerlink" title="Inverse Reinforcement Learning"></a>Inverse Reinforcement Learning</h2><p>使用 reward function 找到最佳 actor。</p>
+<p>原则：The teacher is always the best。</p>
+<p>方法论：</p>
+<img src="https://s2.loli.net/2022/07/02/YR12xlTz8PwE7sG.png" alt="image-20220702164853222" style="zoom:50%;" />
+
+<img src="https://s2.loli.net/2022/07/02/FDgLe1CdnYfmhoU.png" alt="image-20220702165029388" style="zoom:50%;" />
+
+<p>和 GAN 的类比理解</p>
+<p>GAN 中 Generator 的优化目标是产生跟 Ground Truth 的很像的结果，IRL 中 Actor 的优化目标是产生跟 Expert 的很像的结果。</p>
+<p>GAN 中 Discriminator 的优化目标是产生分辨 Ground Truth 和 Generator 的输出值，给 Ground Truth 打高分，IRL 中 Reward 则是给 Expert 打高分。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/rl/" title="rl">rl </a><span class="leancloud_visitors"></span><span>About 2401 words, 8 min 0 sec  read</span></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/07/06/machine-learning/2022-07-06-review-domain-adaptation/">domain-adaptation</a></h3></div><div class="post-content"><div class="card"><p><h1 id="27-Domain-Adaptation"><a href="#27-Domain-Adaptation" class="headerlink" title="27 Domain Adaptation"></a>27 Domain Adaptation</h1><p>训练资料跟测试资料的分布是不一样的，叫做 &#x3D;&#x3D;Domain Shift&#x3D;&#x3D;。</p>
+<p>解决办法是 &#x3D;&#x3D;Domain Adaptation&#x3D;&#x3D;，它也可以看做是 &#x3D;&#x3D;Transfer Learning&#x3D;&#x3D; 的一种。</p>
+<p>Transfer Learning ：在 A 任务上学到的技能可以被用在 B 任务上</p>
+<p>Domain Adaptation：你的训练资料是一个 Domain，你的测试资料是另外一个 Domain，你在训练资料上面学到的资讯可以要把它用到另外一个 Domain 上。</p>
+<h2 id="Domain-Shift"><a href="#Domain-Shift" class="headerlink" title="Domain Shift"></a>Domain Shift</h2><p>两者可能情况。一，输入资料即训练集和测试集的分布不同。二，输入跟输出虽然分布相同的，但它们之间的关係变了，比如训练集叫做 0 的东西在测试集里叫做 1。</p>
+<p>今天只考虑前者。记测试集为 &#x3D;&#x3D;Target Domain&#x3D;&#x3D;，训练集为 &#x3D;&#x3D;Source Domain&#x3D;&#x3D;。</p>
+<h2 id="Domain-Adaptation"><a href="#Domain-Adaptation" class="headerlink" title="Domain Adaptation"></a>Domain Adaptation</h2><p>分三种情况考虑：</p>
+<p>其一，在 Target Domain 上有一大堆的资料且配有 Label，那就直接拿 Target Domain 的资料来训练。</p>
+<p>其二，在 Target Domain 上有一点点的资料且配有 Label，那就拿他们来微调，即不要在 Target Domain 上的资料上跑太多的 Iteration。</p>
+<p>其三，在 Target Domain 上有一大堆的资料但没有 Label。找个 Feature Extractor，它会把 Source 和 Target 不一样的部分拿掉，只抽取出它们共同的部分。</p>
+<p>其四，在 Target Domain 上有一点点的资料且没有 Label。有一个方法叫做 &#x3D;&#x3D;Testing Time Training&#x3D;&#x3D;,它的缩写是 TTT。</p>
+<img src="https://s2.loli.net/2022/07/02/YkL3rCt54DKV1hd.png" alt="image-20220702171146183" style="zoom:50%;" />
+
+
+
+<h3 id="Domain-Adversarial-Training"><a href="#Domain-Adversarial-Training" class="headerlink" title="Domain Adversarial Training"></a>Domain Adversarial Training</h3><p>怎麼找出这样的一个 Feature Extractor 呢？那其实我们可以把一个一般的 Classifier 分成 Feature Extractor 跟 Label Predictor 。</p>
+<img src="https://s2.loli.net/2022/07/02/KRqyn5MD2SxmYE3.png" alt="image-20220702172724450" style="zoom:50%;" />
+
+<p>Domain Adaptation 的一种方法 &#x3D;&#x3D;Domain Adversarial Training&#x3D;&#x3D;</p>
+<p>训练 Feature Extractor：让 Source Domain 的图片得到的 Feature，跟 Target Domain 的分不出差异。</p>
+<p>训练 Domain Classifier：二元分类器，区分这个 feature 是来自於 Source Domain,还是来自於 Target Domain。</p>
+<p>Domain Adversarial Training 很像是 GAN。可以把 Feature Extractor 想成是 Generator，把 Domain Classifier 想成是 Discriminator。</p>
+<p>Generator 好像优势太大了，它只要都输出 0 不就无法区分了吗？不行，都输出 0 虽然 Domain Classifier 无法区分，但 Label Predictor 也无法区分！</p>
+<p>接下来考虑参数优化。Label Predictor 要做的事情就是让这个 Source Domain 的 Image 分类越正确越好，即最小化 Loss（交叉熵，分类问题有交叉熵）。Domain Classifier 要做的事情就是让 Domain 的分类越正确越好，也是最小化交叉熵。</p>
+<p>Feature Extractor 要做的事情是，它又要保证能让 Label Predictor 有个好结果，又要骗过 Domain Classifier，故把 loss 设为 $L-L_d$。</p>
+<h4 id="Limitation"><a href="#Limitation" class="headerlink" title="Limitation"></a>Limitation</h4><p>刚才这整套想法有一个小小的问题</p>
+<img src="https://s2.loli.net/2022/07/02/Hrnl2S15keas3fT.png" alt="image-20220702173655699" style="zoom:50%;" />
+
+<p>直觉上讲右边更好，所以我们是不是应该要让右边的状况发生呢？怎么做呢？也许一个可能的想法：我们既然知道分界点在哪裡，那我们应该要让这些方形远离这一个分界点。</p>
+<h4 id="Considering-Decision-Boundary"><a href="#Considering-Decision-Boundary" class="headerlink" title="Considering Decision Boundary"></a>Considering Decision Boundary</h4><p>什麼叫做离 Boundary 越远越好呢？如果今天输出的结果非常地集中，即 Entropy 小，叫做离 Boundary 远。反之则近。</p>
+<p>到目前為止都假设说，Source Domain 跟 Target Domain，它的类别都要是一模一样。但是真的一定会这样吗？</p>
+<img src="https://s2.loli.net/2022/07/02/wjvbz6ytZYGfS7H.png" alt="image-20220702174451574" style="zoom:50%;" />
+
+
+
+<p>实线的圈圈代表，Source Domain 裡面有的东西，这个虚实线的圈圈代表 Target Domain 裡面有的东西。所以在这个前提之下，你说你要让 Source Domain 的 Data 跟 Target Domain 的 Data，它们的 Feature 完全 Match 在一起，那意味著说，你硬是要让老虎去变得跟狗像，到时候你就分不出老虎这个类别了。</p>
+<h2 id="Domain-Generalization"><a href="#Domain-Generalization" class="headerlink" title="Domain Generalization"></a>Domain Generalization</h2><p>但其实还有一个更严峻的状况，如果我们对 Target Domain 一无所知的话怎麼办呢？这种情况通常就叫 &#x3D;&#x3D;Domain Generalization&#x3D;&#x3D;。</p>
+<p>我们期待机器在 Testing 的时候，不管来什麼样的 Domain，它都可以处理。</p>
+<p>Domain Generalization 又分成两种状况：其一，训练资料本来就包含了各式各样不同的 Domain 的数据；其二，训练资料只有一个 Domain，做 Data Augmentation。</p>
+</p></div></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-06</span><a class="tag" href="/categories/ml/" title="ml">ml </a><span class="leancloud_visitors"></span><span>About 1168 words, 3 min 53 sec  read</span></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/2/">Next</a></li></ul></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"Posts",PAGES:"Pages",CATEGORIES:"Categories",TAGS:"Tags",UNTITLED:"(Untitled)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Search..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
